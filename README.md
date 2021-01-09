@@ -2,7 +2,7 @@
 
 > 协议：[CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 > 
-> 欢迎任何人参与和完善：一个人可以走的很快，但是一群人却可以走的更远。
+> 我知道，这个世界，每天都有太多遗憾，所以你好，再见。——宋冬野《安和桥》
 
 * [在线阅读](https://java.apachecn.org)
 * [在线阅读（Gitee）](https://apachecn.gitee.io/apachecn-java-zh/)
