@@ -8,6 +8,12 @@
 * [在线阅读（Gitee）](https://apachecn.gitee.io/apachecn-java-zh/)
 * [ApacheCN 学习资源](http://docs.apachecn.org/)
 
+## 目录
+
++   [Effective Java 中文第三版](docs/effective-java-3e-zh/SUMMARY.md)
++   [Thinking in Java (Java 编程思想)](docs/thinking-in-java-zh/SUMMARY.md)
++   [Java 8 简明教程](docs/modern-java-zh/SUMMARY.md)
+
 ## 贡献指南
 
 本项目需要校对，欢迎大家提交 Pull Request。
