@@ -15,7 +15,7 @@
 
 (5) 在Java中，类定义采取几乎和C++一样的形式。但没有标志结束的分号。没有`class foo`这种形式的类声明，只有类定义。
 
-```
+```java
 class aType()
 void aMethod() {/* 方法主体 */}
 }
@@ -23,7 +23,7 @@ void aMethod() {/* 方法主体 */}
 
 (6) Java中没有作用域范围运算符`::`。Java利用点号做所有的事情，但可以不用考虑它，因为只能在一个类里定义元素。即使那些方法定义，也必须在一个类的内部，所以根本没有必要指定作用域的范围。我们注意到的一项差异是对`static`方法的调用：使用`ClassName.methodName()`。除此以外，`package`（包）的名字是用点号建立的，并能用`import`关键字实现C++的`#include`的一部分功能。例如下面这个语句：
 
-```
+```java
 import java.awt.*;
 ```
 
@@ -55,7 +55,7 @@ import java.awt.*;
 
 (17) 在Java里，没有象C和C++那样的指针。用`new`创建一个对象的时候，会获得一个引用（本书一直将其称作“引用”）。例如：
 
-```
+```java
 String s = new String("howdy");
 ```
 
@@ -89,7 +89,7 @@ String s = new String("howdy");
 
 (31) Java中的继承具有与C++相同的效果，但采用的语法不同。Java用`extends`关键字标志从一个基类的继承，并用`super`关键字指出准备在基类中调用的方法，它与我们当前所在的方法具有相同的名字（然而，Java中的`super`关键字只允许我们访问父类的方法——亦即分级结构的上一级）。通过在C++中设定基类的作用域，我们可访问位于分级结构较深处的方法。亦可用`super`关键字调用基类构造器。正如早先指出的那样，所有类最终都会从Object里自动继承。和C++不同，不存在明确的构造器初始化列表。但编译器会强迫我们在构造器主体的开头进行全部的基类初始化，而且不允许我们在主体的后面部分进行这一工作。通过组合运用自动初始化以及来自未初始化对象引用的异常，成员的初始化可得到有效的保证。
 
-```
+```java
 public class Foo extends Bar {
   public Foo(String msg) {
     super(msg); // Calls base constructor
@@ -107,7 +107,7 @@ public class Foo extends Bar {
 为创建可进行“例示”（即创建一个实例）的一个`interface`（接口）的版本，需使用`implements`关键字。它的语法类似于继承的语法，如下所示：
 
 
-```
+```java
 public interface Face {
   public void smile();
 }
@@ -124,13 +124,13 @@ public class Baz extends Bar implements Face {
 
 (36) 运行期的类型识别功能与C++极为相似。例如，为获得与引用X有关的信息，可使用下述代码：
 
-```
+```java
 X.getClass().getName();
 ```
 
 为进行一个“类型安全”的紧缩转换，可使用：
 
-```
+```java
 derived d = (derived)base;
 ```
 
@@ -138,7 +138,7 @@ derived d = (derived)base;
 
 (37) Java采取了不同的异常控制机制，因为此时已经不存在构造器。可添加一个`finally`从句，强制执行特定的语句，以便进行必要的清除工作。Java中的所有异常都是从基类`Throwable`里继承而来的，所以可确保我们得到的是一个通用接口。
 
-```
+```java
 public void f(Obj b) throws IOException {
   myresource mr = b.createResource();
   try {
@@ -159,7 +159,7 @@ public void f(Obj b) throws IOException {
 
 (40) 通过事先的约定，C++中经常出现的`const`问题在Java里已得到了控制。我们只能传递指向对象的引用，本地副本永远不会为我们自动生成。若希望使用类似C++按值传递那样的技术，可调用`s`，生成参数的一个本地副本（尽管`clone()`的设计依然尚显粗糙——参见第12章）。根本不存在被自动调用的副本构造器。为创建一个编译期的常数值，可象下面这样编码：
 
-```
+```java
 static final int SIZE = 255
 static final int BSIZE = 8 * SIZE
 ```
