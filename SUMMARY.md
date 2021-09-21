@@ -319,7 +319,7 @@
 	+   [七、使用 REST 构建商业 Web 应用](docs/java-proj/7.md)
 	+   [八、扩展我们的电子商务应用](docs/java-proj/8.md)
 	+   [九、使用反应式编程构建会计应用](docs/java-proj/9.md)
-+   [Java 12 编程学习手册](README.md)
++   [Java 12 编程学习手册](docs/learn-java12-prog/README.md)
 	+   [零、前言](docs/learn-java12-prog/00.md)
 	+   [第 1 节：Java 编程概述](docs/learn-java12-prog/sec1.md)
 		+   [一、Java12 入门](docs/learn-java12-prog/01.md)
