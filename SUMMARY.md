@@ -282,7 +282,7 @@
     +   [在 Java 8 中避免 Null 检查](docs/modern-java-zh/ch8.md)
     +   [使用 Intellij IDEA 解决 Java 8 的数据流问题](docs/modern-java-zh/ch9.md)
     +   [在 Nashron 中使用 Backbone.js](docs/modern-java-zh/ch10.md)
-+   [Java 设计模式最佳实践](README.md)
++   [Java 设计模式最佳实践](docs/design-pattern-best-prac-java/README.md)
 	+   [零、前言](docs/design-pattern-best-prac-java/0.md)
 	+   [一、从面向对象到函数式编程](docs/design-pattern-best-prac-java/1.md)
 	+   [二、创建型模式](docs/design-pattern-best-prac-java/2.md)
