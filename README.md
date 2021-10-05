@@ -10,9 +10,19 @@
 
 ## 目录
 
-+   [Effective Java 中文第三版](docs/effective-java-3e-zh/SUMMARY.md)
-+   [Thinking in Java (Java 编程思想)](docs/thinking-in-java-zh/SUMMARY.md)
-+   [Java 8 简明教程](docs/modern-java-zh/SUMMARY.md)
++   [Effective Java 中文第三版](docs/effective-java-3e-zh/README.md)
++   [Thinking in Java (Java 编程思想)](docs/thinking-in-java-zh/README.md)
++   [Java 8 简明教程](docs/modern-java-zh/REAMDE.md)
++   [Java 设计模式最佳实践](docs/design-pattern-best-prac-java/README.md)
++   [Java 编程问题](docs/java-coding-prob/README.md)
++   [Java 项目大全](docs/java-proj/README.md)
++   [Java 12 编程学习手册](docs/learn-java12-prog/README.md)
++   [精通 Java 11](docs/master-java11/README.md)
++   [Java 自动化测试初学者实用指南](docs/handson-auto-test-java-beginners/README.md)
++   [Java9 高性能应用](docs/high-perform-app-java9/README.md)
++   [Java11 秘籍](docs/java11-cb/README.md)
++   [精通 JUnit5 软件测试](docs/master-soft-test-junit5/README.md)
++   [Java 测试驱动开发](docs/test-driven-java-dev/README.md)
 
 ## 贡献指南
 
