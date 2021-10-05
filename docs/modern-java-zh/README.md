@@ -1,5 +1,7 @@
 # Java 8 简明教程
 
+<!--阶段：精细校对（4）-->
+
 作者：[winterbe](https://github.com/winterbe)
 
 原文：[java8-tutorial](https://github.com/winterbe/java8-tutorial)

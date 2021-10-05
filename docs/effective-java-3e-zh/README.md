@@ -1,5 +1,7 @@
 # Effective Java 中文第三版
 
+<!--阶段：精细校对（4）-->
+
 > 来源：[sjsdfg/effective-java-3rd-chinese](https://github.com/sjsdfg/effective-java-3rd-chinese)
 > 
 > 前 51 条来源：[Effective Java, Third Edition](https://www.jianshu.com/c/ce8cf0e13b23)

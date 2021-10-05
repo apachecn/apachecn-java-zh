@@ -4,6 +4,8 @@
 > 
 > 协议：[CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 > 
+> 阶段：简单校对（2）
+> 
 > 自豪地采用[谷歌翻译](https://translate.google.cn/)
 > 
 > 我知道，这个世界，每天都有太多遗憾，所以你好，再见。——宋冬野《安和桥》

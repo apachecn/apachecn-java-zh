@@ -1,5 +1,7 @@
 ## Thinking in Java (Java 编程思想)
 
+<!--阶段：精细校对（4）-->
+
 原书：[Thinking in Java 4th Edition](http://mindview.net/Books/TIJ4)
 
 作者：[Bruce Eckel](http://www.mindviewinc.com/Index.php)
