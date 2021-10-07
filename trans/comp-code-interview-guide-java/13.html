@@ -1,0 +1,1670 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en" xsi:schemalocation="http://www.w3.org/2002/06/xhtml2/ http://www.w3.org/MarkUp/SCHEMA/xhtml2.xsd">
+<head>
+<link href="Styles/Style00.css" rel="stylesheet" type="text/css"/>
+
+<style type="text/css">body{margin:1em;background-color:transparent!important;}#sbo-rt-content *{text-indent:0pt!important;}#sbo-rt-content .bq{margin-right:1em!important;}#sbo-rt-content *{word-wrap:break-word!important;word-break:break-word!important;}#sbo-rt-content table,#sbo-rt-content pre{overflow-x:unset!important;overflow:unset!important;overflow-y:unset!important;white-space:pre-wrap!important;}</style>
+
+</head>
+<body>
+<p id="_idParaDest-294" class="chapter-number"><em class="italic"><a id="_idTextAnchor295"/>第 13 章</em>：</p>
+			<h1 id="_idParaDest-295"><a id="_idTextAnchor296"/>树与图</h1>
+			<p>本章涵盖了采访中最棘手的话题之一：树和图。虽然与这两个主题相关的问题很多，但在采访中实际遇到的问题却寥寥无几。因此，对树和图中最常见的问题进行优先级排序是非常重要的。</p>
+			<p>在本章中，我们将从树和图的简要概述开始。稍后，我们将讨论 IT 巨头（如亚马逊、微软、Adobe 和其他公司）面试中遇到的最常见和最具挑战性的问题。在本章结束时，您将了解如何以高效、全面的方式回答面试问题并解决有关树和图形的编码难题。</p>
+			<p>本章涵盖以下主题：</p>
+			<ul>
+				<li>简言之，树木</li>
+				<li>简而言之，图</li>
+				<li>编码挑战</li>
+			</ul>
+			<p>那么，让我们开始吧！</p>
+			<h1 id="_idParaDest-296"><a id="_idTextAnchor297"/>技术要求</h1>
+			<p>本章中的所有代码都可以在 GitHub 的<a href="https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter13">上找到 https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter13 </a>。</p>
+			<h1 id="_idParaDest-297"><a id="_idTextAnchor298"/>简言之，树木</h1>
+			<p>树<a id="_idIndexMarker1121"/>是一种非线性数据结构，它在节点中分层组织数据，并且不能包含循环。树的特定术语可能略有不同，但通常采用以下概念：</p>
+			<ul>
+				<li><strong class="bold">根</strong>是<a id="_idIndexMarker1122"/>最上面的节点。</li>
+				<li><strong class="bold">边缘</strong>是两个节点之间的链接<a id="_idIndexMarker1123"/>或连接。</li>
+				<li><strong class="bold">父</strong>是一个<a id="_idIndexMarker1124"/>节点，它与子节点有一条边。</li>
+				<li><strong class="bold">子</strong>是一个有父节点的<a id="_idIndexMarker1125"/>节点。</li>
+				<li><strong class="bold">叶</strong>是一个<a id="_idIndexMarker1126"/>节点，没有子节点。</li>
+				<li><strong class="bold">高度</strong>是叶片最长路径的<a id="_idIndexMarker1127"/>长度。</li>
+				<li><strong class="bold">深度</strong>是指向其根部的路径的<a id="_idIndexMarker1128"/>长度。</li>
+			</ul>
+			<p>下图举例说明了在树上使用的这些术语：</p>
+			<p><img src="img/Figure_13.1_B15403.jpg" alt="Figure 13.1 – Tree terminology "/></p>
+			
+			<p class="figure-caption">图 13.1–树术语</p>
+			<p>通常，任何树都可以有根。树的节点可以遵循特定的顺序（或不遵循），可以存储任何类型的数据，并且可以具有指向其父节点的链接。</p>
+			<p>树编码挑战充斥着不明确的细节和/或不正确的假设。为了消除歧义，与面试官澄清每一个细节是非常重要的。其中一个最重要的方面涉及到树的类型。让我们来看看最常见的树木类型。</p>
+			<h2 id="_idParaDest-298"><a id="_idTextAnchor299"/>普通树</h2>
+			<p>粗略地说，我们可以<a id="_idIndexMarker1129"/>将树分为二叉树和<a id="_idIndexMarker1130"/>其余允许的树。二叉树<a id="_idIndexMarker1131"/>是每个节点最多有两个子节点的树。在下图中，左侧图像为非二叉树，而右侧图像为二叉树：</p>
+			<p><img src="img/Figure_13.2_B15403.jpg" alt="Figure 13.2 – Non-binary tree versus binary tree "/></p>
+			
+			<p class="figure-caption">图 13.2–非二叉树与二叉树</p>
+			<p>在代码方面，二叉树<a id="_idIndexMarker1132"/>可以按如下方式成形（此实现稍后在<em class="italic">编码挑战</em>部分<a id="_idIndexMarker1133"/>中使用，因此请记住）：</p>
+			<pre>private class Node {
+  private Node left;
+  private Node right;
+  private final T element;
+  public Node(T element) {
+    this.element = element;
+    this.left = null;
+    this.right = null;
+  }
+  public Node(Node left, Node right, T element) {
+    this.element = element;
+    this.left = left;
+    this.right = right;
+  }
+  // operations
+}</pre>
+			<p>如您所见，每个<strong class="source-inline">节点</strong>保留对另外两个<strong class="source-inline">节点</strong>元素的引用，以及一个通用数据（元素）。左侧和右侧<a id="_idIndexMarker1134"/>节点代表当前节点的子节点。访谈中遇到的大多数树编码挑战都使用二叉树，因此它们值得特别注意。二叉树可以分类如下。</p>
+			<h3 id="sigil_toc_id_521">了解二叉树遍历</h3>
+			<p>在参加<a id="_idIndexMarker1135"/>技术面试之前，你必须知道如何遍历二叉树。通常，遍历二叉树本身并不是问题，但您必须熟悉<a id="_idIndexMarker1136"/>的<strong class="bold">广度优先搜索</strong>（<strong class="bold">BFS</strong>）和<a id="_idIndexMarker1137"/>的<strong class="bold">深度优先搜索</strong>（<strong class="bold">DFS</strong>算法，以及它们的三种变体：<strong class="bold">预排序</strong>，<strong class="bold">依次为</strong>和<strong class="bold">后序</strong>，下图为各遍历类型的结果：</p>
+			<p><img src="img/Figure_13.3_B15403.jpg" alt="Figure 13.3 – Binary tree traversal "/></p>
+			
+			<p class="figure-caption">图 13.3–二叉树遍历</p>
+			<p>让我们简要介绍一下 BFS 和 DFS 算法。</p>
+			<h4 id="sigil_toc_id_522">树的广度优先搜索（BFS）</h4>
+			<p>树的 BFS<a id="_idIndexMarker1138"/>也称为水平顺序遍历。其主要思想是维护一个节点队列，以确保遍历顺序。最初，队列仅包含根节点。算法步骤如下：</p>
+			<ol>
+				<li>将队列中的第一个节点作为当前节点弹出。</li>
+				<li>访问当前节点。</li>
+				<li>如果当前节点有一个左节点，则将该左节点排队。</li>
+				<li>如果当前节点有一个右节点，则将该右节点排队。</li>
+				<li>从<em class="italic">步骤 1</em>重复，直到队列为空。</li>
+			</ol>
+			<p>在代码方面，我们有以下内容：</p>
+			<pre>private void printLevelOrder(Node node) {
+  Queue&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
+  queue.add(node);
+  while (!queue.isEmpty()) {
+    // Step 1
+    Node current = queue.poll();
+    // Step 2
+    System.out.print(" " + current.element);
+    // Step 3
+    if (current.left != null) {
+      queue.add(current.left);
+    }
+    // Step 4
+    if (current.right != null) {
+      queue.add(current.right);
+    }
+  }
+}</pre>
+			<p>接下来，让我们关注 DFS。</p>
+			<h4 id="sigil_toc_id_523">树的深度优先搜索（DFS）</h4>
+			<p>树的 DFS<a id="_idIndexMarker1139"/>有三种变体：<strong class="bold">预订单</strong>、<strong class="bold">顺序</strong>和<strong class="bold">后订单</strong>。</p>
+			<p>预序遍历在子节点之前访问<a id="_idIndexMarker1140"/>当前节点，如下<strong class="bold">（根|左子树|右子树）</strong>：</p>
+			<pre>private void printPreOrder(Node node) {
+  if (node != null) {
+    System.out.print(" " + node.element);
+    printPreOrder(node.left);
+    printPreOrder(node.right);
+  }
+}</pre>
+			<p>按顺序遍历访问<a id="_idIndexMarker1141"/>左分支，然后访问当前节点，最后访问右分支，如下<strong class="bold">（左子树|根|右子树）</strong>：</p>
+			<pre>private void printInOrder(Node node) {
+  if (node != null) {
+    printInOrder(node.left);
+    System.out.print(" " + node.element);
+    printInOrder(node.right);
+  }
+}</pre>
+			<p>Post Order<a id="_idIndexMarker1142"/>在其子节点之后访问<a id="_idIndexMarker1143"/>当前节点，如下图<strong class="bold">（左子树|右子树|根）</strong>：</p>
+			<pre>private void printPostOrder(Node node) {
+  if (node != null) {
+    printPostOrder(node.left);
+    printPostOrder(node.right);
+    System.out.print(" " + node.element);
+  }
+}</pre>
+			<p>完整的应用程序是<a id="_idIndexMarker1144"/>称为<em class="italic">二进制树四层结构</em>。除了前面的示例之外，完整的代码还包含返回<strong class="source-inline">列表</strong>和<strong class="source-inline">迭代器</strong>的 BFS 和 DFS 实现。</p>
+			<h2 id="_idParaDest-299"><a id="_idTextAnchor300"/>二叉搜索树</h2>
+			<p><strong class="bold">二叉搜索树</strong>（<strong class="bold">BST</strong>是遵循排序规则的二叉<a id="_idIndexMarker1145"/>树。通常，在 BST 中，左侧子体（根左侧的所有元素）小于或等于根元素，右侧子体（根右侧的所有元素）大于根元素。但是，这个顺序并不适用于根元素。它适用于每个节点<em class="italic">n</em>，因此，在 BST 中，<em class="italic">n</em>的左后代≤ <em class="italic">n</em>&lt;<em class="italic">对</em><em class="italic">n</em>的后代。在下图中，左侧的图像是二叉树，而右侧的图像是 BST：</p>
+			<p><img src="img/Figure_13.4_B15403.jpg" alt="Figure 13.4 – Binary tree versus binary search tree "/></p>
+			
+			<p class="figure-caption">图 13.4–二叉树与 BST</p>
+			<p>通常，BST 不接受副本，但当它接受副本时，副本可以在一侧（例如，仅在左侧）或两侧。副本也可以存储在单独的哈希映射中，或者通过计数器直接存储在树的结构中。注意并与面试官澄清这些细节。在亚马逊、Flipkart 和微软的采访中，在 BST 中处理重复数据是一个问题，这就是为什么在<em class="italic">编码挑战</em>部分中要解决这个问题。</p>
+			<p>在本书附带的代码中，您可以找到一个名为<em class="italic">BinarySearchTreeTraversal</em>的应用程序，<a id="_idIndexMarker1147"/>公开了以下一组方法：<strong class="source-inline">插入（T 元素）</strong>、<strong class="source-inline">包含（T 元素）</strong>、<strong class="source-inline">删除（T 元素）</strong>、<strong class="source-inline">最小（）</strong>、<strong class="source-inline">最大（）</strong>，<strong class="source-inline">root（）</strong>、<strong class="source-inline">size（）</strong>和<strong class="source-inline">height（）</strong>。此外，它还包含一个 BFS 和 DFS 的实现，用于打印节点以及作为<strong class="source-inline">列表</strong>或<strong class="source-inline">迭代器</strong>返回节点。慢慢来，仔细分析代码。</p>
+			<h2 id="_idParaDest-300"><a id="_idTextAnchor301"/>平衡和非平衡二叉树</h2>
+			<p>当一个二叉树保证插入和查找操作的次数为 O（logn）时，我们可以说我们有一个<em class="italic"><a id="_idIndexMarker1148"/></em><em class="italic">平衡的</em>二叉树，但它不一定是平衡的。当树中任意<a id="_idIndexMarker1149"/>节点的左、右子树高度差不大于 1 时，则树为<em class="italic">高度平衡</em>。下图中，左侧树为非平衡二叉树，中间树为平衡二叉树但不平衡高度，右侧树为平衡高度树：</p>
+			<p><img src="img/Figure_13.5_B15403.jpg" alt="Figure 13.5 – Unbalanced binary tree versus balanced binary tree versus height balanced binary tree "/></p>
+			
+			<p class="figure-caption">图 13.5-不平衡二叉树与平衡二叉树与高度平衡二叉树</p>
+			<p>有两种类型的平衡树：红黑树和 AVL 树。</p>
+			<h3 id="sigil_toc_id_524">红黑树</h3>
+			<p>红黑树<a id="_idIndexMarker1150"/>是一个自平衡 BST，其中每个节点都受到以下规则的影响：</p>
+			<ul>
+				<li>每个节点不是红色就是黑色</li>
+				<li>根节点始终为黑色</li>
+				<li>每片叶子（空）都是黑色的</li>
+				<li>红色节点的两个子节点都是黑色的</li>
+				<li>从一个节点到一个空节点的每个路径都有相同数量的黑色节点</li>
+			</ul>
+			<p>下图表示一棵红黑树：</p>
+			<p><img src="img/Figure_13.6_B15403.jpg" alt="Figure 13.6 – Red-Black tree example "/></p>
+			
+			<p class="figure-caption">图 13.6–红黑树示例</p>
+			<p>红黑相间的树永远不会失去平衡。如果所有节点均为黑色，则该树将成为一棵<em class="italic">完全平衡树</em>。当红黑树最长路径中的节点为黑色和红色交替节点时，红黑树将成为其最大高度。黑红树的高度始终小于或等于 2log2（n+1），因此其高度始终为 O（logn）。</p>
+			<p>由于它们的复杂性和实施时间，涉及红黑树的问题在采访中并不常见。但是，当它们发生时，问题可能会要求您实现插入、删除或查找操作。在本书附带的代码中，您可以找到一个红黑树实现，它显示了这些操作的工作原理。花点时间研究代码，熟悉红黑<a id="_idIndexMarker1152"/>树的概念。该应用程序名为<em class="italic">RedBlackTreeImpl</em>。</p>
+			<p>您可能想查看更多的实现，请访问<a href="http://github.com/williamfiset/data-structures/blob/master/com/williamfiset/datastructures/balancedtree/RedBlackTree.java">github.com/williamfiset/data-structures/blob/master/com/williamfiset/datastructures/balancedtree/RedBlackTree.java</a>和<a href="http://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html">algs4.cs.princeton.edu/33balanced/redblackst.java.html</a>。对于一个图形化的可视化，请考虑 ORT T4，www. cas.ufc.EdU/~ Gale/Visual/RealBr.HTML。</p>
+			<p>如果您需要深入研究这个主题，我强烈建议您阅读一本专门介绍数据结构的书，因为这是一个非常广泛的主题。</p>
+			<h3 id="sigil_toc_id_525">平衡二叉树</h3>
+			<p>一棵<strong class="bold">AVL</strong>树（以其发明者<strong class="bold">A</strong>delson-<strong class="bold">V</strong>elsky 和<strong class="bold">L</strong>andis 命名）是一种自平衡 BST，它遵守以下规则：</p>
+			<ul>
+				<li>子树的高度最多相差 1。</li>
+				<li>一个节点（<em class="italic">n</em>的平衡因子（<em class="italic">BN</em>为-1、0 或 1，定义为高度（<em class="italic">h</em>差：<em class="italic">BN=h</em>（<em class="italic">右子树</em>（<em class="italic">n</em>）<em class="italic">-h</em>（<em class="italic">左子树</em>（<em class="italic">n</em>）<em class="italic"/>）或<em class="italic">BN=h</em>（<em class="italic">左 _ 子树</em>（<em class="italic">n</em>））<em class="italic">-h</em>（<em class="italic">右 _ 子树（n</em>）。</li>
+			</ul>
+			<p>下图表示 AVL 树：</p>
+			<p><img src="img/Figure_13.7_B15403.jpg" alt="Figure 13.7 – AVL tree sample "/></p>
+			
+			<p class="figure-caption">图 13.7–AVL 树示例</p>
+			<p>AVL 树允许所有操作（插入、删除、查找最小值、查找最大值等）在 O（日志 n）中执行，其中<em class="italic">n</em>是节点数。</p>
+			<p>由于 AVL 树的复杂性和实现时间，涉及 AVL 树的问题在访谈中并不常见。但是，当它们发生时，问题可能会要求您实现插入、删除或查找操作。在本书附带的代码中，您可以找到一个 AVL 树实现，它显示了这些工作中的操作。花点时间学习代码，熟悉 AVL 树的概念。应用程序<a id="_idIndexMarker1153"/>被称为<em class="italic">AVLTREimpl</em>。</p>
+			<p>您可能想查看更多的实现，请访问<a href="http://github.com/williamfiset/data-structures/blob/master/com/williamfiset/datastructures/balancedtree/AVLTreeRecursiveOptimized.java">github.com/williamfiset/data-structures/blob/master/com/williamfiset/datastructures/balancedtree/AVLTreeRecursiveOptimized.java</a>和<a href="http://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html">algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html</a>。对于一个图形化的可视化，请考虑 ORT T4。www. cas.ufca. EdU/~ Gale/Visual/avl Tr.HTML。</p>
+			<p>如果您需要深入研究这个主题，我强烈建议您阅读一本专门介绍数据结构的书，因为这是一个非常广泛的主题。</p>
+			<h2 id="_idParaDest-301"><a id="_idTextAnchor302"/>完全二叉树</h2>
+			<p>一个完整的二叉树<a id="_idIndexMarker1154"/>是一个二叉树，其中每一级，可能除了最后一级，都是完全填充的。此外，所有节点都尽可能地位于左侧。在下图中，左侧显示非完整二叉树，而右侧显示完整二叉树：</p>
+			<p><img src="img/Figure_13.8_B15403.jpg" alt="Figure 13.8 – A non-complete binary tree versus a complete binary tree "/></p>
+			
+			<p class="figure-caption">图 13.8–非完整二叉树与完整二叉树</p>
+			<p>完整的二叉树必须从左到右填充，因此上图中显示的左侧树不完整。具有<em class="italic">n</em>个节点的完整二叉树总是具有 O（logn）高度。</p>
+			<h2 id="_idParaDest-302"><a id="_idTextAnchor303"/>全二叉树</h2>
+			<p>完整二叉树<a id="_idIndexMarker1155"/>是一种二叉树，其中每个节点都有两个子节点或没有子节点。换句话说，一个节点不能只有一个子节点。在下图中，左侧显示非完整二叉树，而右侧显示完整二叉树：</p>
+			<p><img src="img/Figure_13.9_B15403.jpg" alt="Figure 13.9 – A non-full binary tree versus a full binary tree "/></p>
+			
+			<p class="figure-caption">图 13.9–非完整二叉树与完整二叉树</p>
+			<p>上图中的左侧树未满，因为节点 68 有一个子节点。</p>
+			<h2 id="_idParaDest-303"><a id="_idTextAnchor304"/>完美二叉树</h2>
+			<p>一个完美的二叉树<a id="_idIndexMarker1156"/>是同时完整的。下图显示了一个这样的树：</p>
+			<p><img src="img/Figure_13.10_B15403.jpg" alt="Figure 13.10 – Perfect binary tree "/></p>
+			
+			<p class="figure-caption">图 13.10–完美二叉树</p>
+			<p>因此，在一个完美的二叉树中，所有的叶节点都在同一个层次上。这意味着最后一级包含最大数量的节点。这种树在采访中非常罕见。</p>
+			<p class="callout-heading">重要提示</p>
+			<p class="callout">注意这样的问题：考虑到你已经得到了一棵二叉树。写一段代码，让。。。不要对给定的二叉树做任何假设！经常向面试官询问更多细节，例如<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">这是一棵平衡树吗？它是一个完整的二叉树吗？它是一个 BST 吗？</em>。换句话说，不要将你的解决方案建立在对给定的二叉树可能不正确的假设上。</p>
+			<p>现在，让我们更详细地讨论二进制堆。</p>
+			<h2 id="_idParaDest-304"><a id="_idTextAnchor305"/>二进制堆</h2>
+			<p>简言之，二进制堆<a id="_idIndexMarker1157"/>是一个完整的二叉树，具有<em class="italic">堆属性</em>。当元素按升序排列时（heap 属性表示每个节点的元素大于或等于其父节点的元素），我们有一个最小二进制堆（最小元素是根元素），而当元素按降序排列时（heap 属性表示每个节点的元素小于或等于其父节点的元素），我们有一个最大二进制堆（最大元素是根元素）。</p>
+			<p>下图显示了完整的二叉树（左侧）、最小二进制堆（中间）和最大二进制堆（右侧）：</p>
+			<p><img src="img/Figure_13.11_B15403.jpg" alt="Figure 13.11 – Complete binary tree and min and max heaps "/></p>
+			
+			<p class="figure-caption">图 13.11–完整的二叉树以及最小和最大堆</p>
+			<p>二进制堆未排序。它是部分订购的。任何给定级别上的节点之间都没有关系。</p>
+			<p>二进制堆通常表示为一个数组（让我们将其表示为<em class="italic">堆</em>，其根位于<em class="italic">堆</em>[0]。更重要的是，对于<em class="italic">堆</em><em class="italic">i</em>，我们有以下内容：</p>
+			<ul>
+				<li><em class="italic">堆</em>[（<em class="italic">i</em>-1）/2]：返回父节点</li>
+				<li><em class="italic">heap</em>[（2*<em class="italic">i</em>）+1]：返回左侧子节点</li>
+				<li><em class="italic">heap</em>[（2*<em class="italic">i</em>）+2]：返回正确的子节点</li>
+			</ul>
+			<p>通过数组实现的最大二进制堆如下所示：</p>
+			<pre>public class MaxHeap&lt;T extends Comparable&lt;T&gt;&gt; {
+  private static final int DEFAULT_CAPACITY = 5;
+  private int capacity;
+  private int size;
+  private T[] heap;
+  public MaxHeap() {
+    capacity = DEFAULT_CAPACITY;
+    this.heap = (T[]) Array.newInstance(
+      Comparable[].class.getComponentType(),DEFAULT_CAPACITY);
+  }
+  // operations
+}</pre>
+			<p><a id="_idIndexMarker1158"/>与堆一起使用的常见操作有<strong class="source-inline">add（）</strong>、<strong class="source-inline">poll（）</strong>和<strong class="source-inline">peek（）</strong>。添加或轮询元素后，我们必须修复堆，使其尊重 heap 属性。此步骤通常被引用为<em class="italic">堆化</em>堆。</p>
+			<p>向堆中添加元素是一个 O（logn）时间操作。新元素添加到堆树的末尾。如果新元素比其父元素小，那么我们不需要做任何事情。否则，我们必须向上遍历堆以修复违反的 heap 属性。此<a id="_idIndexMarker1160"/>操作称为<em class="italic">heapify up</em>。<em class="italic">heapify up</em>背后的算法有两个步骤：</p>
+			<ol>
+				<li value="1">从堆的末尾开始作为当前节点。</li>
+				<li>当当前节点具有父节点且父节点小于当前节点时，交换这些节点。</li>
+			</ol>
+			<p>从堆轮询元素也是一种 O（logn）时间操作。在轮询堆的根元素之后，我们必须修复堆，使其尊重 heap 属性。此操作称为<em class="italic">heapify down</em>。<em class="italic">heapify down</em>后面的<a id="_idIndexMarker1161"/>算法有三个步骤：</p>
+			<ol>
+				<li value="1">从堆的根开始作为当前节点。</li>
+				<li>确定当前节点的子节点之间的最大节点。</li>
+				<li>如果当前节点小于其最大的子节点，则交换这两个节点并从<em class="italic">步骤 2</em>重复；否则，就没有别的事可做了，所以停下来。</li>
+			</ol>
+			<p>最后，窥视是一个 O（1）操作，<a id="_idIndexMarker1162"/>返回堆的根元素。</p>
+			<p>在本书附带的代码中，您可以找到一个名为<em class="italic">MaxHeap</em>的应用程序<a id="_idIndexMarker1163"/>，它公开了以下方法集：<strong class="source-inline">添加（T 元素）</strong>、<strong class="source-inline">peek（）</strong>和<strong class="source-inline">轮询（）</strong>。</p>
+			<p class="callout-heading">重要提示</p>
+			<p class="callout">树的一个特例被称为树。也被称为<a id="_idIndexMarker1165"/>的<em class="italic">数字树</em>或<em class="italic">前缀树</em>Trie 是一种有序树结构，通常用于存储字符串。它的名字来源于 Trie 是一个 re<em class="italic">Trie</em>val 数据结构。它的性能优于二叉树。Trie 在我的书<em class="italic">Java 编码问题</em>（<a href="https://www.packtpub.com/programming/java-coding-problems">中有详细介绍 https://www.packtpub.com/programming/java-coding-problems </a>），紧挨着其他数据结构，如元组、不相交集、二元索引树（Fenwick 树）和 Bloom 过滤器。</p>
+			<p>接下来，让我们简要概述一下图。</p>
+			<h1 id="_idParaDest-305"><a id="_idTextAnchor306"/>简而言之，图</h1>
+			<p>图<a id="_idIndexMarker1166"/>是一种数据结构，用于表示可以与边连接的节点集合。例如，一个图可以用来表示社交媒体平台上的成员网络，因此它是表示现实生活中的联系的一个很好的数据结构。树（如前一节所述）是一种特殊类型的图。换句话说，树是一个没有圈的图。在图的术语中，没有圈的图被称为无圈图。</p>
+			<p>图形的特定术语包括两个主要术语：</p>
+			<ul>
+				<li><strong class="bold">顶点</strong>表示<a id="_idIndexMarker1168"/>信息（例如，成员、狗或值）</li>
+				<li><strong class="bold">边</strong>是两个顶点之间的连接或<a id="_idIndexMarker1169"/>关系</li>
+			</ul>
+			<p>连接可以是单向的（如二叉树的情况）或双向的。当连接是双向的（例如双向街道）时，该图被称为<em class="italic">无向图</em>，它具有<em class="italic">无向边</em>。当连接是单向的（例如单向街道）时，则该图称为<em class="italic">有向图</em>，并且它具有<em class="italic">有向边</em>。</p>
+			<p>图形的边可以承载称为权重的信息（例如，道路长度）。在这种情况下，这些图被称为<em class="italic">加权图</em>。当一个图有一条边指向同一个顶点时，它被称为<em class="italic">自循环图</em>。下图提供了每种图形类型的表示形式：</p>
+			<p><img src="img/Figure_13.12_B15403.jpg" alt="Figure 13.12 – Graph types "/></p>
+			
+			<p class="figure-caption">图 13.12–图形类型</p>
+			<p>与二叉树不同，通过节点链接表示图是不实际的。在计算机中，图形通常通过邻接矩阵或邻接列表来表示。让我们来解决前者；即邻接矩阵。</p>
+			<h2 id="_idParaDest-306"><a id="_idTextAnchor307"/>邻接矩阵</h2>
+			<p>邻接矩阵<a id="_idIndexMarker1170"/>由大小为<em class="italic">n</em>x<em class="italic">n</em>的布尔二维数组（或只包含 0 和 1 的整数二维数组）表示<a id="_idIndexMarker1171"/>，其中<em class="italic">n</em>是顶点数。如果我们将这个二维数组表示为一个<em class="italic">矩阵，</em>那么<em class="italic">矩阵</em><em class="italic">i</em><em class="italic">j</em>是真的（或者 1）如果从顶点<em class="italic">i</em>到顶点<em class="italic">j</em>有一条边；否则，它为 false（或 0）。下图显示了无向图的邻接矩阵示例：</p>
+			<p><img src="img/Figure_13.13_B15403.jpg" alt="Figure 13.13 – An adjacency matrix for an undirected graph "/></p>
+			
+			<p class="figure-caption">图 13.13–无向图的邻接矩阵</p>
+			<p>为了节省空间，还可以使用位矩阵。</p>
+			<p>在加权图的情况下，邻接矩阵可以存储边的权重，而 0 可以用来表示没有边。</p>
+			<p>基于邻接矩阵实现一个图可以如下所示（我们所需要的只是顶点列表，因为边被传递给每个必须作为邻接矩阵遍历图的方法）：</p>
+			<pre>public class Graph&lt;T&gt; {
+  // the vertices list
+  private final List&lt;T&gt; elements;
+  public Graph() {
+    this.elements = new ArrayList&lt;&gt;();
+  }
+  // operations
+}</pre>
+			<p>另一种在计算机中表示图形的方法是邻接表。</p>
+			<h2 id="_idParaDest-307"><a id="_idTextAnchor308"/>邻接表</h2>
+			<p>邻接列表<a id="_idIndexMarker1172"/>是列表的数组<a id="_idIndexMarker1173"/>，其大小等于图中的顶点数。每个顶点都存储在此数组中，并存储相邻顶点的列表。换句话说，数组的索引<em class="italic">i</em>处的列表包含索引<em class="italic">i</em>处数组中存储的顶点的相邻顶点。下图显示了无向图的邻接列表示例：</p>
+			<p><img src="img/Figure_13.14_B15403.jpg" alt="Figure 13.14 – An adjacency list for an undirected graph "/></p>
+			
+			<p class="figure-caption">图 13.14–无向图的邻接列表</p>
+			<p>基于邻接列表实现一个图可以如下所示（这里，我们使用<strong class="source-inline">映射</strong>来实现邻接列表）：</p>
+			<pre>public class Graph&lt;T&gt; {
+  // the adjacency list is represented as a map
+  private final Map&lt;T, List&lt;T&gt;&gt; adjacencyList;
+  public Graph() {
+    this.adjacencyList = new HashMap&lt;&gt;();
+  }
+  // operations
+}</pre>
+			<p>接下来，让我们简要介绍图的遍历。</p>
+			<h2 id="_idParaDest-308"><a id="_idTextAnchor309"/>图遍历</h2>
+			<p>两种最常见的遍历<a id="_idIndexMarker1174"/>图形的方法是通过<strong class="bold">深度优先搜索</strong>（<strong class="bold">DFS</strong>）和<strong class="bold">广度优先搜索</strong>（<strong class="bold">BFS</strong>）。让我们对每一个都做一个简要介绍。<strong class="bold">BFS</strong>主要用于图形。</p>
+			<p>在图的情况下，我们必须考虑图可能有周期。一个普通的 BFS 实现（正如您在二叉树中看到的）没有考虑循环，因此我们在遍历 BFS 队列时冒着无限循环的风险。可以通过保存访问节点的附加集合来消除此风险。该算法的步骤如下：</p>
+			<ol>
+				<li value="1">将开始节点（当前节点）标记为已访问（将其添加到已访问节点的集合中），并将其添加到 BFS 队列中。</li>
+				<li>从队列中弹出当前节点。</li>
+				<li>访问当前节点。</li>
+				<li>获取当前节点的相邻节点。</li>
+				<li>Loop the adjacent nodes. For each non-null and unvisited node, do the following:<p>A.将其标记为已访问（将其添加到已访问节点的集合中）。</p><p>B 将其添加到队列中。</p></li>
+				<li>从<em class="italic">步骤 2</em>重复，直到队列为空。</li>
+			</ol>
+			<h3 id="sigil_toc_id_526">图的深度优先搜索（DFS）</h3>
+			<p>对于图，我们可以<a id="_idIndexMarker1177"/>通过递归或迭代实现 DFS 算法。</p>
+			<h4 id="sigil_toc_id_527">图的递归 DFS</h4>
+			<p>通过递归实现图的<a id="_idIndexMarker1178"/>DFS 算法的步骤如下：</p>
+			<ol>
+				<li value="1">从当前节点（给定节点）开始，将当前节点标记为已访问（将其添加到已访问节点的集合）。</li>
+				<li>访问当前节点。</li>
+				<li>通过递归遍历未访问的相邻顶点。</li>
+			</ol>
+			<h4 id="sigil_toc_id_528">图的 DFS–迭代实现</h4>
+			<p>DFS 算法的迭代<a id="_idIndexMarker1179"/>实现依赖于<strong class="source-inline">堆栈</strong>。步骤如下：</p>
+			<ol>
+				<li value="1">从当前节点（给定节点）开始，将当前节点推入<strong class="source-inline">栈</strong>。</li>
+				<li>While <strong class="source-inline">Stack</strong> is not empty, do the following:<p>A.从<strong class="source-inline">堆栈中弹出当前节点。</strong></p><p>B 访问当前节点。</p><p>C 将当前节点标记为已访问（将其添加到已访问节点的集合中）。</p><p>D 将未访问的相邻顶点推入<strong class="source-inline">堆栈</strong>。</p></li>
+			</ol>
+			<p>在本书附带的代码中，您可以找到一个基于邻接矩阵<a id="_idIndexMarker1180"/>的图形实现，称为<em class="italic">GraphadJacyMatrixTraversal。</em>您还可以根据名为<em class="italic">GraphAdjacencyListTraversal 的邻接列表找到一个。</em>两个应用程序都包含 BFS<a id="_idIndexMarker1181"/>和 DFS 实现。</p>
+			<h1 id="_idParaDest-309"><a id="_idTextAnchor310"/>编码挑战</h1>
+			<p>既然我们<a id="_idIndexMarker1182"/>已经对树和图有了一个简要的概述，现在是时候用在这些主题的采访中遇到的 25 个最流行的编码问题来挑战我们自己了。</p>
+			<p>和往常一样，世界顶级公司通常会遇到各种各样的问题，包括亚马逊、Adobe 和谷歌等 IT 巨头。那么，让我们开始吧！</p>
+			<h2 id="_idParaDest-310"><a id="_idTextAnchor311"/>编码挑战 1–两个节点之间的路径</h2>
+			<p>问题 T1：考虑到你已经给出了有向图。编写一段代码，如果两个给定节点之间存在路径（路由），则返回<strong class="source-inline">true</strong>。</p>
+			<p>我们可以考虑下面图表中所示的有向图：</p>
+			<p><img src="img/Figure_13.15_B15403.jpg" alt="Figure 13.15 – Paths from D to E and vice versa "/></p>
+			
+			<p class="figure-caption">图 13.15–从 D 到 E 的路径，反之亦然</p>
+			<p>如果我们考虑节点 T0、D、D、T1、T 和 T2，则可以看出，从 To.t4，D，T5，To 到 T6，T7，有三条路径，而从 T8 到 T9 到 St10，没有一条。因此，如果我们从<em class="italic">D</em>开始并遍历图（通过 BFS 或 DFS），那么在某一点上，我们必须通过节点<em class="italic">E</em>，否则<em class="italic">D</em>和<em class="italic">E</em>之间将没有路径。因此，这个问题的解决方案包括从一个给定节点开始，遍历图<a id="_idIndexMarker1184"/>，直到到达第二个给定节点，或者直到不再有有效的移动。例如，我们可以通过 BFS 进行如下操作：</p>
+			<pre>public boolean isPath(T from, T to) {
+  Queue&lt;T&gt; queue = new ArrayDeque&lt;&gt;();
+  Set&lt;T&gt; visited = new HashSet&lt;&gt;();
+  // we start from the 'from' node
+  visited.add(from);
+  queue.add(from);
+  while (!queue.isEmpty()) {
+    T element = queue.poll();
+    List&lt;T&gt; adjacents = adjacencyList.get(element);
+    if (adjacents != null) {
+      for (T t : adjacents) {
+        if (t != null &amp;&amp; !visited.contains(t)) {
+          visited.add(t);
+          queue.add(t);
+          // we reached the destination (the 'to' node)
+          if (t.equals(to)) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}</pre>
+			<p>完整的应用程序被称为<em class="italic">DirectedGraphPath。</em></p>
+			<h2 id="_idParaDest-311"><a id="_idTextAnchor312"/>编码挑战 2–排序数组到最小 BST</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong></p>
+			<p>问题 T1：考虑到你已经给出了一个排序（升序）整数数组。编写一段代码，从该数组创建最小 BST。我们将最小 BST 定义为具有最小高度的 BST。</p>
+			<p>Po.T0.解决方案 T1：将给定的数组考虑为{ 2, 3, 4，6, 7, 8，12, 23, 90 }。可以从此阵列创建的最小 BST 如下所示：</p>
+			<p><img src="img/Figure_13.16_B15403.jpg" alt="Figure 13.16 – Sorted array to minimal BST "/></p>
+			
+			<p class="figure-caption">图 13.16–按最小 BST 排序的阵列</p>
+			<p>为了获得最小高度的 BST，我们必须努力在左、右子树中分配相等数量的节点。记住这句话，请注意，我们可以选择排序数组的中间部分作为根。中间左侧的数组元素比中间的元素小，因此它们可以形成左子树。中间右侧的数组元素大于中间的元素，因此它们可以形成右侧的子树。</p>
+			<p>因此，我们可以选择 7 作为树的根。接下来，-2、3、4 和 6 应构成左子树，而 8、12、23 和 90 应构成右子树。然而，我们知道我们不能简单地将这些元素添加到左或右子树中，因为我们必须尊重 BST 属性：在 BST 中，对于每个节点，<em class="italic">n</em>，n 的<em class="italic">左后代≤ n&lt;n</em>的右后裔。</p>
+			<p>然而，我们可以简单地遵循相同的技术。如果我们把- 2, 3, 4 和 6 看作一个数组，则它的中间是 3，如果我们考虑 8, 12, 24，而 90 作为数组，则它的中间是 12。所以，3 是包含-2 的左子树的根，右子树是包含 4 和 6 的子树。类似地，12 是包含 8 的左子树的根，右子树是包含 24 和 90 的子树。</p>
+			<p>嗯，我认为我们有足够的经验直觉地认为，在我们处理完所有子阵列之前，同样的技术也可以应用。此外，它是相当直观的，这个解决方案可以通过递归实现（如果你不考虑递归的一个你的最高技能，审查 ALE T1）T2 T2 第 8 章 AUTT3。因此，我们可以通过四个步骤恢复我们的算法：</p>
+			<ol>
+				<li value="1">将数组的中间元素插入树中。</li>
+				<li>将左子数组的元素插入左子树。</li>
+				<li>将右侧子数组的元素插入右侧子树。</li>
+				<li>触发递归调用。</li>
+			</ol>
+			<p>以下实现将这些步骤编入代码：</p>
+			<pre>public void minimalBst(T m[]) {       
+  root = minimalBst(m, 0, m.length - 1);
+}
+private Node minimalBst(T m[], int start, int end) {
+  if (end &lt; start) {
+    return null;
+  }
+  int middle = (start + end) / 2;
+  Node node = new Node(m[middle]);
+  nodeCount++;
+  node.left = minimalBst(m, start, middle - 1);
+  node.right = minimalBst(m, middle + 1, end);
+  return node;
+}</pre>
+			<p>完整的<a id="_idIndexMarker1188"/>应用程序称为<em class="italic">SorterDarrayTominBinarySearchtree。</em></p>
+			<h2 id="_idParaDest-312"><a id="_idTextAnchor313"/>编码挑战 3–每个级别的列表</h2>
+			<p>问题是：考虑到一个二叉树，你已经知道了。编写一段代码，为树的每个级别创建一个元素列表（例如，如果树的深度为<em class="italic">d</em>，那么您将拥有<em class="italic">d</em>列表）。</p>
+			<p>我们可以考虑下面图表中所示的二叉树：</p>
+			<p><img src="img/Figure_13.17_B15403.jpg" alt="Figure 13.17 – List per level "/></p>
+			
+			<p class="figure-caption">图 13.17–每级列表</p>
+			<p>我们有一个深度为 3 的二叉树。深度为 0 时，我们有根，40。在深度 1，我们有 47 和 45。在深度 2 上，我们有 11、13、44 和 88。最后，在深度 3 上，我们有 3 和 1。</p>
+			<p>这样想很直观：如果我们逐级遍历二叉树，那么我们可以为每个级别创建一个元素列表。换句话说，我们可以调整 BFS 算法（也称为级别顺序遍历），以便在每个遍历级别捕获元素。更准确地说，我们从遍历根开始（并创建包含此元素的列表），继续遍历级别 1（并创建包含此级别元素的列表），等等。</p>
+			<p>当我们到达级别<em class="italic">i</em>时，我们<a id="_idIndexMarker1190"/>将已经完全访问了上一级别<em class="italic">i</em>-1 上的所有节点。这意味着要获得级别<em class="italic">i</em>上的元素，我们必须遍历上一级别<em class="italic">i</em>-1 节点的所有子节点。以下解决方案在 O（n）时间内运行：</p>
+			<pre>public List&lt;List&lt;T&gt;&gt; fetchAllLevels() {
+  // each list holds a level
+  List&lt;List&lt;T&gt;&gt; allLevels = new ArrayList&lt;&gt;();
+  // first level (containing only the root)
+  Queue&lt;Node&gt; currentLevelOfNodes = new ArrayDeque&lt;&gt;();
+  List&lt;T&gt; currentLevelOfElements = new ArrayList&lt;&gt;();
+  currentLevelOfNodes.add(root);
+  currentLevelOfElements.add(root.element);
+  while (!currentLevelOfNodes.isEmpty()) {
+    // store the current level as the previous level
+    Queue&lt;Node&gt; previousLevelOfNodes = currentLevelOfNodes;
+    // add level to the final list
+    allLevels.add(currentLevelOfElements);
+    // go to the next level as the current level
+    currentLevelOfNodes = new ArrayDeque&lt;&gt;();
+    currentLevelOfElements = new ArrayList&lt;&gt;();
+    // traverse all nodes on current level
+    for (Node parent : previousLevelOfNodes) {
+      if (parent.left != null) {
+        currentLevelOfNodes.add(parent.left);                    
+        currentLevelOfElements.add(parent.left.element);
+      }
+      if (parent.right != null) {
+        currentLevelOfNodes.add(parent.right);                      
+        currentLevelOfElements.add(parent.right.element);
+      }
+    }
+  }
+  return allLevels;
+}</pre>
+			<p>完整的<a id="_idIndexMarker1191"/>应用程序称为<em class="italic">ListPerBinaryTreeLevel。</em></p>
+			<h2 id="_idParaDest-313"><a id="_idTextAnchor314"/>编码挑战 4–子树</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了两个二叉树，Po.T3，P，T4，和 T5。如果<em class="italic">q</em>是<em class="italic">p</em>的子树，则编写一段返回<strong class="source-inline">true</strong>的代码。</p>
+			<p>解决方案：考虑下面的图表：</p>
+			<p><img src="img/Figure_13.18_B15403.jpg" alt="Figure 13.18 – Binary tree’s sub-tree of another binary tree "/></p>
+			
+			<p class="figure-caption">图 13.18–另一棵二叉树的二叉树子树</p>
+			<p>正如我们所看到的，中间的二叉树，即 To0t}q qTyt1，是一个子树，它是一个二叉树（左手边），但不是一个子树，它是一个二叉树（右手边）。</p>
+			<p>此外，该图显示了两种情况：</p>
+			<ul>
+				<li>如果<em class="italic">p</em>的根与<em class="italic">q</em>的根匹配（<em class="italic">p.root.element==q.root.element</em>，那么问题将简化为检查<em class="italic">q</em>的右子树是否与<em class="italic">p 的右子树相同，</em>还是<em class="italic">q</em>的左子树相同与<em class="italic">p</em>的左子树相同。</li>
+				<li>如果<em class="italic">p</em>的根与<em class="italic">q</em>的根不匹配（<em class="italic">p.root.element！=q.root.element</em>，那么问题将简化为检查<em class="italic">p</em>的左子树是否与<em class="italic">q、</em>相同，或者<em class="italic">p</em>的右子树是否与<em class="italic">q 相同</em>。</li>
+			</ul>
+			<p>为了实现第一个<a id="_idIndexMarker1193"/>项目，我们需要两种方法。为了更好地理解为什么我们需要两种方法，请查看下图：</p>
+			<p><img src="img/Figure_13.19_B15403.jpg" alt="Figure 13.19 – Roots and leaves match but the intermediate nodes don’t "/></p>
+			
+			<p class="figure-caption">图 13.19–根和叶匹配，但中间节点不匹配</p>
+			<p>如果<em class="italic">p</em>和<em class="italic">q</em>的根匹配，但是左/右子树中的一些节点不匹配，那么我们必须返回到我们从<em class="italic">p</em>和<em class="italic">q</em>开始的地方，检查<em class="italic">q</em>是否是<em class="italic">p</em>的子树。第一种方法是在树根相同的情况下检查树木是否相同。第二种方法应该处理这样的情况，即我们发现树不是相同的，而是从某个节点开始的。注意这一点，因为许多候选人没有考虑到这一点。</p>
+			<p>因此，在代码方面，我们有以下内容（对于<em class="italic">n</em>节点，它在 O（n）时间内运行）：</p>
+			<pre>public boolean isSubtree(BinaryTree q) {
+  return isSubtree(root, q.root);
+}
+private boolean isSubtree(Node p, Node q) {
+  if (p == null) {
+    return false;
+  }
+  // if the roots don't match
+  if (!match(p, q)) {
+    return (isSubtree(p.left, q) || isSubtree(p.right, q));
+  }
+  return true;
+}
+private boolean match(Node p, Node q) {
+  if (p == null &amp;&amp; q == null) {
+    return true;
+  }
+  if (p == null || q == null) {
+    return false;
+  }
+  return (p.element == q.element
+      &amp;&amp; match(p.left, q.left)
+      &amp;&amp; match(p.right, q.right));
+}</pre>
+			<p>该应用程序被称为<em class="italic">二进制树子树</em><em class="italic">。</em></p>
+			<h2 id="_idParaDest-314"><a id="_idTextAnchor315"/>编码挑战 5–着陆预定系统</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑 T2 T2 机场单跑道。该机场接收来自不同飞机的着陆请求。着陆请求包含着陆时间（例如，9:56）和完成程序所需的时间（例如，5 分钟）。我们将其表示为 9:56（5）。编写一段代码，使用 BST 设计此预订系统。由于只有一条跑道，代码应拒绝任何与现有跑道重叠的着陆请求。请求的顺序决定了保留的顺序。</p>
+			<p>我们考虑了着陆时间线的时间截图（着陆请求的顺序是 10:10（3）、10:14（3）、9:55（2）、10:18（1）、9:58（5）、9:47（2）、9:41（2）、10:22（1）、9:50（6）和 10:04（4）。</p>
+			<p><img src="img/Figure_13.20_B15403.jpg" alt="Figure 13.20 – Timeline screenshot "/></p>
+			
+			<p class="figure-caption">图 13.20–时间轴屏幕截图</p>
+			<p>因此，我们已经做了几项预定，如下所示：9:41，一架飞机将着陆，需要 2 分钟来完成程序；9 点 47 分和 9 点 55 分，还有两架飞机需要 2 分钟才能完成着陆；9 点 58 分，我们有一架飞机需要 5 分钟才能完成着陆；等等此外，我们还有两个新的着陆请求，在图中表示为<em class="italic">R1</em>和<em class="italic">R2</em>。</p>
+			<p>请注意，我们无法批准<em class="italic">R1</em>着陆请求。着陆时间是 9:50，需要 6 分钟才能完成，所以 9:56 结束。然而，在 9:56，我们已经有飞机从 9:55 在跑道上。由于我们只有一条跑道，我们拒绝了这个着陆请求。我们认为这种情况是重叠的。</p>
+			<p>另一方面，我们批准了<em class="italic">R2</em>着陆请求。请求时间为 10:04，需要 4 分钟才能完成，因此在 10:08 结束。10 点 08 分，跑道上没有其他飞机，因为下一次着陆时间是 10 点 10 分。</p>
+			<p>请注意，我们必须使用 BST 来解决此问题，但使用数组（排序或未排序）或链表（排序或未排序）也是一种有效的方法。使用未排序的数组（或链表）将需要 O（1）时间来插入登录请求，O（n）时间来检查潜在的重叠。如果我们使用排序数组（或链表）和二进制搜索算法，那么我们可以检查 O（logn）中的潜在重叠。然而，要插入着陆请求，我们需要 O（n），因为我们必须将所有元素从插入位置移到<a id="_idIndexMarker1196"/>右侧。</p>
+			<p>使用 BST 怎么样？首先，让我们将前面的时间线截图表示为 BST。查看下图（着陆请求的顺序为 10:10（3）、10:14（3）、9:55（2）、10:18（1）、9:58（5）、9:47（2）、9:41（2）、10:22（1）、<em class="italic">9:50（6）</em>和 10:04（4））：</p>
+			<p><img src="img/Figure_13.21_B15403.jpg" alt="Figure 13.21 – Timeline screenshot as a BST "/></p>
+			
+			<p class="figure-caption">图 13.21–作为 BST 的时间线屏幕截图</p>
+			<p>这一次，对于每个着陆请求，我们只需扫描树的一半。这是使用 BST 的结果（左侧的所有节点都比右侧的所有节点小，因此着陆请求时间只能在左侧或右侧的子树中）。例如，10:04 的着陆请求小于根（10:10），因此它位于左子树中。如果在任何给定的着陆请求中，我们遇到重叠，那么我们只返回，而不将相应的节点插入树中。我们可以在 O（h）中找到潜在的重叠，其中<em class="italic">h</em>是 BST 的高度，我们可以在 O（1）时间中插入它。</p>
+			<p>下面的简单计算给出了一个重叠（我们使用的是 Java 8 日期时间 API，但您也可以将其简化为简单整数–如果您不熟悉 Java 8 日期时间 API，那么我强烈建议您购买我的书，<em class="italic">Java 编码问题</em>，由 Packt（<a href="https://www.packtpub.com/programming/java-coding-problems">出版） https://www.packtpub.com/programming/java-coding-problems </a>。这本书有一个关于这个主题的<a id="_idIndexMarker1197"/>令人惊讶的章节，这是任何候选人必须阅读的<em class="italic"/>：</p>
+			<pre>long t1 = Duration.between(current.element.
+  plusMinutes(current.time), element).toMinutes();
+long t2 = Duration.between(current.element,   
+  element.plusMinutes(time)).toMinutes();
+if (t1 &lt;= 0 &amp;&amp; t2 &gt;= 0) {
+    // overlapping found
+}</pre>
+			<p>因此，在<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">t1</em>中，我们计算当前节点完成所需的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">落地时间</em>+<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">时间与当前请求的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">落地时间</em>之间的时间。在<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">t2</em>中，我们计算当前节点<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">落地时间</em>与（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">当前请求落地时间</em>+<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">完成</em>所需的时间）之间的时间。如果<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">t1</em>小于或等于<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">t2</em>，则我们发现了重叠，因此我们拒绝当前的着陆请求。让我们看看完整的代码：</em></p>
+			<pre>public class BinarySearchTree&lt;Temporal&gt; {
+  private Node root = null;
+  private class Node {
+    private Node left;
+    private Node right;
+    private final LocalTime element;
+    private final int time;
+    public Node(LocalTime element, int time) {
+      this.time = time;
+      this.element = element;
+      this.left = null;
+      this.right = null;
+    }
+    public Node(Node left, Node right, 
+            LocalTime element, int time) {
+      this.time = time;
+      this.element = element;
+      this.left = left;
+      this.right = right;
+    }
+  }
+  public void insert(LocalTime element, int time) {
+    if (element == null) {
+      throw new IllegalArgumentException("...");
+    }
+    root = insert(root, element, time);
+  }
+  private Node insert(Node current, 
+          LocalTime element, int time) {
+    if (current == null) {
+      return new Node(element, time);
+    }
+    long t1 = Duration.between(current.element.
+        plusMinutes(current.time), element).toMinutes();
+    long t2 = Duration.between(current.element, 
+        element.plusMinutes(time)).toMinutes();
+    if (t1 &lt;= 0 &amp;&amp; t2 &gt;= 0) {
+      System.out.println("Cannot reserve the runway at "
+        + element + " for " + time + " minutes !");
+      return current;
+    }
+    if (element.compareTo(current.element) &lt; 0) {
+      current.left = insert(current.left, element, time);
+    } else {
+      current.right = insert(current.right, element, time);
+    }
+    return current;
+  }
+  public void printInOrder() {
+    printInOrder(root);
+  }
+  private void printInOrder(Node node) {
+    if (node != null) {
+      printInOrder(node.left);
+      System.out.print(" " + node.element
+        + "(" + node.time + ")");
+      printInOrder(node.right);
+    }
+  }
+}</pre>
+			<p>请注意<a id="_idIndexMarker1198"/>我们可以使用 BST 的顺序遍历轻松打印时间线。完整的应用程序<a id="_idIndexMarker1199"/>称为<em class="italic">BinaryTreeLandingReservation。</em></p>
+			<h2 id="_idParaDest-315"><a id="_idTextAnchor316"/>编码挑战 6–平衡二叉树</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。如果任何节点的两个子树的高度相差不超过一个（这就是所谓的高度平衡二叉树），我们认为它是平衡的。编写一段代码，如果二叉树是平衡的，则返回<strong class="source-inline">true</strong>。</p>
+			<p><strong class="bold">解决方案</strong>：因此，为了有一个平衡的二叉树，对于每个节点，两个子树的高度差不能超过一个。与此声明一致，右侧的图像表示平衡二叉树，而左侧的图像表示不平衡二叉树：</p>
+			<p><img src="img/Figure_13.22_B15403.jpg" alt="Figure 13.22 – Unbalanced and balanced binary trees "/></p>
+			
+			<p class="figure-caption">图 13.22–不平衡和平衡二叉树</p>
+			<p>左侧的二叉树是不平衡的，因为节点 40（根）和节点 30 对应的左子树与右子树的高度差大于 1（例如，<em class="italic">左高</em>（40）=4，而<em class="italic">右高</em>（40）=2）。</p>
+			<p>右侧二叉树是平衡的，因为对于每个节点，左侧子树和右侧子树之间的高度差不大于 1。</p>
+			<p>基于这个例子，我们可以直觉地知道一个简单的解决方案由一个递归算法组成。我们可以遍历每个节点并计算左、右子树的高度。如果这些高度之间的差值大于 1，则返回<strong class="source-inline">false</strong>。就代码而言，这非常简单：</p>
+			<pre>public boolean isBalanced() {
+  return isBalanced(root);
+}
+private boolean isBalanced(Node root) {
+  if (root == null) {
+    return true;
+  }
+  if (Math.abs(height(root.left) - height(root.right)) &gt; 1) {
+    return false;
+  } else {
+    return isBalanced(root.left) &amp;&amp; isBalanced(root.right);
+  }
+}
+private int height(Node root) {
+  if (root == null) {
+    return 0;
+  }
+  return Math.max(height(root.left), height(root.right)) + 1;
+}</pre>
+			<p>这种方法在 O（nlogn）时间内执行，因为在每个节点上，我们通过其整个子树应用递归。因此，问题在于<strong class="source-inline">height（）</strong>调用的数量。此时，<strong class="source-inline">height（）</strong>方法仅计算高度。但也可以改进以检查树是否<a id="_idIndexMarker1202"/>平衡。我们所需要做的就是通过一个错误代码向一个不平衡的子树发送信号。另一方面，对于平衡树，我们返回相应的高度。我们可以使用<strong class="source-inline">Integer.MIN_ 值</strong>代替错误代码，如下所示：</p>
+			<pre>public boolean isBalanced() {
+  return checkHeight(root) != Integer.MIN_VALUE;
+}
+private int checkHeight(Node root) {
+  if (root == null) {
+    return 0;
+  }
+  int leftHeight = checkHeight(root.left);
+  if (leftHeight == Integer.MIN_VALUE) {
+    return Integer.MIN_VALUE; // error 
+  }
+  int rightHeight = checkHeight(root.right);
+  if (rightHeight == Integer.MIN_VALUE) {
+    return Integer.MIN_VALUE; // error 
+  }
+  if (Math.abs(leftHeight - rightHeight) &gt; 1) {
+    return Integer.MIN_VALUE; // pass error back
+  } else {
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+}</pre>
+			<p>此<a id="_idIndexMarker1203"/>代码在 O（n）时间和 O（h）空间中运行，其中<em class="italic">h</em>是<a id="_idIndexMarker1204"/>树的高度。该应用程序称为<em class="italic">二进制树平衡。</em></p>
+			<h2 id="_idParaDest-316"><a id="_idTextAnchor317"/>编码挑战 7–二叉树是 BST</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个可以包含重复数据的二叉树。如果此树<a id="_idIndexMarker1206"/>是<strong class="bold">二元搜索树</strong>（<strong class="bold">BST</strong>，请编写一段代码，返回<strong class="source-inline">true</strong><strong class="source-inline"><a id="_idIndexMarker1205"/></strong>。</p>
+			<p><strong class="bold">解决方案</strong>：从一开始，我们就注意到问题明确提到给定的二叉树可能包含重复项。为什么这很重要？因为如果二叉树不允许重复，那么我们可以依靠简单的顺序遍历和数组。如果我们将每个遍历的元素添加到一个数组中，那么只有当二叉树是 BST 时，才会对结果数组进行排序。让我们通过下图来阐明这一方面：</p>
+			<p><img src="img/Figure_13.23_B15403.jpg" alt="Figure 13.23 – Valid and invalid BSTs "/></p>
+			
+			<p class="figure-caption">图 13.23–有效和无效的 BST</p>
+			<p>我们知道，BST<a id="_idIndexMarker1207"/>属性表示，对于 BST 的每个节点<em class="italic">n</em>，<em class="italic">留下 n 的后代≤ n&lt;n</em>的右后裔。这意味着前一个图中显示的前两个二叉树是有效的 BST，而最后一个二叉树不是有效的 BST。现在，将中间和最后一个二叉树的元素添加到数组中将得到一个[40,40]的数组。这意味着我们无法基于此数组验证或使 BST 无效，因为我们无法区分树。因此，总之，如果给定的二叉树不接受重复项，那么您应该依赖这个简单的算法。</p>
+			<p>现在，是时候更进一步了。让我们来看看 n 的<em class="italic">左后代≤ 如下二叉树中 n</em>语句的 n&lt;右后代：</p>
+			<p><img src="img/Figure_13.24_B15403.jpg" alt="Figure 13.24 – Invalid BST"/></p>
+			
+			<p class="figure-caption">图 13.24–无效的 BST</p>
+			<p>看看这个！对于每个节点，<em class="italic">n</em>，我们可以将其写入<em class="italic">n≤ n&lt;n.对</em>，但很明显 55 放错了地方。因此，让我们强调一下，当前节点的所有左侧节点都应该小于或等于当前节点，而当前节点必须小于所有右侧节点。</p>
+			<p>换句话说，仅验证当前节点的左侧和右侧节点是不够的。我们必须根据一系列节点验证每个节点。更准确地说，左或右子树的所有节点都应根据最小可接受元素（分别为最大可接受元素）（<em class="italic">min，max</em>）限定的范围进行验证。让我们考虑下面的树：</p>
+			<p><img src="img/Figure_13.25_B15403.jpg" alt="Figure 13.25 – Validating a BST "/></p>
+			
+			<p class="figure-caption">图 13.25–验证 BST</p>
+			<p>我们从根（40）开始，我们考虑（So.t0，min，T1，Tube＝NULL，Ont2，席 max，T3，Tube＝NULL），所以 40 满足条件，因为没有最小或最大极限。接下来，我们转到左子树（让我们将此子树表示为 40 左子树）。左 40 子树中的所有节点应介于（null，40）之间。接下来，我们再次转到左边，我们遇到 35 个左子树，它的范围应该在（null，35）之间。基本上，我们继续向左走，直到没有节点为止。在这一点上，我们开始向右，因此 35 右的子树应该在（35，40）之间，40 右的子树应该在（40，null）之间，依此类推。所以，当我们向左移动时，最大值会被更新。当我们向右移动时，最小值会被更新。如果出现任何问题，我们将停止并返回<strong class="source-inline">false</strong>。让我们看看基于此算法的代码：</p>
+			<pre>public boolean isBinarySearchTree() {
+  return isBinarySearchTree(root, null, null);
+}
+private boolean isBinarySearchTree(Node node, 
+        T minElement, T maxElement) {
+  if (node == null) {
+    return true;
+  }
+  if ((minElement != null &amp;&amp; 
+    node.element.compareTo(minElement) &lt;= 0)
+       || (maxElement != null &amp;&amp; node.element.
+              compareTo(maxElement) &gt; 0)) {
+    return false;
+  }
+  if (!isBinarySearchTree(node.left, minElement, node.element)
+          || !isBinarySearchTree(node.right, 
+                node.element, maxElement)) {
+    return false;
+  }
+  return true;
+}</pre>
+			<p>完整的应用程序<a id="_idIndexMarker1208"/>称为<em class="italic">二进制树 BST。</em></p>
+			<h2 id="_idParaDest-317"><a id="_idTextAnchor318"/>编码质询 8–后续节点</h2>
+			<p><strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个 T2 的二叉搜索树，即 T4（To.T5，BST，OutT6）和这个树上的一个节点。编写一段代码，在顺序遍历上下文中打印给定节点的后续节点。</p>
+			<p><strong class="bold">解决方案</strong>：让我们回忆一下二叉树的顺序遍历。此<strong class="bold">深度优先搜索</strong>（<strong class="bold">DFS</strong>风格）遍历左子树，然后遍历当前节点，然后遍历右子树。现在，假设我们从 BST 中任意选择一个节点（将其表示为<em class="italic">n</em>），并希望在顺序遍历的上下文中找到其后续节点（将其表示为<em class="italic">s</em>）。</p>
+			<p>让我们考虑下面的图表作为给定的 BST，我们可以用它来区分可能的情况：</p>
+			<p><img src="img/Figure_13.26_B15403.jpg" alt="Figure 13.26 – BST sample with start and successor nodes "/></p>
+			
+			<p class="figure-caption">图 13.26–具有开始和后续节点的 BST 示例</p>
+			<p>如上图所示，我们将两种主要情况表示为（a）和（b）。在情况（a）中，节点<em class="italic">n</em>具有正确的子树。在情况（b）中，节点<em class="italic">n</em>不包含正确的子树。</p>
+			<p>以左侧 BST 为例的情况（a）表明，如果节点<em class="italic">n</em>具有右子树，则后续节点<em class="italic">s</em>是该右子树的最左侧节点。例如，对于<em class="italic">n</em>=50，后续节点为 54。</p>
+			<p>案例（b）有两个子案例：简单案例和复杂案例。上图中显示的中间 BST 举例说明了简单的情况。当节点<em class="italic">n</em>不包含右子树且<em class="italic">n</em>为其父节点的左子节点时，则后续节点为该父节点。例如，对于<em class="italic">n</em>=40，后续节点为 50。这是（b）的简单子情况。</p>
+			<p>上图所示的右侧 BST 举例说明了（b）的复杂子情况。当节点<em class="italic">n</em>不包含右子树且<em class="italic">n</em>是其父节点的右子节点时，我们必须向上遍历，直到<em class="italic">n</em>成为其父节点的左子节点。完成后，我们将返回此父级。例如，如果<em class="italic">n</em>=59，则后继节点为 60。</p>
+			<p>此外，我们必须考虑，如果 Tr1 T1 n n Ty2 T2 是遍历中的最后一个节点，那么我们返回根的父节点，它可以是 NULL。</p>
+			<p>如果我们将这些案例粘在一起形成一些伪代码，那么我们会得到以下结果：</p>
+			<pre>Node inOrderSuccessor(Node n) {
+  if (n has a right sub-tree) {
+    return the leftmost child of right sub-tree
+  } 
+  while (n is a right child of n.parent) {
+    n = n.parent; // traverse upwards 
+  }
+  return n.parent; // parent has not been traversed
+}</pre>
+			<p>现在，我们可以将这个<a id="_idIndexMarker1211"/>伪代码翻译成代码，如下所示：</p>
+			<pre>public void inOrderSuccessor() {
+  // choose the node
+  Node node = ...;
+  System.out.println("\n\nIn-Order:");
+  System.out.print("Start node: " + node.element);
+  node = inOrderSuccessor(node);
+  System.out.print(" Successor node: " + node.element);
+}
+private Node inOrderSuccessor(Node node) {
+  if (node == null) {
+    return null;
+  }
+  // case (a)
+  if (node.right != null) {
+    return findLeftmostNode(node.right);
+  }
+  // case (b)
+  while (node.parent != null &amp;&amp; node.parent.right == node) {
+    node = node.parent;
+  }
+  return node.parent;
+}</pre>
+			<p>完整的<a id="_idIndexMarker1212"/>应用程序称为<em class="italic">BinarySearchTreeSuccessor</em><em class="italic">。</em>此<a id="_idIndexMarker1213"/>应用程序也包含相同的问题，但通过预订单和后订单遍历解决。在检查预排序和后排序上下文的解决方案之前，您应该通过确定可能的情况和绘制伪代码及其实现来挑战自己。</p>
+			<h2 id="_idParaDest-318"><a id="_idTextAnchor319"/>编码挑战 9–拓扑排序</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个 T3 的有向非循环图，T4（To.T5，DAG，OT6）。也就是说，一个没有圈的有向图。编写一段代码<a id="_idIndexMarker1215"/>，返回顶点的线性排序，这样对于每个有向边，<em class="italic">XY</em>，顶点<em class="italic">X</em>在排序中位于<em class="italic">Y</em>之前。换句话说，对于每条边，源节点位于目标节点之前。这也称为拓扑排序，仅适用于 DAG。</p>
+			<p><strong class="bold">解决方案</strong>：让我们通过以下 DAG 深入探讨这个问题：</p>
+			<p><img src="img/Figure_13.27_B15403.jpg" alt="Figure 13.27 – Directed acyclic graph (DAG) "/></p>
+			
+			<p class="figure-caption">图 13.27–有向无环图（DAG）</p>
+			<p>让我们从顶点 D 开始拓扑排序。在顶点 D 之前，没有其他顶点（没有边），因此我们可以将 D 添加到结果（D）。从 D，我们可以到 B 或 A。让我们到顶点 A。我们不能将 A 添加到结果中，因为我们没有处理边 BA 的顶点 B，所以让我们到顶点 B。在 B 之前，我们只有 D，它被添加到结果中，所以我们可以将 B 添加到结果中，（D，B）。从 B，我们可以到 A，E，C 和 F。我们不能到 C，因为我们没有处理 AC，我们不能到 F，因为我们没有处理 CF。但是，我们可以到 A，因为 DA 和 BA 已经处理，我们可以到 E，因为在 E 之前，只有 B，这是结果。请注意，拓扑排序可能会提供不同的结果。让我们转到 E。因此，E 被添加到结果（D，B，E）中。接下来，我们可以在结果中添加 A，这允许我们添加 C，这允许我们添加 F。因此，结果现在是（D，B，E，A，C，F）。从 F，我们可以到 G。由于 EG 已经被处理，我们可以把 G 加到结果中。最后，从 G 到 H，我们得到拓扑排序结果为（D，B，E，A，C，F，G，H）。</p>
+			<p>这种遍历只是一种<a id="_idIndexMarker1216"/>任意的遍历，我们无法将其放入代码中。然而，我们知道图可以通过 BFS 和 DFS 算法进行遍历。如果我们尝试在 DFS 的上下文中思考，那么我们从节点 D 开始，遍历 B、A、C、F、G、H 和 E。在执行 DFS 遍历时，我们不能简单地将顶点添加到结果中，因为我们违反了问题要求（对于每个有向边，<em class="italic">XY</em>，顶点<em class="italic">X</em>在<em class="italic">Y</em>之前）在订单中）。但是，我们可以使用一个<strong class="source-inline">堆栈</strong>，并在遍历所有相邻顶点后将其推入该堆栈。这意味着 H 是第一个被推到堆栈中的顶点，然后是 G、F、C、A、E、B 和 D。现在，从堆栈中弹出，直到它为空，将为我们提供拓扑排序为 D、B、E、A、C、F、G 和 H。</p>
+			<p>因此，拓扑排序只是一种基于<strong class="source-inline">堆栈</strong>的 DFS 风格，可以实现如下：</p>
+			<pre>public Stack&lt;T&gt; topologicalSort(T startElement) {
+  Set&lt;T&gt; visited = new HashSet&lt;&gt;();
+  Stack&lt;T&gt; stack = new Stack&lt;&gt;();
+  topologicalSort(startElement, visited, stack);
+  return stack;
+}
+private void topologicalSort(T currentElement, 
+      Set&lt;T&gt; visited, Stack&lt;T&gt; stack) {
+  visited.add(currentElement);
+  List&lt;T&gt; adjacents = adjacencyList.get(currentElement);
+  if (adjacents != null) {
+    for (T t : adjacents) {
+      if (t != null &amp;&amp; !visited.contains(t)) {
+        topologicalSort(t, visited, stack);
+        visited.add(t);
+      }
+    }
+  }
+  stack.push(currentElement);
+}</pre>
+			<p>完整的<a id="_idIndexMarker1217"/>应用程序称为<em class="italic">GraphTopologicalSort。</em></p>
+			<h2 id="_idParaDest-319"><a id="_idTextAnchor320"/>编码挑战 10–共同祖先</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。编写一段代码，查找两个给定节点的第一个公共祖先。不能在数据结构中存储其他节点。</p>
+			<p><strong class="bold">解决方案</strong>：分析此类问题的最佳方法是拿一些纸和笔，用一些样本画一棵二叉树。请注意，问题并不是说这是一个 BST。实际上，它可以是任何有效的二叉树。</p>
+			<p>在下图中，我们有三种可能的场景：</p>
+			<p><img src="img/Figure_13.28_B15403.jpg" alt="Figure 13.28 – Finding the first common ancestor "/></p>
+			
+			<p class="figure-caption">图 13.28–寻找第一个共同祖先</p>
+			<p>在这里，我们可以看到给定的节点可以位于不同的子树（左树和右树）或同一子树（中间树）中。因此，我们可以使用<strong class="source-inline">公共祖先（Node root，Node n1，Node n2）</strong>类型的方法从根开始遍历树，并返回如下（<em class="italic">n1</em>和<em class="italic">n2</em>是两个给定的节点）：</p>
+			<ul>
+				<li>如果根的子树包含<em class="italic">n1</em>（不包含<em class="italic">n2</em>，则返回<em class="italic">n1</em></li>
+				<li>如果根的子树包含<em class="italic">n2</em>（不包含<em class="italic">n1</em>，则返回<em class="italic">n2</em></li>
+				<li>如果根的子树中既不存在<em class="italic">n1</em>也不存在<em class="italic">n2</em>，则返回<strong class="source-inline">null</strong></li>
+				<li>否则返回<em class="italic">n1</em>和<em class="italic">n2</em>的共同祖先。</li>
+			</ul>
+			<p>当<strong class="source-inline">CommonSenator（n.left，n1，n2）</strong>和<strong class="source-inline">CommonSenator（n.right，n1，n2）</strong>返回非空值时，这意味着<em class="italic">n1</em>和<em class="italic">n2</em>在不同的子树中，<em class="italic">n</em>是共同祖先。让我们从代码的角度来看：</p>
+			<pre>public T commonAncestor(T e1, T e2) {
+  Node n1 = findNode(e1, root);
+  Node n2 = findNode(e2, root);
+  if (n1 == null || n2 == null) {
+    throw new IllegalArgumentException("Both nodes 
+             must be present in the tree");
+  }
+  return commonAncestor(root, n1, n2).element;
+}
+private Node commonAncestor(Node root, Node n1, Node n2) {
+  if (root == null) {
+    return null;
+  }
+  if (root == n1 &amp;&amp; root == n2) {
+    return root;
+  }
+  Node left = commonAncestor(root.left, n1, n2);
+  if (left != null &amp;&amp; left != n1 &amp;&amp; left != n2) {
+    return left;
+  }
+  Node right = commonAncestor(root.right, n1, n2);
+  if (right != null &amp;&amp; right != n1 &amp;&amp; right != n2) {
+    return right;
+  }
+  // n1 and n2 are not in the same sub-tree
+  if (left != null &amp;&amp; right != null) {
+    return root;
+  } else if (root == n1 || root == n2) {
+    return root;
+  } else {
+    return left == null ? right : left;
+  }
+}</pre>
+			<p><a id="_idIndexMarker1219"/>完整的应用程序被<a id="_idIndexMarker1220"/>称为<em class="italic">二进制树公共祖先。</em></p>
+			<h2 id="_idParaDest-320"><a id="_idTextAnchor321"/>编码挑战 11–国际象棋骑士</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题是：你已经得到了一个棋盘和骑士。最初，骑士被放置在一个单元格（起始单元格）中。编写一段代码，计算将骑士从起始单元格移动到给定目标单元格所需的最小移动次数。</p>
+			<p>让我们考虑一个例子。棋盘大小为 8x8，骑士从单元格（1,8）开始。目标单元格为（8，1）。如下图所示，骑士需要至少移动 6 步才能从牢房（1,8）移动到牢房（8,1）：</p>
+			<p><img src="img/Figure_13.29_B15403.jpg" alt="Figure 13.29 – Moving the knight from cell (1, 8) to cell (8, 1) "/></p>
+			
+			<p class="figure-caption">图 13.29–将骑士从牢房（1,8）移动到牢房（8,1）</p>
+			<p>如图所示，骑士可以从一个（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r，c</em>）单元格移动到其他八个有效单元格，如下所示：（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>+2<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>+1）、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>+1<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>+2）、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>-1<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>+2】、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>-2<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c+T17】、<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">）r</em>-2<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>-1）、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>-1<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>-2）、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>+1<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>-2）、（<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">r</em>+2<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、c</em>-1）。因此，有八种可能的运动。如果我们将这些可能的移动视为方向（边），将细胞视为顶点，那么我们可以在图形的上下文中可视化这个问题。边是可能的移动，而顶点是骑士可能的单元。每次移动都会保持当前单元格到起始单元格的距离。对于每个移动，距离增加 1。因此，在图的上下文中，问题归结为在图中寻找最短路径。因此，我们可以使用 BFS 来解决这个问题。</em></p>
+			<p>该算法的步骤如下：</p>
+			<ol>
+				<li value="1">创建一个空队列。</li>
+				<li>将起始单元格排队，使其与自身的距离为 0。</li>
+				<li>As long as the queue is not empty, do the following:<p>A.从队列中弹出下一个未访问的单元格。</p><p>B 如果弹出的单元格是目标单元格，则返回其距离。</p><p>C 如果弹出的单元格不是目标单元格，则将此单元格标记为已访问，并通过将距离增加 1 将八种可能的移动中的每种移动排队。</p></li>
+			</ol>
+			<p>由于我们依赖于 BFS 算法，我们知道最短路径为 1 的所有单元都会首先访问。接下来，访问的小区是最短路径为 1+1=2 的相邻小区，依此类推；因此，其最短路径等于其父代+1 的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">最短路径的任何单元。这意味着，当我们第一次遍历目标单元时，它会给出最终结果。这是<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker1223"/>最短路径。让我们看看代码：</em></p>
+			<pre>private int countknightMoves(Node startCell, 
+            Node targetCell, int n) {
+  // store the visited cells
+  Set&lt;Node&gt; visited = new HashSet&lt;&gt;();
+  // create a queue and enqueue the start cell
+  Queue&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
+  queue.add(startCell);
+  while (!queue.isEmpty()) {
+    Node cell = queue.poll();
+    int r = cell.r;
+    int c = cell.c;
+    int distance = cell.distance;
+    // if destination is reached, return the distance
+    if (r == targetCell.r &amp;&amp; c == targetCell.c) {
+      return distance;
+    }
+    // the cell was not visited
+    if (!visited.contains(cell)) {
+      // mark current cell as visited
+      visited.add(cell);
+      // enqueue each valid movement into the queue 
+      for (int i = 0; i &lt; 8; ++i) {
+        // get the new valid position of knight from current
+        // position on chessboard and enqueue it in the queue 
+        // with +1 distance
+        int rt = r + ROW[i];
+        int ct = c + COL[i];
+        if (valid(rt, ct, n)) {
+          queue.add(new Node(rt, ct, distance + 1));
+        }
+      }
+    }
+  }
+  // if path is not possible
+  return Integer.MAX_VALUE;
+}
+// Check if (r, c) is valid    
+private static boolean valid(int r, int c, int n) {
+  if (r &lt; 0 || c &lt; 0 || r &gt;= n || c &gt;= n) {
+    return false;
+  }
+  return true;
+}</pre>
+			<p><a id="_idIndexMarker1224"/>应用程序被<a id="_idIndexMarker1225"/>称为<em class="italic">棋子骑士。</em></p>
+			<h2 id="_idParaDest-321"><a id="_idTextAnchor322"/>编码挑战 12–打印二叉树角点</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。编写一段代码，在每个级别打印此树的各个角。</p>
+			<p>让我们考虑下面的树：</p>
+			<p><img src="img/Figure_13.30_B15403.jpg" alt="Figure 13.30 – Printing binary tree corners "/></p>
+			
+			<p class="figure-caption">图 13.30–打印二叉树角点</p>
+			<p>因此，主要思想是在每个级别打印最左边和最右边的节点。这意味着级别顺序遍历（BFS）非常有用，因为我们可以遍历每个级别。我们所要做的就是确定每个级别上的第一个和最后一个节点。为此，我们需要通过添加一个用于确定当前节点是否表示角点的条件来调整经典的级别顺序遍历。《守则》不言自明：</p>
+			<pre>public void printCorners() {
+  if (root == null) {
+    return;
+  }
+  Queue&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
+  queue.add(root);
+  int level = 0;
+  while (!queue.isEmpty()) {
+    // get the size of the current level
+    int size = queue.size();
+    int position = size;
+    System.out.print("Level: " + level + ": ");
+    level++;
+    // process all nodes present in current level
+    while (position &gt; 0) {
+      Node node = queue.poll();
+      position--;
+      // if corner node found, print it
+      if (position == (size - 1) || position == 0) {
+        System.out.print(node.element + " ");
+      }
+      // enqueue left and right child of current node
+      if (node.left != null) {
+        queue.add(node.left);
+      }
+      if (node.right != null) {
+        queue.add(node.right);
+      }
+    }
+    // level done            
+    System.out.println();
+  }
+}</pre>
+			<p><a id="_idIndexMarker1228"/>应用程序被<a id="_idIndexMarker1229"/>称为<em class="italic">二进制树。</em></p>
+			<h2 id="_idParaDest-322"><a id="_idTextAnchor323"/>编码挑战 13–最大路径和</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经给出了一个非空二叉树。编写一段代码，计算最大路径和。路径被视为从树中的任何节点开始到树中的任何节点结束的任何节点序列，以及父子连接。路径必须至少包含一个节点，并且可以穿过树的根，也可以不穿过树的根。</p>
+			<p><strong class="bold">解决方案</strong>：下图显示了最大路径和的三个示例：</p>
+			<p><img src="img/Figure_13.31_B15403.jpg" alt="Figure 13.31 – Three examples of a max path sum "/></p>
+			
+			<p class="figure-caption">图 13.31–最大路径和的三个示例</p>
+			<p>找到这个问题的解决方案需要我们确定当前节点可以成为最大路径一部分的方式的数量。通过检查前面的示例，我们可以分离出四种情况，如下图所示（慢慢看，看更多的示例，直到得出相同的结论）：</p>
+			<p><img src="img/Figure_13.32_B15403.jpg" alt="Figure 13.32 – Number of ways the current node can be a part of the maximum path  "/></p>
+			
+			<p class="figure-caption">图 13.32–当前节点成为最大路径一部分的方式数量</p>
+			<p>因此，作为<a id="_idIndexMarker1231"/>最大路径一部分的节点被放入以下四种情况之一：</p>
+			<ol>
+				<li value="1">该节点是最大路径中的唯一节点</li>
+				<li>该节点是其左子节点旁边的最大路径的一部分</li>
+				<li>该节点是其右子节点旁边的最大路径的一部分</li>
+				<li>该节点是其左侧和右侧子节点旁边的最大路径的一部分</li>
+			</ol>
+			<p>这四个步骤让我们得出一个明确的结论：我们必须迭代树的所有节点。DFS 算法是一个不错的选择，但更准确地说，是后序树遍历，它将遍历顺序强制为<strong class="bold">左子树</strong><strong class="bold">右子树</strong><strong class="bold">根</strong>。当我们遍历树时，我们将树其余部分的最大值传递给父级。下图显示了此算法：</p>
+			<p><img src="img/Figure_13.33_B15403.jpg" alt="Figure 13.33 – Post-order traversal and passing the maximum in the tree to the parent "/></p>
+			
+			<p class="figure-caption">图 13.33–后序遍历和将树中的最大值传递给父级</p>
+			<p>因此，如果我们将此算法一步一步地应用到前面的图中，我们将得到以下结果（请记住，这是一个后序遍历）：</p>
+			<ul>
+				<li>41 没有<a id="_idIndexMarker1232"/>子项，因此将 41 添加到 max（0，0），41+max（0，0）=41。</li>
+				<li>3 只有左边的子项-5，因此 3 被添加到 max（-5，0），3+max（-5，0）=3。</li>
+				<li>-2 被添加到 max（41,3）子树中，因此-2+max（41,3）=39。</li>
+				<li>-7 没有子项，因此将-7 添加到 max（0，0），-7+max（0，0）=-7。</li>
+				<li>70 没有子对象，因此 70 被添加到 max（0，0），70+max（0，0）=70。</li>
+				<li>-1 被添加到最大（-7,70）子树，因此-1+70=69。</li>
+				<li>50 加到左（39）和右（69）子树的最大值上，因此 39+69+50=158（这是最大路径和）。</li>
+			</ul>
+			<p>以下代码显示了此算法的实现：</p>
+			<pre>public int maxPathSum() {
+  maxPathSum(root);
+  return max;
+}
+private int maxPathSum(Node root) {
+  if (root == null) {
+    return 0;
+  }
+  // maximum of the left child and 0
+  int left = Math.max(0, maxPathSum(root.left));
+  // maximum of the right child and 0
+  int right = Math.max(0, maxPathSum(root.right));
+  // maximum at the current node (all four cases 1,2,3 and 4)
+  max = Math.max(max, left + right + root.element);
+  //return the maximum from left, right along with current               
+  return Math.max(left, right) + root.element;
+}</pre>
+			<p><a id="_idIndexMarker1233"/>应用程序被<a id="_idIndexMarker1234"/>称为<em class="italic">二进制树 XPathSUM。</em></p>
+			<h2 id="_idParaDest-323"><a id="_idTextAnchor324"/>编码挑战 14–对角线遍历</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个非空二叉树。编写一段代码，打印每个负对角线（\）的所有节点。负对角线具有负斜率。</p>
+			<p><strong class="bold">解决方案</strong>：如果您不熟悉二叉树负对角的概念，那么请确保与面试官澄清这一方面。他们可能会为您提供一个类似于下图所示的示例：</p>
+			<p><img src="img/Figure_13.34_B15403.jpg" alt="Figure 13.34 – Negative diagonals of a binary tree "/></p>
+			
+			<p class="figure-caption">图 13.34–二叉树的负对角线</p>
+			<p>在上图中，我们有三条对角线。第一条对角线包含节点 50、12 和 70。第二条对角线包含节点 45、3、14 和 65。最后，第三对角线包含节点 41 和 11。</p>
+			<h3 id="sigil_toc_id_529">基于递归的解决方案</h3>
+			<p>这个问题的一个解决方案<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker1236"/>是使用递归和<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">哈希</em>（如果您不熟悉哈希的概念，请阅读<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" href="06.html#_idTextAnchor080"><em class="italic">第 6 章</em></a><em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">、面向对象编程</em>、<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">哈希表【T10 问题）。在 Java 中，我们可以通过内置的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">HashMap</strong>实现使用哈希，因此不需要从头开始编写哈希实现。但是这个<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">哈希映射</strong>有什么用处呢？我们应该在这个映射的条目（键值对）中存储什么？</em></p>
+			<p>我们可以将二叉树中的每个对角线与映射中的一个键相关联。由于每个对角线（键）包含多个节点，因此将值表示为<strong class="source-inline">列表</strong>非常方便。当我们遍历二叉树时，我们需要将当前节点添加到适当的<strong class="source-inline">列表</strong>，因此在适当的对角线下。例如，在这里，我们可以执行预顺序遍历。每次我们到左边的子树，我们增加对角线 1，每次到右边的子树，我们保持当前的对角线。通过这种方式，我们得到了类似于以下内容的结果：</p>
+			<p><img src="img/Figure_13.35_B15403.jpg" alt="Figure 13.35 – Pre-Order traversal and increasing the diagonal by 1 for the left child "/></p>
+			
+			<p class="figure-caption">图 13.35–左子对象的预顺序遍历和对角线增加 1</p>
+			<p>以下解的时间复杂度为 O（n logn），辅助空间为 O（n），其中<em class="italic">n</em>为树中的<a id="_idIndexMarker1237"/>个节点数：</p>
+			<pre>// print the diagonal elements of given binary tree
+public void printDiagonalRecursive() {
+  // map of diagonals
+  Map&lt;Integer, List&lt;T&gt;&gt; map = new HashMap&lt;&gt;();
+  // Pre-Order traversal of the tree and fill up the map
+  printDiagonal(root, 0, map);
+  // print the current diagonal
+  for (int i = 0; i &lt; map.size(); i++) {
+    System.out.println(map.get(i));
+  }
+}
+// recursive Pre-Order traversal of the tree 
+// and put the diagonal elements in the map
+private void printDiagonal(Node node, 
+        int diagonal, Map&lt;Integer, List&lt;T&gt;&gt; map) {
+  if (node == null) {
+    return;
+  }
+  // insert the current node in the diagonal
+  if (!map.containsKey(diagonal)) {
+    map.put(diagonal, new ArrayList&lt;&gt;());
+  }
+  map.get(diagonal).add(node.element);
+  // increase the diagonal by 1 and go to the left sub-tree
+  printDiagonal(node.left, diagonal + 1, map);
+  // maintain the current diagonal and go 
+  // to the right sub-tree
+  printDiagonal(node.right, diagonal, map);
+}</pre>
+			<p>现在，让我们看看这个问题的另一个解决方案。</p>
+			<h3 id="sigil_toc_id_530">基于迭代的解</h3>
+			<p>解决这个问题也可以迭代进行。这一次，我们可以采用水平顺序遍历，并使用<strong class="source-inline">队列</strong>将对角线的节点排队。此解决方案的主要伪代码可以编写如下：</p>
+			<pre>(first diagonal)
+Enqueue the root and all its right children 
+While the queue is not empty
+	Dequeue (let's denote it as A)
+	Print A
+    (next diagonal)
+	If A has a left child then enqueue it 
+    (let's denote it as B)
+		Continue to enqueue all the right children of B</pre>
+			<p>当将此伪代码放入代码中时，我们得到以下结果：</p>
+			<pre>public void printDiagonalIterative() {
+  Queue&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
+  // mark the end of a diagonal via dummy null value
+  Node dummy = new Node(null);
+  // enqueue all the nodes of the first diagonal
+  while (root != null) {
+    queue.add(root);
+    root = root.right;
+  }
+  // enqueue the dummy node at the end of each diagonal
+  queue.add(dummy);
+  // loop while there are more nodes than the dummy
+  while (queue.size() != 1) {
+    Node front = queue.poll();
+    if (front != dummy) {
+      // print current node
+      System.out.print(front.element + " ");
+      // enqueue the nodes of the next diagonal 
+      Node node = front.left;
+      while (node != null) {
+        queue.add(node);
+        node = node.right;
+      }
+    } else {
+      // at the end of the current diagonal enqueue the dummy                 
+      queue.add(dummy);
+      System.out.println();
+    }
+  }
+}</pre>
+			<p>前面的<a id="_idIndexMarker1240"/>代码以 O（n）时间运行，辅助空间为 O（n），其中<em class="italic">n</em>为树中的节点数。完整的<a id="_idIndexMarker1241"/>应用程序称为<em class="italic">二进制树。</em></p>
+			<h2 id="_idParaDest-324"><a id="_idTextAnchor325"/>编码挑战 15–在 BST 中处理重复项</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经有了一个允许重复的 BST。编写一个在处理重复项时支持插入和删除操作的实现。</p>
+			<p><strong class="bold">解决方案</strong>：我们知道 BST 的属性声明对于每个节点<em class="italic">n</em>，我们知道<em class="italic">留下了 n 的后代≤ n&lt;n</em>的右后裔。通常，涉及 BST 的问题不允许重复，因此无法插入重复项。但是，如果允许重复，那么我们的约定是将重复插入左子树。</p>
+			<p>但是，面试官可能希望看到一个实现，允许我们将计数与每个节点关联，如下图所示：</p>
+			<p><img src="img/Figure_13.36_B15403.jpg" alt="Figure 13.36 – Handling duplicates in a BST "/></p>
+			
+			<p class="figure-caption">图 13.36–在 BST 中处理重复项</p>
+			<p>为了提供此实现，我们<a id="_idIndexMarker1243"/>需要修改经典 BST 的结构，使其支持计数器：</p>
+			<pre>private class Node {
+  private T element;
+<strong class="bold">  private int count;</strong>
+  private Node left;
+  private Node right;
+  private Node(Node left, Node right, T element) {
+    this.element = element;
+    this.left = left;
+    this.right = right;
+<strong class="bold">    this.count = 1;</strong>
+  }
+}</pre>
+			<p>每次我们创建一个新节点（树中不存在的节点）时，计数器将等于 1。</p>
+			<p>插入节点时，需要区分新节点和重复节点。如果我们插入一个重复的节点，那么我们需要做的就是将该节点的计数器增加 1，而不<a id="_idIndexMarker1244"/>创建一个新节点。此处列出了插入操作的相关部分：</p>
+			<pre>private Node insert(Node current, T element) {
+  if (current == null) {
+    return new Node(null, null, element);
+  }
+<strong class="bold">  // START: Handle inserting duplicates</strong>
+<strong class="bold">  if (element.compareTo(current.element) == 0) {</strong>
+<strong class="bold">    current.count++;</strong>
+    <strong class="bold">return current;</strong>
+  <strong class="bold">}</strong>
+  <strong class="bold">// END: Handle inserting duplicates</strong>
+...
+}</pre>
+			<p>删除节点遵循类似的逻辑。如果我们删除一个重复的节点，那么我们只需将其计数器减少一个。如果计数器已经等于 1，那么我们只删除节点。有关守则如下：</p>
+			<pre>private Node delete(Node node, T element) {
+  if (node == null) {
+    return null;
+  }
+  if (element.compareTo(node.element) &lt; 0) {
+    node.left = delete(node.left, element);
+  } else if (element.compareTo(node.element) &gt; 0) {
+    node.right = delete(node.right, element);
+  }
+  if (element.compareTo(node.element) == 0) {
+<strong class="bold">    // START: Handle deleting duplicates</strong>
+<strong class="bold">    if (node.count &gt; 1) {</strong>
+<strong class="bold">      node.count--;</strong>
+<strong class="bold">      return<a id="_idTextAnchor326"/> node;</strong>
+<strong class="bold">    }</strong>
+<strong class="bold">    // END: Handle deleting duplicates</strong>
+    ...
+}</pre>
+			<p>完整的<a id="_idIndexMarker1245"/>应用程序被<a id="_idIndexMarker1246"/>称为<em class="italic">BinarySearchTreeDuplicates。</em>这个问题的另一个解决方案是使用哈希表来记录节点数。这样，就不会修改树结构。挑战自己并完成此实现。</p>
+			<h2 id="_idParaDest-325"><a id="_idTextAnchor327"/>编码挑战 16–二叉树的同构</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑到你已经给出了两个二叉树。编写一段代码，确定这两个二叉树是否彼此同构。</p>
+			<p><strong class="bold">解决方案</strong>：如果您不熟悉<em class="italic">同构</em>一词，那么您必须向面试官澄清。这个术语在数学中有很好的定义，但面试官可能不会给出数学解释/演示，而且，正如你所知，数学家有自己的语言，很难被认为是流利易懂的英语。此外，在数学中，同构的概念指的是任何两种结构，而不仅仅是二叉树。因此，面试官可能会给你一个解释，如下所示（让我们将树木表示为<em class="italic">T1</em>和<em class="italic">T2</em>：</p>
+			<p><strong class="bold">定义 1</strong>：<em class="italic">如果可以通过多次交换子项将 T1 更改为 T2，则 T1 和 T2 是同构的。T1 和 T2 根本不必是相同的物理形状。</em></p>
+			<p><strong class="bold">定义 2</strong>：<em class="italic">T1 和 T2 是同构的，如果您可以在不丢失信息的情况下将 T1 翻译成 T2，将 T2 翻译成 T1。</em></p>
+			<p><strong class="bold">定义 3</strong>：<em class="italic">想想两个字符串，AAB 和 XXY。如果 A 转换成 X，B 转换成 Y，那么 AAB 变成 XXY，所以这两个字符串是同构的。所以，如果 T2 是 T1 的结构镜像，那么两个二叉树是同构的。</em></p>
+			<p>不管你从面试官那里得到什么样的定义，我很肯定他们都会给你举个例子。下图显示了一组同构二叉树的示例：</p>
+			<p><img src="img/Figure_13.37_B15403.jpg" alt="Figure 13.37 – Isomorphic binary tree examples "/></p>
+			
+			<p class="figure-caption">图 13.37–同构二叉树示例</p>
+			<p>根据前面的定义和示例，我们可以形成以下算法来确定两个二叉树是否同构：</p>
+			<ol>
+				<li value="1">如果<em class="italic">T1</em>和<em class="italic">T2</em>为<strong class="source-inline">null</strong>，则<a id="_idIndexMarker1248"/>同构，因此返回<strong class="source-inline">true。</strong></li>
+				<li>如果<em class="italic">T1</em>或<em class="italic">T2</em>为<strong class="source-inline">null</strong>，则它们不是同构的，因此返回<strong class="source-inline">false。</strong></li>
+				<li>如果<em class="italic">T1.data</em>不等于<em class="italic">T2.data，</em>则它们不是同构的，因此返回<strong class="source-inline">false。</strong></li>
+				<li>遍历<em class="italic">T1</em>的左子树和<em class="italic">T2</em>的左子树。</li>
+				<li>Traverse the right sub-tree of <em class="italic">T1</em> and the right sub-tree of <em class="italic">T2</em>:<p>A.如果<em class="italic">T1</em>和<em class="italic">T2</em>的结构相同，则返回<strong class="source-inline">true。</strong></p><p>B 如果<em class="italic">T1</em>和<em class="italic">T2</em>的结构不相同，则检查一棵树（或子树）是否镜像另一棵树（子树），</p></li>
+				<li>遍历<em class="italic">T1</em>的左子树和<em class="italic">T2 的右子树。</em></li>
+				<li>Traverse the right sub-tree of <em class="italic">T1</em> and the left sub-tree of <em class="italic">T2</em>:<p>A.如果结构被镜像，则返回<strong class="source-inline">true</strong>；否则返回<strong class="source-inline">false。</strong></p></li>
+			</ol>
+			<p>将此算法放入代码中，结果<a id="_idIndexMarker1249"/>如下：</p>
+			<pre>private boolean isIsomorphic(Node treeOne, Node treeTwo) {
+  // step 1
+  if (treeOne == null &amp;&amp; treeTwo == null) {
+    return true;
+  }
+  // step 2
+  if ((treeOne == null || treeTwo == null)) {
+    return false;
+  }
+  // step 3
+  if (!treeOne.element.equals(treeTwo.element)) {
+    return false;
+  }
+  // steps 4, 5, 6 and 7
+  return (isIsomorphic(treeOne.left, treeTwo.right)
+    &amp;&amp; isIsomorphic(treeOne.right, treeTwo.left)
+    || isIsomorphic(treeOne.left, treeTwo.left)
+    &amp;&amp; isIsomorphic(treeOne.right, treeTwo.right));
+}
+.</pre>
+			<p><a id="_idIndexMarker1250"/>完整的应用程序被<a id="_idIndexMarker1251"/>称为<em class="italic">TwoBinaryTreesAreIsomorphic。</em></p>
+			<h2 id="_idParaDest-326"><a id="_idTextAnchor328"/>编码挑战 17–二叉树右视图</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。编写一段代码，打印此树的右视图。打印<em class="italic">右视图</em>意味着打印从二叉树右侧查看时可以看到的所有节点。</p>
+			<p><strong class="bold">解决方案</strong>：如果你不确定二叉树的正确视图是什么，那么请与面试官澄清。例如，下图突出显示了表示二叉树右视图的节点：</p>
+			<p><img src="img/Figure_13.38_B15403.jpg" alt="Figure 13.38 – Right view of a binary tree "/></p>
+			
+			<p class="figure-caption">图 13.38–二叉树的右视图</p>
+			<p>因此，如果放置在该树的右侧，将只看到节点 40、45、44、9 和 2。如果我们考虑级别顺序遍历（BFS），我们将获得以下输出：</p>
+			<ul>
+				<li><strong class="bold">40</strong>、47、<strong class="bold">45</strong>、11、3、<strong class="bold">44</strong>、7、5、<strong class="bold">9</strong>、<strong class="bold">2</strong></li>
+			</ul>
+			<p>高亮显示的节点是表示右侧视图的节点。但是，这些节点中的每一个都表示树中每个级别上最右边的节点。这意味着我们可以调整 BFS 算法并打印每个级别的最后一个节点。</p>
+			<p>这是一个具有辅助 O（n）空间（由队列表示）的 O（n）复杂度时间<a id="_idIndexMarker1253"/>算法，其中<em class="italic">n</em>是树中的节点数：</p>
+			<pre>private void printRightViewIterative(Node root) {
+  if (root == null) {
+    return;
+  }
+  // enqueue root node
+  Queue&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
+  queue.add(root);
+  Node currentNode;
+  while (!queue.isEmpty()) {
+    // number of nodes in the current level is the queue size
+    int size = queue.size();
+    int i = 0;
+    // traverse each node of the current level and enqueue its
+    // non-empty left and right child
+    while (i &lt; size) {
+      i++;
+      currentNode = queue.poll();
+      // if this is last node of current level just print it
+      if (i == size) {
+        System.out.print(currentNode.element + " ");
+      }
+      if (currentNode.left != null) {
+        queue.add(currentNode.left);
+      }
+      if (currentNode.right != null) {
+        queue.add(currentNode.right);
+      }
+    }
+  }
+}</pre>
+			<p>在这里，我们也可以实现递归解决方案。</p>
+			<p>这是一个 O（n）复杂度时间算法，带有一个辅助 O（n）空间（由映射表示），其中<em class="italic">n</em>是树中的节点数。您可以在<em class="italic">BinaryTreeRightView</em>应用程序中<a id="_idIndexMarker1255"/>与本<a id="_idIndexMarker1254"/>书捆绑的代码中找到递归方法。挑战自己，实现二叉树的左视图。</p>
+			<h2 id="_idParaDest-327"><a id="_idTextAnchor329"/>编码挑战 18–第 k 个最大元素</h2>
+			<p><strong class="bold">谷歌</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经给出了一个 BST.写的代码片段，它打印了不改变 BST 的第 3 个最大元素。</p>
+			<p>让我们考虑下面的 BST：</p>
+			<p><img src="img/Figure_13.39_B15403.jpg" alt="Figure 13.39 – kth largest element in a BST "/></p>
+			
+			<p class="figure-caption">图 13.39–BST 中第 k 个最大元素</p>
+			<p>对于<em class="italic">k</em>=1，我们可以看到 56 是第一大元素。对于<em class="italic">k</em>=2，我们可以看到 55 是第二大元素，依此类推。</p>
+			<p>蛮力解决方案非常简单，将在 O（n）时间内运行，其中<em class="italic">n</em>是树中的节点数。我们所要做的就是提取一个数组，并将其按树的顺序遍历<strong class="bold">（左子树【右子树】【根】）</strong>：45、47、50、52、54、55、56。完成后，我们可以找到第<em class="italic">k</em>个元素作为<em class="italic">数组</em>[<em class="italic">n-k</em>。例如，对于<em class="italic">k</em>=3，第三个元素是<em class="italic">数组</em>[7-3]=<em class="italic">数组</em>[4]=54。如果愿意，您可以挑战自己并提供此实现。</p>
+			<p>然而，另一种在 O（k+h）复杂度时间内运行的方法，其中<em class="italic">h</em>是 BST 的高度，可以基于逆序遍历<strong class="bold">（右子树|左子树|根）</strong>来编写，它按降序给出元素：56、55、54、52、50、47、45。</p>
+			<p><a id="_idIndexMarker1257"/>代码本身就说明了问题（<strong class="source-inline">c</strong>变量统计访问的节点数）：</p>
+			<pre>public void kthLargest(int k) {
+  kthLargest(root, k);
+}
+private int c;
+private void kthLargest(Node root, int k) {
+  if (root == null || c &gt;= k) {
+    return;
+  }
+  kthLargest(root.right, k);
+  c++;
+  // we found the kth largest value
+  if (c == k) {
+    System.out.println(root.element);
+  }
+  kthLargest(root.left, k);
+}</pre>
+			<p><a id="_idIndexMarker1258"/>完整的应用程序称为<em class="italic">BinarySearchTreeKthLargestElement。</em></p>
+			<h2 id="_idParaDest-328"><a id="_idTextAnchor330"/>编码挑战 19–镜像二叉树</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong></p>
+			<p>问题是：考虑到一个二叉树，你已经知道了。编写一段代码来构造此树的镜像。</p>
+			<p><strong class="bold">解决方案</strong>：镜像树的外观如下（右侧的树是左侧树的镜像版本）：</p>
+			<p><img src="img/Figure_13.40_B15403.jpg" alt="Figure 13.40 – Given tree and the mirrored tree "/></p>
+			
+			<p class="figure-caption">图 13.40–给定树和镜像树</p>
+			<p>因此，镜像树就像给定树的水平翻转。要创建树的镜像，我们必须决定是将镜像树作为新树返回，还是将给定树镜像到位。</p>
+			<h3 id="sigil_toc_id_531">在新树中镜像给定树</h3>
+			<p>将<a id="_idIndexMarker1260"/>镜像作为新树返回可以通过以下步骤的递归算法完成：</p>
+			<p><img src="img/Figure_13.41_B15403_Recursive_Algorithm.jpg" alt="Figure 13.41 - Recursive Algorithm"/></p>
+			
+			<p class="figure-caption">图 13.41-递归算法</p>
+			<p>在代码方面，我们有以下内容：</p>
+			<pre>private Node mirrorTreeInTree(Node root) {
+  if (root == null) {
+    return null;
+  }
+  Node node = new Node(root.element);
+  node.left = mirrorTreeInTree(root.right);
+  node.right = mirrorTreeInTree(root.left);
+  return node;
+}</pre>
+			<p>现在，让我们试着在适当的位置镜像给定的树。</p>
+			<h3 id="sigil_toc_id_532">在适当位置镜像给定的树</h3>
+			<p>也可以通过递归在适当的位置镜像给定的<a id="_idIndexMarker1262"/>树。这一次，算法遵循以下步骤：</p>
+			<ol>
+				<li value="1">镜像给定树的左子树。</li>
+				<li>镜像给定树的右子树。</li>
+				<li>交换左右两个子树（交换它们的指针）。</li>
+			</ol>
+			<p>在代码方面，我们有以下内容：</p>
+			<pre>private void mirrorTreeInPlace(Node node) {
+  if (node == null) {
+    return;
+  }
+  Node auxNode;
+  mirrorTreeInPlace(node.left);
+  mirrorTreeInPlace(node.right);
+  auxNode = node.left;
+  node.left = node.right;
+  node.right = auxNode;
+}</pre>
+			<p>完整的<a id="_idIndexMarker1263"/>应用程序称为<em class="italic">MirrorBinaryTree。</em></p>
+			<h2 id="_idParaDest-329"><a id="_idTextAnchor331"/>编码挑战 20–二叉树的螺旋级顺序遍历</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。编写一段代码，打印此二叉树的螺旋级遍历。更准确地说，应该从左到右打印级别 1 上的所有节点，然后从右到左打印级别 2 上的所有节点，然后从左到右打印级别 3 上的所有节点，依此类推。所以，奇数级别应该从左到右打印，偶数级别应该从右到左打印。</p>
+			<p><strong class="bold">解决方案</strong>：螺旋式水平穿越可采用两种方式表述，如下所示：</p>
+			<ul>
+				<li>奇数级别应从左到右打印，偶数级别从右到左打印。</li>
+				<li>奇数级别应从右向左打印，偶数级别从左向右打印。</li>
+			</ul>
+			<p>下图显示了这些语句：</p>
+			<p><img src="img/Figure_13.41_B15403.jpg" alt="Figure 13.42 – Spiral order traversal "/></p>
+			
+			<p class="figure-caption">图 13.42–螺旋顺序遍历</p>
+			<p>因此，在左侧<a id="_idIndexMarker1265"/>上，我们得到 50、12、45、12、3、65、70、24 和 41。另一方面，在右边，我们得到 50，45，12，70，65，3，12，41 和 24。</p>
+			<h3 id="sigil_toc_id_533">递归方法</h3>
+			<p>让我们试着从上图左侧实现<a id="_idIndexMarker1266"/>螺旋顺序遍历。请注意，奇数级别应按从左到右的顺序打印，而偶数级别应按相反顺序打印。基本上，我们需要通过翻转偶数层的方向来调整众所周知的层顺序遍历。这意味着我们可以使用布尔变量来改变打印顺序。因此，如果布尔变量为<strong class="source-inline">true</strong>（或 1），则从左到右打印当前级别；否则，我们将从右向左打印它。在每个迭代（级别）中，我们翻转布尔值。</p>
+			<p>通过递归应用此功能可按如下方式进行：</p>
+			<pre>public void spiralOrderTraversalRecursive() {
+  if (root == null) {
+    return;
+  }
+  int level = 1;
+  boolean flip = false;
+  // as long as printLevel() returns true there 
+  // are more levels to print
+  while (printLevel(root, level++, flip = !flip)) {
+    // there is nothing to do
+  };
+}
+// print all nodes of a given level 
+private boolean printLevel(Node root, 
+      int level, boolean flip) {
+  if (root == null) {
+    return false;
+  }
+  if (level == 1) {
+    System.out.print(root.element + " ");
+    return true;
+  }
+  if (flip) {
+    // process left child before right child
+    boolean left = printLevel(root.left, level - 1, flip);
+    boolean right = printLevel(root.right, level - 1, flip);
+    return left || right;
+  } else {
+    // process right child before left child
+    boolean right = printLevel(root.right, level - 1, flip);
+    boolean left = printLevel(root.left, level - 1, flip);
+    return right || left;
+  }
+}</pre>
+			<p>此代码以 O（n2）时间运行，这是非常低效的。我们能更有效地做到这一点吗？是的–我们可以通过迭代方法在 O（n）时间内用额外的空间 O（n）完成。</p>
+			<h3 id="sigil_toc_id_534">迭代法</h3>
+			<p>让我们尝试从给定图表的右侧执行<a id="_idIndexMarker1268"/>螺旋顺序遍历。这次我们将通过迭代的方法来实现这一点。我们主要可以使用两个堆栈（<strong class="source-inline">堆栈</strong>）或一个双端队列（<strong class="source-inline">Deque</strong>）。让我们学习如何通过两个堆栈来实现这一点。</p>
+			<p>使用两个堆栈的主要思想非常简单：我们使用一个堆栈打印从左到右的节点，另一个堆栈打印从右到左的节点。在每个迭代（或级别）中，我们在其中一个堆栈中有相应的节点。当我们从堆栈打印节点时，我们将下一级别的节点推送到另一个堆栈中。</p>
+			<p>以下<a id="_idIndexMarker1269"/>代码将这些语句转换为代码形式：</p>
+			<pre>private void printSpiralTwoStacks(Node node) {
+  if (node == null) {
+    return;
+  }
+  // create two stacks to store alternate levels         
+  Stack&lt;Node&gt; rl = new Stack&lt;&gt;(); // right to left         
+  Stack&lt;Node&gt; lr = new Stack&lt;&gt;(); // left to right 
+  // Push first level to first stack 'rl' 
+  rl.push(node);
+  // print while any of the stacks has nodes 
+  while (!rl.empty() || !lr.empty()) {
+    // print nodes of the current level from 'rl' 
+    // and push nodes of next level to 'lr'
+    while (!rl.empty()) {
+      Node temp = rl.peek();
+      rl.pop();
+      System.out.print(temp.element + " ");
+      if (temp.right != null) {
+        lr.push(temp.right);
+      }
+      if (temp.left != null) {
+        lr.push(temp.left);
+      }
+    }
+    // print nodes of the current level from 'lr' 
+    // and push nodes of next level to 'rl'
+    while (!lr.empty()) {
+      Node temp = lr.peek();
+      lr.pop();
+      System.out.print(temp.element + " ");
+      if (temp.left != null) {
+        rl.push(temp.left);
+      }
+      if (temp.right != null) {
+        rl.push(temp.right);
+      }
+    }
+  }
+}</pre>
+			<p><a id="_idIndexMarker1270"/>完整的应用程序<a id="_idIndexMarker1271"/>称为<em class="italic">BinaryTreeSpiralTraversal。</em>在此应用程序中，您还可以找到基于<strong class="source-inline">Deque</strong>的实现。</p>
+			<h2 id="_idParaDest-330"><a id="_idTextAnchor332"/>编码挑战 21–距离叶子 k 处的节点</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个整数的二叉树和一个整数。编写一段代码，打印距离叶节点<em class="italic">k</em>的所有节点。</p>
+			<p><strong class="bold">解决方案</strong>：我们可以凭直觉推断，距离叶子<em class="italic">k</em>的距离意味着叶子上方的<em class="italic">k</em>水平。但为了澄清任何疑问，让我们遵循经典方法，并尝试可视化一个示例。下图表示二叉树；高亮显示的节点（40、47 和 11）表示距离叶节点<em class="italic">k</em>=2 的节点：</p>
+			<p><img src="img/Figure_13.42_B15403.jpg" alt="Figure 13.43 – Nodes at a distance of  k=2 from any leaf node  "/></p>
+			
+			<p class="figure-caption">图 13.43–距离叶节点 k=2 的节点</p>
+			<p>从上图中，我们可以得出以下观察结果：</p>
+			<ul>
+				<li>节点 40 与叶 44 的距离为 2。</li>
+				<li>节点 47 与叶 9 和叶 5 的距离为 2。</li>
+				<li>节点 11 与叶 2 的距离为 2。</li>
+			</ul>
+			<p>如果我们查看每个级别，则可以看到以下内容：</p>
+			<ul>
+				<li>距离叶节点 1 的节点为 3、11、7 和 45。</li>
+				<li>距离叶节点 2 的节点分别为 11、47 和 40。</li>
+				<li>距离叶节点 3 处的节点分别为 40 和 47。</li>
+				<li>距离叶节点 4 处的节点为 40。</li>
+			</ul>
+			<p>因此，根节点是离叶子的最大距离，<em class="italic">k</em>大于层数没有意义；就是 1。如果我们从根开始沿着树往下走，直到找到一片叶子，那么得到的路径应该包含一个节点，该节点与该叶子的距离为<em class="italic">k</em>。</p>
+			<p>例如，可能的路径是 40（根）、47、11、7 和 2（叶）。如果<em class="italic">k</em>=2，则节点 11 与叶片的距离为 2。另一个可能的路径是 40（根）、47、11 和 5（叶）。如果<em class="italic">k</em>=2，则节点 47 与叶片的距离为 2。另一条路径是 40（根）、47、3 和 9（叶）。如果<em class="italic">k</em>=2，则节点 47 与叶片的距离为 2。我们已经找到了这个节点；因此，我们现在必须注意并消除重复。</p>
+			<p>到目前为止列出的路径<a id="_idIndexMarker1273"/>表明有树<strong class="bold">（根【左子树】【右子树】</strong>的预序遍历。在遍历过程中，我们必须跟踪当前路径。换句话说，构建的路径由预序遍历中当前节点的祖先组成。当我们找到一个叶节点时，我们必须打印出与该叶<em class="italic">k</em>距离的祖先。</p>
+			<p>为了消除重复，我们可以使用一个<strong class="source-inline">集合</strong>（我们将其表示为<strong class="source-inline">节点列表</strong>，如下代码所示：</p>
+			<pre>private void leafDistance(Node node, 
+    List&lt;Node&gt; pathToLeaf, Set&lt;Node&gt; nodesAtDist, int dist) {
+  if (node == null) {
+    return;
+  }
+  // for each leaf node, store the node at distance 'dist'
+  if (isLeaf(node) &amp;&amp; pathToLeaf.size() &gt;= dist) {
+    nodesAtDist.add(pathToLeaf.get(pathToLeaf.size() - dist));
+    return;
+  }
+  // add the current node into the current path        
+  pathToLeaf.add(node);
+  // go  to left and right subtree via recursion
+  leafDistance(node.left, pathToLeaf, nodesAtDist, dist);
+  leafDistance(node.right, pathToLeaf, nodesAtDist, dist);
+  // remove the current node from the current path       
+  pathToLeaf.remove(node);
+}
+private boolean isLeaf(Node node) {
+  return (node.left == null &amp;&amp; node.right == null);
+}</pre>
+			<p>前面的代码在 O（n）时间<a id="_idIndexMarker1274"/>复杂度和辅助空间 O（n）中运行，其中<em class="italic">n</em>是树中的节点数。完整的<a id="_idIndexMarker1275"/>应用程序称为<em class="italic">BinaryTreeDistanceFromLeaf。</em></p>
+			<h2 id="_idParaDest-331"><a id="_idTextAnchor333"/>编码质询 22–给定和的配对</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经给出了一个 BST 和一个和。编写一段代码，如果有一对节点具有此和，则返回<strong class="source-inline">true</strong>。</p>
+			<p>我们在下面的图中示出 BST 和 SoT T2。</p>
+			<p><img src="img/Figure_13.43_B15403.jpg" alt="Figure 13.44 – The pair for sum=74 contains nodes 6 and 68 "/></p>
+			
+			<p class="figure-caption">图 13.44–sum=74 的一对包含节点 6 和 68</p>
+			<p>因此，对于<em class="italic">和</em>=74，我们可以找到这对（6，68）。如果<em class="italic">和</em>=89，则该对为（43,46）。如果<em class="italic">和</em>=99，则该对为（50,49）。形成该对的节点可以来自相同的子树或不同的子树，也可以包括根节点和叶节点。</p>
+			<p>这个问题的一个解决方案依赖于<em class="italic">散列</em>和递归。主要是使用顺序遍历（<strong class="bold">左子树</strong><strong class="bold">根</strong><strong class="bold">右子树</strong>）遍历树，并将每个节点的元素插入一个集合（例如，插入一个<strong class="source-inline">哈希集合</strong>）。此外，在将当前节点插入集合之前，我们检查（<em class="italic">给定的和-当前节点的元素</em>是否存在于集合中。如果是，那么我们已经找到了一对，因此我们停止该过程并返回<strong class="source-inline">true</strong>。否则，我们将当前节点插入到集合中并继续此过程，直到找到一对，或者遍历完成。</p>
+			<p>此处列出了此操作的代码：</p>
+			<pre>public boolean findPairSum(int sum) {
+  return findPairSum(root, sum, new HashSet());
+}
+private static boolean findPairSum(Node node, 
+        int sum, Set&lt;Integer&gt; set) {
+  // base case
+  if (node == null) {
+    return false;
+  }
+  // find the pair in the left subtree 
+  if (findPairSum(node.left, sum, set)) {
+    return true;
+  }
+  // if pair is formed with current node then print the pair      
+  if (set.contains(sum - node.element)) {
+    System.out.print("Pair (" + (sum - node.element) + ", "
+      + node.element + ") = " + sum);
+    return true;
+  } else {
+    set.add(node.element);
+  }
+  // find the pair in the right subtree 
+  return findPairSum(node.right, sum, set);
+}</pre>
+			<p>此代码的运行时为 O（n），辅助空间为 O（n）。完整的应用程序<a id="_idIndexMarker1277"/>称为<em class="italic">二进制搜索树。</em></p>
+			<p>另一个解决方案，您可能喜欢考虑和挑战自己，从一个事实开始，BST，当遍历使用顺序遍历时，按排序顺序输出节点。这意味着，如果我们扫描 BST 并将输出存储在数组中，那么问题与在数组中查找给定和的对完全相同。但是这个解决方案需要对所有节点进行两次遍历，并需要一个辅助空间 O（n）。</p>
+			<p>另一种方法从 BST 属性开始：<em class="italic">n 的左后代≤ n&lt;n</em>的右后裔。换句话说，树中的最小节点是最左边的节点（在本例中为 6），而树中的最大节点是最右边的节点（在本例中为 71）。现在，考虑树的两个遍历：</p>
+			<ul>
+				<li>按顺序向前遍历（最左边的节点是第一个访问的节点）</li>
+				<li>顺序相反的遍历（最右边的节点是第一个访问的节点）</li>
+			</ul>
+			<p>现在，让我们计算（<em class="italic">最小值+最大值</em>表达式：</p>
+			<ul>
+				<li>如果（<em class="italic">最小值+最大值</em>&lt;<em class="italic">和</em>，则转到下一个<em class="italic">最小值</em>（前向顺序遍历返回的下一个节点）。</li>
+				<li>如果（<em class="italic">最小值+最大值</em>&gt;<em class="italic">和</em>，则转到下一个<em class="italic">最大值</em>（逆序遍历返回下一个节点）。</li>
+				<li>如果（<em class="italic">最小值+最大值</em>＝<em class="italic">和</em>，则返回<strong class="source-inline">true。</strong></li>
+			</ul>
+			<p>这里的主要问题是我们需要管理这两个遍历。一种方法可以依赖于两个堆栈。在一个堆栈中，我们按顺序存储正向遍历的输出，而在另一个堆栈中，我们按顺序存储反向遍历的输出。当我们到达<em class="italic">最小值</em>（最左侧）和<em class="italic">最大值</em>（最右侧）节点时，我们必须弹出堆栈顶部，并对给定的<em class="italic">和</em>执行相等性检查。</p>
+			<p>此相等性检查通过前面的一个检查（由前面的三个项目符号给出），并解释如下：</p>
+			<ul>
+				<li>如果（<em class="italic">最小值+最大值</em>&lt;<em class="italic">和</em>，则我们通过前向顺序遍历进入弹出节点的右子树。这就是我们如何找到下一个最伟大的元素。</li>
+				<li>如果（<em class="italic">最小值+最大值</em>&gt;<em class="italic">和</em>，则按相反顺序遍历到弹出节点的左子树。这就是我们如何找到下一个最小元素的方法。</li>
+				<li>如果（<em class="italic">最小值+最大值</em>＝<em class="italic">和</em>，那么我们已经找到一对验证给定<em class="italic">和</em>。</li>
+			</ul>
+			<p>只要按序向前和按序反向遍历不满足要求，则该算法按<a id="_idIndexMarker1279"/>应用。让我们看看这方面的代码：</p>
+			<pre>public boolean findPairSumTwoStacks(int sum) {
+  return findPairSumTwoStacks(root, sum);
+}
+private static boolean findPairSumTwoStacks(
+              Node node, int sum) {
+  Stack&lt;Node&gt; fio = new Stack&lt;&gt;(); // fio - Forward In-Order
+  Stack&lt;Node&gt; rio = new Stack&lt;&gt;(); // rio - Reverse In-Order
+  Node minNode = node;
+  Node maxNode = node;
+  while (!fio.isEmpty() || !rio.isEmpty()
+           || minNode != null || maxNode != null) {
+    if (minNode != null || maxNode != null) {
+      if (minNode != null) {
+        fio.push(minNode);
+        minNode = minNode.left;
+      }
+      if (maxNode != null) {
+        rio.push(maxNode);
+        maxNode = maxNode.right;
+      }
+    } else {
+      int elem1 = fio.peek().element;
+      int elem2 = rio.peek().element;
+      if (fio.peek() == rio.peek()) {
+        break;
+      }
+      if ((elem1 + elem2) == sum) {
+        System.out.print("\nPair (" + elem1 + ", " 
+             + elem2 + ") = " + sum);
+        return true;
+      }
+      if ((elem1 + elem2) &lt; sum) {
+        minNode = fio.pop();
+        minNode = minNode.right;
+      } else {
+        maxNode = rio.pop();
+        maxNode = maxNode.left;
+      }
+    }
+  }
+  return false;
+}</pre>
+			<p>此代码的运行时<a id="_idIndexMarker1280"/>为 O（n），辅助空格为 O（n）。完整的<a id="_idIndexMarker1281"/>应用程序称为<em class="italic">二进制搜索树。</em></p>
+			<h2 id="_idParaDest-332"><a id="_idTextAnchor334"/>编码挑战 23–二叉树中的垂直和</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个二叉树。编写一段代码，计算此二叉树的垂直和。</p>
+			<p><strong class="bold">解决方案</strong>：为了清楚地了解这个问题，绘制一个有意义的图表是非常重要的。使用带有正方形的笔记本（数学笔记本）将非常有用。这很有用，因为必须以 45 度角绘制节点之间的边；否则，可能无法正确看到节点的垂直轴。通常，当我们绘制二叉树时，我们并不关心节点之间的角度，但在这种情况下，这是理解问题并找到解决方案的一个重要方面。</p>
+			<p>下图是二叉树的示意图。它显示了一些有助于我们找到解决方案的里程碑：</p>
+			<p><img src="img/Figure_13.44_B15403.jpg" alt="Figure 13.45 – Vertical sums in a binary tree "/></p>
+			
+			<p class="figure-caption">图 13.45–二叉树中的垂直和</p>
+			<p>如果我们从左边到右边扫描这棵树，我们可以识别出七个垂直轴，它们的总和是 5、7、16、35、54、44 和 6。在图的顶部，我们添加了每个节点到根节点的水平距离。如果我们认为根节点具有距离 0，那么我们可以很容易地通过减小根的左或右唯一地识别每个垂直轴，分别增加 1、3、-2、-1, 0（根）、1, 2, 3。</p>
+			<p>每个轴都是通过其与根的距离来唯一标识的，每个轴都包含我们必须求和的节点。如果我们将一个轴的唯一距离作为一个键，将该轴上的节点数之和作为一个值来考虑，那么我们可以直觉地认为这个问题可以通过<em class="italic">散列</em>来解决（如果您不熟悉散列的概念，那么请看<a href="06.html#_idTextAnchor080"><em class="italic">第 6 章</em></a><em class="italic">，面向对象编程</em>，<em class="italic">哈希表</em>问题）。在 Java 中，我们可以通过内置的<strong class="source-inline">HashMap</strong>实现使用哈希，因此不需要从头开始编写哈希实现。</p>
+			<p>但是我们怎么填这张地图呢？很明显，我们在填地图时必须穿过这棵树。我们可以从根开始，将键添加到地图中，作为 0（0 对应于包含根的轴），将值添加到根（21）。接下来，我们可以使用递归将到根的距离减少 1，从而转到根的左轴。我们还可以使用递归通过根的右轴，将与根的距离增加 1。在每个节点上，我们更新地图中与标识当前轴的键相对应的值。因此，如果我们递归地遵循路径<strong class="bold">根</strong><strong class="bold">左子树</strong><strong class="bold">右子树</strong>，那么我们使用二叉树的预序遍历。</p>
+			<p>最后，我们的映射应该包含以下键值对：（-3,5），（-2,7），（-1,16），（0,35），（1,54），（2,44）和（3,6）。</p>
+			<p>将此算法放入代码中，结果如下（<strong class="source-inline">映射</strong>包含垂直和）：</p>
+			<pre>private void verticalSum(Node root, 
+        Map&lt;Integer, Integer&gt; map, int dist) {
+  if (root == null) {
+    return;
+  }
+  if (!map.containsKey(dist)) {
+    map.put(dist, 0);
+  }
+  
+  map.put(dist, map.get(dist) + root.element);        
+  // or in functional-style
+  /*
+  BiFunction &lt;Integer, Integer, Integer&gt; distFunction
+    = (distOld, distNew) -&gt; distOld + distNew;
+  map.merge(dist, root.element, distFunction);
+  */
+  // decrease horizontal distance by 1 and go to left
+  verticalSum(root.left, map, dist - 1);
+  // increase horizontal distance by 1 and go to right
+  verticalSum(root.right, map, dist + 1);
+}</pre>
+			<p>前面的代码以 O（n logn）时间运行，辅助空间为 O（n），其中<em class="italic">n</em>是树的节点总数。添加到映射的时间复杂度为 O（logn），因为我们对树的每个节点进行了添加，这意味着我们得到了 O（nlogn）。对于面试来说，这里给出的解决方案应该足够了。但是，您可以通过使用额外的双链接列表来挑战自己，并将时间复杂性降低到 O（n）。主要是，您需要<a id="_idIndexMarker1284"/>将每个垂直和存储在链表的一个节点中。首先，将包含根的轴对应的垂直和添加到链接列表中。然后，链表的<em class="italic">node.next</em>和<em class="italic">node.prev</em>应该存储根轴左右的轴的垂直和。最后，在遍历<a id="_idIndexMarker1285"/>树时，依靠递归更新链表。</p>
+			<p>完整的<a id="_idIndexMarker1286"/>应用程序称为<em class="italic">BinaryTreeVerticalSum。</em></p>
+			<h2 id="_idParaDest-333"><a id="_idTextAnchor335"/>编码挑战 23–将最大堆转换为最小堆</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑阿纳尔 T2。你已经得到了一个表示 Min 二进制堆的数组。编写一段代码，将给定的最小二进制堆在线性时间内转换为最大二进制堆，而无需额外空间。</p>
+			<p><strong class="bold">解决方案</strong>：该问题的解决方案受到<em class="italic">堆排序</em>算法的启发（该算法在<a href="14.html#_idTextAnchor340"><em class="italic">第 14 章</em></a><em class="italic"/>排序和搜索中介绍）。</p>
+			<p>起初，这个问题听起来可能很复杂，但经过几分钟的思考，您可能会得出结论，这个问题可以简化为从未排序的数组构建 Max 二进制堆。因此，给定数组是否是最小二进制堆这一事实并不重要。我们可以通过以下两个步骤从任何数组（已排序或未排序）构建所需的最大二进制堆：</p>
+			<ol>
+				<li value="1">从给定数组的最右、最底节点（最后一个内部节点）开始。</li>
+				<li><em class="italic">通过自底向上技术对</em>所有节点进行加密。</li>
+			</ol>
+			<p>《守则》不言自明：</p>
+			<pre>public static void convertToMinHeap(int[] maxHeap) {
+  // build heap from last node to all 
+  // the way up to the root node
+  int p = (maxHeap.length - 2) / 2;
+  while (p &gt;= 0) {
+    heapifyMin(maxHeap, p--, maxHeap.length);
+  }
+}
+// heapify the node at index p and its two direct children    
+private static void heapifyMin(int[] maxHeap,
+      int p, int size) {
+  // get left and right child of node at index p
+  int left = leftChild(p);
+  int right = rightChild(p);
+  int smallest = p;
+  // compare maxHeap[p] with its left and 
+  // right child and find the smallest value
+  if ((left &lt; size) &amp;&amp; (maxHeap[left] &lt; maxHeap[p])) {
+    smallest = left;
+  }
+  if ((right &lt; size) 
+      &amp;&amp; (maxHeap[right] &lt; maxHeap[smallest]))  {
+    smallest = right;
+  }
+  // swap 'smallest' with 'p' and heapify
+  if (smallest != p) {
+    swap(maxHeap, p, smallest);
+    heapifyMin(maxHeap, smallest, size);
+  }
+}
+/* Helper methods */
+private static int leftChild(int parentIndex) {
+  return (2 * parentIndex + 1);
+}
+private static int rightChild(int parentIndex) {
+  return (2 * parentIndex + 2);
+}
+// utility function to swap two indices in the array
+private static void swap(int heap[], int i, int j) {
+  int aux = heap[i];
+  heap[i] = heap[j];
+  heap[j] = aux;
+}</pre>
+			<p>此代码的运行时为 O（n），不需要<a id="_idIndexMarker1288"/>额外空间。完整的应用程序称为<em class="italic">MaxHeapToMinHeap。</em>它还<a id="_idIndexMarker1289"/>包含从最小二进制堆到最大二进制堆的转换。</p>
+			<h2 id="_idParaDest-334"><a id="_idTextAnchor336"/>编码挑战 24–找出二叉树是否对称</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题是：考虑到一个二叉树，你已经知道了。编写一段代码，如果此二叉树是对称的（自身是否镜像；左子树和右子树是彼此的镜像），则返回<strong class="source-inline">true</strong>。</p>
+			<p>首先，让我们来看看包含对称和非对称二叉树的图。标记为（a）、（b）和（d）的二叉树是不对称的，而标记为（c）、（e）和（f）的二叉树是对称的。请注意，如果结构和数据都是对称的，则二叉树是对称的：</p>
+			<p><img src="img/Figure_13.45_B15403.jpg" alt="Figure 13.46 – Symmetric and asymmetric binary tree examples "/></p>
+			
+			<p class="figure-caption">图 13.46–对称和非对称二叉树示例</p>
+			<p>我们可以将此问题视为镜像<em class="italic">root.left</em>并检查它是否与<em class="italic">root.right</em>相同。如果它们相同，则二叉树是对称的。但是，我们也可以通过三个条件来表示两个二叉树的对称性，如下所示（理解这些条件的最简单方法是获取每个条件并将它们传递给上图中所示的示例）：</p>
+			<ol>
+				<li value="1">根节点的元素相同。</li>
+				<li>左树的左子树和右树的右子树必须是镜像。</li>
+				<li>左树的右子树和右树的左子树必须是镜像。</li>
+			</ol>
+			<p>我认为我们有足够的<a id="_idIndexMarker1291"/>经验认识到这些条件可以通过递归实现，如下所示：</p>
+			<pre>private boolean isSymmetricRecursive(
+      Node leftNode, Node rightNode) {
+  boolean result = false;
+  // empty trees are symmetric
+  if (leftNode == null &amp;&amp; rightNode == null) {
+    result = true;
+  }
+  // conditions 1, 2, and 3 from above
+  if (leftNode != null &amp;&amp; rightNode != null) {
+    result = (leftNode.element.equals(rightNode.element))
+      &amp;&amp; isSymmetricRecursive(leftNode.left, rightNode.right)
+      &amp;&amp; isSymmetricRecursive(leftNode.right, rightNode.left);
+  }
+  return result;
+}</pre>
+			<p>该代码的时间复杂度为 O（n）和 O（h）额外空间，其中<em class="italic">h</em>是树的高度。迭代实现怎么样？我们可以通过队列提供迭代实现。以下代码是对这种方法的最好解释：</p>
+			<pre>public boolean isSymmetricIterative() {        
+  boolean result = false;
+  Queue&lt;Node&gt; queue = new LinkedList&lt;&gt;();
+  queue.offer(root.left);
+  queue.offer(root.right);
+  while (!queue.isEmpty()) {
+    Node left = queue.poll();
+    Node right = queue.poll();
+    if (left == null &amp;&amp; right == null) {
+      result = true;
+    } else if (left == null || right == null 
+                || left.element != right.element) {
+      result = false;
+      break;
+    } else {
+      queue.offer(left.left);
+      queue.offer(right.right);
+      queue.offer(left.right);
+      queue.offer(right.left);
+    }
+  }
+  return result;
+}</pre>
+			<p>该代码的时间复杂度为 O（n）和 O（h）额外空间，其中<em class="italic">h</em>是树的高度。完整的<a id="_idIndexMarker1294"/>应用程序称为<em class="italic">二叉树。</em></p>
+			<h2 id="_idParaDest-335"><a id="_idTextAnchor337"/>编码挑战 25–以最低成本连接<em class="italic">n</em>绳索</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑到你已经得到了一个数组，包含了长度为 3 的 3 个阿纳尔 T4 绳索，我们需要把所有这些绳索连接到一根绳子上。考虑连接两条绳索的成本等于它们的长度之和。编写一段代码，以最低成本将所有绳索连接到单个绳索。</p>
+			<p>让我们考虑，我们有四条绳子，长度是 1, 3, 4，6。让我们先把最短的两根绳子连接起来。这意味着我们需要连接绳索 1 和绳索 3，其成本为 1+3=4。继续使用相同的逻辑，接下来的两条绳子是 4（我们刚刚得到的那条），长度是 4。成本为 4+4=8，因此总成本为 4+8=12。我们还有两条绳子，长度分别是 8 和 6。连接它们的成本为 8+6=14。因此，总成本和最终成本为 12+14=26。</p>
+			<p>现在，让我们尝试另一种策略。让我们先把最长的两根绳子连接起来。这意味着我们需要连接绳索 4 和 6，其成本为 4+6=10。按照同样的逻辑，接下来的两条绳子是 10（我们刚刚得到的那条）和 3 的长度。成本为 10+3=13，因此总成本为 10+13=23。我们还有两条绳子，长度分别是 13 和 1。连接它们的成本为 13+1=14。因此，总成本和最终成本为 23+14=37。</p>
+			<p>由于 37&gt;26，显然第一种方法比第二种方法好。但问题是什么？好吧，如果你还没有注意到的话，连接的绳子的长度首先出现在其余的连接处。例如，当我们连接绳索 1 和绳索 3 时，我们写出 1+3=4。到目前为止，4 是总成本。接下来，我们添加 4+4=8，因此新的总成本是之前的总成本+8，即 4+8，但 4 是从 1+3 中获得的，因此 1+3 再次出现。最后，我们连接 8+6=14。新的总成本是以前的成本+14，即 12+14，但 12 是从 4+8 获得的，4 是从 1+3 获得的，因此 1+3 再次出现。</p>
+			<p>通过分析前面的陈述，我们可以得出这样的结论：如果重复添加的绳索最小，那么连接所有绳索的成本最小，依此类推。换言之，我们可以将其算法考虑如下：</p>
+			<ol>
+				<li value="1">按长度按降序排列绳子。</li>
+				<li>连接前两条绳索并更新部分最低成本。</li>
+				<li>将前两条绳索更换为产生的绳索。</li>
+				<li>从<em class="italic">步骤 1</em>重复，直到剩下一根绳子（连接所有绳子的结果）。</li>
+			</ol>
+			<p>在实现该算法后，我们<a id="_idIndexMarker1296"/>应该得到最终的最小成本。如果我们尝试通过排序算法（如快速排序或合并排序）来实现该算法，那么结果将在 O（n2 logn）时间内执行。从<a href="07.html#_idTextAnchor135"><em class="italic">第 7 章</em></a><em class="italic"/>算法的大 O 分析可知，这些排序算法在 O（n logn）时间内执行，但每次连接两根绳子时，我们都要对数组进行排序。</p>
+			<p>我们能做得更好吗？是的，我们可以！在任何时候，我们只需要两条最小长度的绳子；我们不关心阵列的其余部分。换言之，我们需要一个数据结构，使我们能够有效地访问最小元素。因此，答案是最小二进制堆。从最小二进制堆添加和删除是一个 O（logn）复杂度时间操作。其算法可表示为：</p>
+			<ol>
+				<li value="1">从绳子长度数组（O（logn））创建最小二进制堆。</li>
+				<li>轮询最小二进制堆的根，这将为我们提供最小的 rope（O（logn））。</li>
+				<li>再次轮询根，这将给我们第二条最小的绳子（O（logn））。</li>
+				<li>连接两条绳子（将它们的长度相加），并将结果放回最小二进制堆。</li>
+				<li>从<em class="italic">步骤 2</em>开始重复，直到剩下一根绳索（连接所有绳索的结果）。</li>
+			</ol>
+			<p>因此，<a id="_idIndexMarker1297"/>在 O（n logn）复杂度时间内执行的算法如下：</p>
+			<pre>public int minimumCost(int[] ropeLength) {
+  if (ropeLength == null) {
+    return -1;
+  }
+  // add the lengths of the ropes to the heap
+  for (int i = 0; i &lt; ropeLength.length; i++) {           
+    add(ropeLength[i]);
+  }
+  int totalLength = 0;
+  while (size() &gt; 1) {         
+    int l1 = poll();
+    int l2 = poll();
+    totalLength += (l1 + l2);
+    add(l1 + l2);
+  }
+  return totalLength;
+}</pre>
+			<p>完整的<a id="_idIndexMarker1298"/>应用程序称为<em class="italic">HeapConnectRopes。</em></p>
+			<h1 id="_idParaDest-336"><a id="_idTextAnchor338"/>高级主题</h1>
+			<p>从一开始，你<a id="_idIndexMarker1299"/>就应该知道在技术面试中很少遇到以下主题。首先，让我列举这些主题作为一个非详尽的列表：</p>
+			<ul>
+				<li>AVL 树（本书附带的代码中提供了简要说明和实现）</li>
+				<li>红黑树（本书附带的代码中提供了简要说明和实现）</li>
+				<li>Dijkstra 算法</li>
+				<li>拉宾-卡普子串搜索</li>
+				<li>贝尔曼-福特算法</li>
+				<li>Floyd-Warshall 算法</li>
+				<li>间隔树</li>
+				<li>最小生成树</li>
+				<li>B-树</li>
+				<li>二部图</li>
+				<li>图着色</li>
+				<li>P、 NP，和 NP 完全</li>
+				<li>组合与概率</li>
+				<li>正则表达式</li>
+				<li>A*</li>
+			</ul>
+			<p>如果你已经掌握了本书中涉及的所有问题，那么我强烈建议你继续学习上述主题。如果你不这样做，那么请考虑所有问题比这些主题具有更高的优先级。</p>
+			<p>这里概述的大多数主题可能会在采访中被问到，也可能不会被问到。它们代表了你知道或不知道的复杂算法——面试官不能仅仅因为你能够重现一个著名的算法就真正了解你的逻辑和思维能力。面试官希望看到你有能力利用自己的知识。这些算法不会显示您解决以前从未见过的问题的能力。很明显，你无法凭直觉理解如此复杂的算法，因此你的足迹几乎微不足道。如果你不知道这些算法，不要担心！它们不会让你看起来更聪明或更愚蠢！此外，由于它们是复杂的，因此需要大量的时间来实施，而且在面试中，时间是有限的。</p>
+			<p>然而，多学习并没有坏处！这是一条规则，所以如果你有时间，那么也可以看看这些高级主题。</p>
+			<h1 id="_idParaDest-337"><a id="_idTextAnchor339"/>总结</h1>
+			<p>这是本书中艰难的章节之一，任何技术面试都必须阅读<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">。树和图形是如此广泛、美妙和富有挑战性的主题，以至于整本书都致力于它们。然而，当你必须为面试做准备时，你没有时间去读大量的书和深入研究每一个话题。这正是这一章的魅力所在：这一章（就像整本书一样）完全集中于一个事实，即你必须实现你的目标：在技术面试中取得优异成绩。</em></p>
+			<p>换句话说，本章包含了技术访谈中可能遇到的最常见的树和图问题，以及有意义的数字、全面的解释和清晰明了的代码。</p>
+			<p>在下一章中，我们将处理与排序和搜索相关的问题。</p>
+		
+	
+</body>
+</html>

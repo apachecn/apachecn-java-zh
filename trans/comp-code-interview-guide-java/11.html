@@ -1,0 +1,882 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en" xsi:schemalocation="http://www.w3.org/2002/06/xhtml2/ http://www.w3.org/MarkUp/SCHEMA/xhtml2.xsd">
+<head>
+<link href="Styles/Style00.css" rel="stylesheet" type="text/css"/>
+
+<style type="text/css">body{margin:1em;background-color:transparent!important;}#sbo-rt-content *{text-indent:0pt!important;}#sbo-rt-content .bq{margin-right:1em!important;}#sbo-rt-content *{word-wrap:break-word!important;word-break:break-word!important;}#sbo-rt-content table,#sbo-rt-content pre{overflow-x:unset!important;overflow:unset!important;overflow-y:unset!important;white-space:pre-wrap!important;}</style>
+
+</head>
+<body>
+<p id="_idParaDest-251" class="chapter-number"><em class="italic"><a id="_idTextAnchor252"/>第 11 章</em>：</p>
+			<h1 id="_idParaDest-252"><a id="_idTextAnchor253"/>链表和地图</h1>
+			<p>本章介绍了最常见的编码挑战，包括您将在编码采访中遇到的地图和链表。由于在技术访谈中首选单链表，本章中的大多数问题都将利用它们。但是，您可以挑战自己，并尝试在双链接列表的上下文中解决每个此类问题。通常，对于双链接列表，问题变得更容易解决，因为双链接列表为每个节点维护两个指针，并允许我们在列表中来回导航。</p>
+			<p>到本章结束时，您将了解所有涉及链表和地图的常见问题，并且您将对许多技术有足够的知识和理解，以帮助您解决这一类别中的任何其他问题。我们的议程很简单；我们将介绍以下主题：</p>
+			<ul>
+				<li>简而言之，链表</li>
+				<li>简而言之，地图</li>
+				<li>编码挑战</li>
+			</ul>
+			<h1 id="_idParaDest-253"><a id="_idTextAnchor254"/>技术要求</h1>
+			<p>本章中的所有代码文件都可以在 GitHub 上找到，可以在<a href="https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter11">上访问 https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter11 </a>。</p>
+			<p>然而，在讨论编码挑战之前，让我们首先了解链表和地图。</p>
+			<h1 id="_idParaDest-254"><a id="_idTextAnchor255"/>简言之，链表</h1>
+			<p>链表是一种表示一系列节点的线性<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker884"/>数据结构。第一个节点通常称为<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker885"/>头，而最后一个节点通常称为<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker886"/>尾。当每个节点指向下一个节点时，我们<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker887"/>有一个<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">单链表</em>，如下图所示：</p>
+			<p><img src="img/Figure_11.1_B15403.jpg" alt="11.1: A singly linked list "/></p>
+			
+			<p class="figure-caption">图 11.1–单链表</p>
+			<p>当每个节点指向下一个节点和<a id="_idIndexMarker888"/>前一个节点时，我们有一个<em class="italic">双链表</em>，如下图所示：</p>
+			<p><img src="img/Figure_11.2_B15403.jpg" alt="11.2: A doubly linked list "/></p>
+			
+			<p class="figure-caption">图 11.2–双链接列表</p>
+			<p>让我们考虑一个单链表。如果尾部<a id="_idIndexMarker889"/>指向头部，则我们有一个<em class="italic">循环单链表</em>。另外，让我们考虑一个双链表。如果尾部指向头部，头部指向尾部，那么我们<a id="_idIndexMarker891"/>有一个<em class="italic">循环双链表</em>。</p>
+			<p>在单链表中，节点<a id="_idIndexMarker892"/>保存数据（例如，整数或对象）和指向下一个节点的指针。以下代码表示单链表的节点：</p>
+			<pre>private final class Node {
+  private int data;
+  private Node next;
+}</pre>
+			<p>双链接列表还需要指向上一个节点的指针：</p>
+			<pre>private final class Node {
+  private int data;
+  private Node next;
+  private Node prev;
+}</pre>
+			<p>与数组不同，链表不提供访问第<em class="italic">n</em>个元素的固定时间。我们必须迭代<em class="italic">n</em>-1 个元素，才能得到<em class="italic">n</em>个元素。我们可以从链表的开始（单次和双次）以固定时间插入、删除和更新节点。如果我们的实现管理双<a id="_idIndexMarker893"/>链表（称为双头双链表）的尾部，那么我们也可以从链表的末尾以固定时间插入、移除和更新节点<a id="_idIndexMarker894"/>；否则，我们需要迭代链表直到最后一个节点。如果我们的实现管理单链表的尾部（称为双头单链表），那么我们可以<a id="_idIndexMarker895"/>在链表的末尾以固定时间插入节点；否则，我们需要迭代链表直到最后一个节点。</p>
+			<p>本书的代码包附带以下应用程序（每个应用程序公开了<strong class="source-inline">insertFirst（）</strong>、<strong class="source-inline">insertLast（）</strong>、<strong class="source-inline">insertAt（）</strong>、<strong class="source-inline">delete（）</strong>、<strong class="source-inline">deleteByIndex（）</strong>和<strong class="source-inline">print（）</strong>方法）：</p>
+			<ul>
+				<li><em class="italic">单链接列表</em>：双头单链接列表的实现</li>
+				<li><em class="italic">单头单联列表</em>：单头单联列表的实现</li>
+				<li><em class="italic">双链表</em>：双头双链表的实现</li>
+				<li><em class="italic">双链表单头</em>：单头双链表的实现</li>
+			</ul>
+			<p>强烈建议您自己对这些应用程序进行骨骼解剖。每个步骤都有大量的注释，以帮助您理解每个步骤。以下编码挑战依赖于这些链表实现。</p>
+			<h1 id="_idParaDest-255"><a id="_idTextAnchor256"/>简而言之，地图</h1>
+			<p>想象一下，你正在字典里寻找一个单词。这个词本身是独一无二的，可以被认为是一个<em class="italic">键</em>。这个词的意义<a id="_idIndexMarker897"/>可以被<a id="_idIndexMarker898"/>视为<em class="italic">值</em>。因此，该词及其<a id="_idIndexMarker899"/>含义构成<em class="italic">键值对</em>。类似地，在计算中，键值对容纳一段数据，通过使用键进行搜索可以在其中找到值。换句话说，我们知道关键，我们可以用它来找到价值。</p>
+			<p>映射是一种<strong class="bold">抽象数据类型</strong>（<strong class="bold">ADT</strong>），它通过<a id="_idIndexMarker901"/>数组管理<a id="_idIndexMarker900"/>键值对（称为条目）。地图的特征包括：</p>
+			<ul>
+				<li>密钥是唯一的（即不允许重复密钥）。</li>
+				<li>我们可以查看键列表和/或值列表。</li>
+				<li>使用地图最常用的方法是<strong class="source-inline">get（）</strong>、<strong class="source-inline">put（）</strong>和<strong class="source-inline">remove（）</strong>。</li>
+			</ul>
+			<p>现在我们已经简要地概述了链表和地图的概念，让我们开始我们的编码挑战。</p>
+			<h1 id="_idParaDest-256"><a id="_idTextAnchor257"/>编码挑战</h1>
+			<p>在下面的 17 个编码<a id="_idIndexMarker903"/>挑战中，我们将讨论一些涉及地图和链表的问题。由于链表在技术面试中更受欢迎，我们将为他们分配更多的问题。但是，为了掌握地图数据结构的概念，特别是内置 Java 地图实现，我强烈建议您购买 Packt Publishing（<a href="https://www.packtpub.com/programming/java-coding-problems">出版的书<em class="italic">Java 编码问题</em>https://www.packtpub.com/programming/java-coding-problems </a>）。除了是本书的绝妙伴侣外，<em class="italic">Java 编码问题</em>还包含以下地图问题（请注意，这不是一个完整的列表）：</p>
+			<ul>
+				<li>创建不可修改/不可变的集合</li>
+				<li>映射默认值</li>
+				<li>计算<strong class="source-inline">映射</strong>中是否缺少/存在值</li>
+				<li>从<strong class="source-inline">地图</strong>中删除</li>
+				<li>替换<strong class="source-inline">映射</strong>中的条目</li>
+				<li>比较两张地图</li>
+				<li>排序一张<strong class="source-inline">地图</strong></li>
+				<li>复制一个<strong class="source-inline">哈希映射</strong></li>
+				<li>合并两张地图</li>
+				<li>删除集合中与谓词匹配的所有元素</li>
+			</ul>
+			<p>现在我们有了关于链接列表和地图的基本概念，让我们来看看访谈中最流行的与地图和链表有关的问题。</p>
+			<h2 id="_idParaDest-257"><a id="_idTextAnchor258"/>编码挑战 1–映射放置、获取和移除</h2>
+			<p><strong class="bold">问题</strong>：编写地图数据结构的基本<a id="_idIndexMarker904"/>实现，允许您放置、获取和移除值。您应该有一个名为<strong class="source-inline">put（kk，vv）</strong>的方法，一个名为<strong class="source-inline">get（kk）</strong>的方法，还有一个名为<strong class="source-inline">remove（kk）</strong>的方法。</p>
+			<p><strong class="bold">解决方案</strong>：如您所知，映射是<a id="_idIndexMarker905"/>一个键值对数据结构。每个键值对都是映射的一个条目。因此，在实现条目之前，我们无法实现映射的功能。因为一个条目包含两条信息，所以我们需要定义一个类，该类以通用方法包装键和值。</p>
+			<p>代码非常简单：</p>
+			<pre>private final class MyEntry&lt;K, V&gt; {
+  private final K key;
+  private V value;
+  public MyEntry(K key, V value) {
+    this.key = key;
+    this.value = value;
+  }
+  // getters and setters omitted for brevity
+}</pre>
+			<p>现在我们有了一个条目，可以声明一个映射了。映射通过具有默认大小的条目数组进行管理，该数组称为<a id="_idIndexMarker906"/>映射容量。初始容量为 16 个元素的映射声明如下：</p>
+			<pre>private static final int DEFAULT_CAPACITY = 16;
+private MyEntry&lt;K, V&gt;[] entries 
+        = new MyEntry[DEFAULT_CAPACITY];</pre>
+			<p>接下来，我们可以将重点放在使用此数组作为客户端的映射上。只有当条目的键在地图上是唯一的时，才能将条目放入地图<a id="_idIndexMarker907"/>。如果给定的键存在，那么我们只更新它的值。除此之外，只要没有超过<a id="_idIndexMarker908"/>地图容量，我们就可以添加一个条目。在这种情况下，典型的方法是将地图的大小增加一倍。基于这些语句的代码如下所示：</p>
+			<pre>private int size;
+public void put(K key, V value) {
+  boolean success = true;
+  for (int i = 0; i &lt; size; i++) {
+    if (entries[i].getKey().equals(key)) {
+      entries[i].setValue(value);
+      success = false;
+    }
+  }
+  if (success) {
+    checkCapacity();
+    entries[size++] = new MyEntry&lt;&gt;(key, value);
+  }
+}</pre>
+			<p>以下帮助器方法用于将贴图的容量增加一倍。由于 Java 数组无法调整大小，我们需要通过创建初始数组的副本来解决此问题，但其大小是初始数组的两倍：</p>
+			<pre>private void checkCapacity() {
+  if (size == entries.length) {
+    int newSize = entries.length * 2;
+    entries = Arrays.copyOf(entries, newSize);
+  }
+}</pre>
+			<p>使用键<a id="_idIndexMarker910"/>获取值。如果找不到给定的密钥，则返回<strong class="source-inline">null</strong>。获取值不会从映射中删除条目。让我们看一下代码：</p>
+			<pre>public V get(K key) {
+  for (int i = 0; i &lt; size; i++) {
+    if (entries[i] != null) {
+      if (entries[i].getKey().equals(key)) {
+        return entries[i].getValue();
+      }
+    }
+  }
+  return null;
+}</pre>
+			<p>最后，我们需要使用密钥删除一个条目。从数组中删除一个元素需要将其余元素移动一个位置。元素移位后，倒数第二个元素和最后一个元素相等。通过将数组的最后一个元素置零，可以避免内存泄漏。忘记这一步是一个常见的<a id="_idIndexMarker912"/>错误：</p>
+			<pre>public void remove(K key) {
+  for (int i = 0; i &lt; size; i++) {
+    if (entries[i].getKey().equals(key)) {
+      entries[i] = null;
+      size--;
+      condenseArray(i);
+    }
+  }
+}
+private void condenseArray(int start) {
+  int i;
+  for (i = start; i &lt; size; i++) {
+    entries[i] = entries[i + 1];
+  }
+  entries[i] = null; // don't forget this line
+}</pre>
+			<p>映射的生产实现比这里公开的要复杂得多（例如，映射使用 bucket）。然而，最有可能的是，在面试中，你不需要知道比这个实现更多的<a id="_idIndexMarker913"/>。然而，向面试官提及这一点是个好主意。通过这种方式，你可以向他们展示你理解问题的复杂性，并且你意识到了这一点。</p>
+			<p>完成！完整的应用程序名为<em class="italic">地图</em>。</p>
+			<h2 id="_idParaDest-258"><a id="_idTextAnchor259"/>编码挑战 2–映射密钥集和值</h2>
+			<p>问题 T1：考虑以前的编码挑战作为地图数据结构的一种基本实现。使用返回一组键（<strong class="source-inline">keySet（）</strong>）的方法和返回一组值（<strong class="source-inline">values（）</strong>的方法来丰富此实现。</p>
+			<p><strong class="bold">解决方案</strong>：返回一组密钥是一个简单的操作，包括循环地图的密钥并将它们逐个添加到<strong class="source-inline">集</strong>。以下代码不言自明：</p>
+			<pre>public Set&lt;K&gt; keySet() {
+  Set&lt;K&gt; set = new HashSet&lt;&gt;();
+  for (int i = 0; i &lt; size; i++) {
+    set.add(entries[i].getKey());
+  }
+  return set;
+}</pre>
+			<p>为了返回一组值，我们循环映射并将这些值逐个添加到<strong class="source-inline">列表</strong>中。我们使用<strong class="source-inline">列表</strong>，因为值可以包含重复项：</p>
+			<pre>public Collection&lt;V&gt; values() {
+  List&lt;V&gt; list = new ArrayList&lt;&gt;();
+  for (int i = 0; i &lt; size; i++) {
+    list.add(entries[i].getValue());
+  }
+  return list;
+}</pre>
+			<p>完成！这很简单；为生产实现的<a id="_idIndexMarker915"/>映射远比这里显示的复杂。例如，<a id="_idIndexMarker916"/>值被缓存，而不是每次提取。向面试官提及这一点，让他/她看到你知道生产图是如何工作的。慢慢来，查看 Java 内置的<strong class="source-inline">映射</strong>和<strong class="source-inline">哈希映射</strong>源代码。</p>
+			<p>完整的应用程序名为<em class="italic">地图</em>。</p>
+			<h2 id="_idParaDest-259"><a id="_idTextAnchor260"/>编码挑战 3–螺母和螺栓</h2>
+			<p><strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong></p>
+			<p>问题 T1：给定的 T2，N，T3，螺母和 T4。编写一段代码，以<a id="_idIndexMarker918"/>最小迭代次数查找螺母和螺栓之间的所有匹配项。</p>
+			<p>解决办法：让我们考虑一下螺母和螺栓是由下面两个数组表示的：</p>
+			<pre>char[] nuts = {'$', '%', '&amp;', 'x', '@'};
+char[] bolts = {'%', '@', 'x', '$', '&amp;'};</pre>
+			<p>最直观的解决方案依赖于蛮力方法。我们可以选择一个螺母，然后迭代螺栓以找到它的配合。例如，如果我们选择<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">螺母【0】</strong>，我们可以找到它与<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">螺栓【3】</strong>的配合。另外，我们可以取<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">螺母【1】</strong>与<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">螺栓【0】</strong>匹配。该算法非常简单，可以通过两个语句的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">来实现，复杂度时间为 O（n2）。</strong></p>
+			<p>另外，我们可以考虑对螺母和螺栓进行分类。这样，螺母和螺栓之间的匹配将自动对齐。这也会起作用，但不包括最小迭代次数。</p>
+			<p>为了获得最少的迭代次数，我们可以使用哈希映射。在这个哈希映射中，首先，我们将每个 nut 作为一个键，并将其在给定 nut 数组中的位置作为一个值。接下来，我们迭代螺栓，并检查哈希映射是否包含每个螺栓作为键。如果哈希映射包含当前螺栓的密钥，则我们找到了匹配项（一对）；否则，就没有与此螺栓匹配的螺栓。让我们看一下代码：</p>
+			<pre>public static void match(char[] nuts, char[] bolts) {
+  // in this map, each nut is a key and 
+  // its position is as value
+  Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+  for (int i = 0; i &lt; nuts.length; i++) {
+    map.put(nuts[i], i);
+  }
+  //for each bolt, search a nut
+  for (int i = 0; i &lt; bolts.length; i++) {
+    char bolt = bolts[i];
+    if (map.containsKey(bolt)) {
+      nuts[i] = bolts[i];
+    } else {
+      System.out.println("Bolt " + bolt + " has no nut");
+    }
+  }
+  System.out.println("Matches between nuts and bolts: ");
+  System.out.println("Nuts: " + Arrays.toString(nuts));
+  System.out.println("Bolts: " +Arrays.toString(bolts));
+}</pre>
+			<p>此代码<a id="_idIndexMarker920"/>的<a id="_idIndexMarker919"/>运行时为 O（n）。完整的代码名为<em class="italic">NutsAndBolts</em>。</p>
+			<h2 id="_idParaDest-260"><a id="_idTextAnchor261"/>编码挑战 4–删除重复项</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑一个未经排序的整数单链表。编写一段删除重复项的代码。</p>
+			<p><strong class="bold">解决方案</strong>：一个简单的解决方案包括迭代<a id="_idIndexMarker922"/>给定链表，并将每个节点的数据存储在<strong class="source-inline">集合&lt;整数&gt;</strong>中。但是，在将当前节点的数据添加到<strong class="source-inline">集合</strong>之前，我们将根据<strong class="source-inline">集合</strong>的当前内容检查数据。如果<strong class="source-inline">集合</strong>已经包含该数据，我们将从链表中删除该节点；否则，我们只需将其数据添加到<strong class="source-inline">集合</strong>。通过将上一个节点链接到当前节点的下一个节点，可以从单链接列表中删除节点。</p>
+			<p>下图说明了这一说法：</p>
+			<p><img src="img/Figure_11.3_B15403.jpg" alt="11.3: Removing a node from a singly linked list "/></p>
+			
+			<p class="figure-caption">图 11.3–从单链表中删除节点</p>
+			<p>由于单链表只包含指向下一个节点的指针，因此我们无法知道当前节点之前的节点。技巧是跟踪两个连续的节点，从当前节点作为链表头开始，前一个节点作为<strong class="source-inline">null</strong>。当当前节点前进到下一个节点时，上一个节点前进到当前节点。让我们看看将这些语句粘在一起的代码：</p>
+			<pre>// 'size' is the linked list size
+public void removeDuplicates() {
+  Set&lt;Integer&gt; dataSet = new HashSet&lt;&gt;();
+  Node currentNode = head;
+  Node prevNode = null;
+  while (currentNode != null) {
+    if (dataSet.contains(currentNode.data)) {
+      prevNode.next = currentNode.next;
+      if (currentNode == tail) {
+        tail = prevNode;
+      }
+      size--;
+    } else {
+      dataSet.add(currentNode.data);
+      prevNode = currentNode;
+    }
+    currentNode = currentNode.next;
+  }
+}</pre>
+			<p>此解决方案适用于 O（n）的<a id="_idIndexMarker923"/>时间和空间复杂度，其中<em class="italic">n</em>是链表中的节点数。我们可以尝试另一种方法，将空间<a id="_idIndexMarker924"/>复杂性降低到 O（1）。首先，我们考虑下面的图表作为下一步的指导：</p>
+			<p><img src="img/Figure_11.4_B15403.jpg" alt="11.4: Removing a node from a singly linked list "/></p>
+			
+			<p class="figure-caption">图 11.4–从单链表中删除节点</p>
+			<p>此方法使用两个<a id="_idIndexMarker925"/>指针：</p>
+			<ol>
+				<li>当前节点，从链表的头部开始，逐节点遍历链表，直到到达尾部（例如，在上图中，当前节点是第二个节点）。</li>
+				<li>runner 节点，<a id="_idIndexMarker926"/>从与当前节点相同的位置开始，即链表的头部。</li>
+			</ol>
+			<p>此外，runner 节点遍历链表并检查每个节点的数据是否等于当前节点的数据。当运行程序代码遍历链表时，当前节点的位置保持不变。</p>
+			<p>如果 runner 节点检测到重复，则会将其从链接列表中删除。当 runner 节点到达链接列表的尾部时，当前节点前进到下一个节点，runner 节点从当前节点开始再次遍历链接列表。这是一个 O（n2）时间复杂度算法，但空间复杂度为 O（1）。让我们看一下代码：</p>
+			<pre>public void removeDuplicates() {
+  Node currentNode = head;
+  while (currentNode != null) {
+    Node runnerNode = currentNode;
+    while (runnerNode.next != null) {
+      if (runnerNode.next.data == currentNode.data) {
+        if (runnerNode.next == tail) {
+          tail = runnerNode;
+        }
+        runnerNode.next = runnerNode.next.next;
+        size--;
+      } else {
+        runnerNode = runnerNode.next;
+      }
+    }
+    currentNode = currentNode.next;
+  }
+}</pre>
+			<p><a id="_idIndexMarker927"/>完整代码为<a id="_idIndexMarker928"/>名为<em class="italic">LinkedListRemoveDuplicates</em>。</p>
+			<h2 id="_idParaDest-261"><a id="_idTextAnchor262"/>编码挑战 5–重新排列链表</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">亚马逊</strong></p>
+			<p>问题 T1A:考虑一个未排序的 Ty2 T1 整数和一个给定的整数的单链表。编写一段代码，重新排列<em class="italic">n</em>周围的节点。换句话说，到最后，链表将包含小于<em class="italic">n</em>的所有值，后面是大于<em class="italic">n</em>的所有节点。节点的<a id="_idIndexMarker930"/>顺序可以改变，<em class="italic">n</em>本身可以在大于<em class="italic">n</em>的值之间的任意位置。</p>
+			<p>考虑到给定的链表为 1→ 5.→ 4.→ 3.→ 2.→ 7.→ 空，且<em class="italic">n</em>=3。因此，3 是我们的轴心。其余节点应围绕该轴重新排列，以符合问题要求。这个问题的一个解决方案是逐节点迭代链表，每个比枢轴小的节点放在头部，而每个比枢轴大的节点放在尾部。下图帮助我们可视化此解决方案：</p>
+			<p><img src="img/Figure_11.5_B15403.jpg" alt="11.5: Linked list rearranging "/></p>
+			
+			<p class="figure-caption">图 11.5–链表重新排列</p>
+			<p>因此，值为 5、4 和 3 的节点移动到尾部，而值为 2 的节点移动到头部。最后，所有小于 3 的值都在虚线的左侧，而<a id="_idIndexMarker931"/>所有大于 3 的值都在虚线的右侧。我们可以将<a id="_idIndexMarker932"/>这个算法编码如下：</p>
+			<pre>public void rearrange(int n) {
+  Node currentNode = head;
+  head = currentNode;
+  tail = currentNode;
+  while (currentNode != null) {
+    Node nextNode = currentNode.next;
+    if (currentNode.data &lt; n) {
+      // insert node at the head
+      currentNode.next = head;
+      head = currentNode;
+    } else {
+      // insert node at the tail
+      tail.next = currentNode;
+      tail = currentNode;
+    }
+    currentNode = nextNode;
+  }
+  tail.next = null;
+}</pre>
+			<p><a id="_idIndexMarker933"/>完整的应用程序名为<a id="_idIndexMarker934"/>名为<em class="italic">LinkedListRearranging</em>。</p>
+			<h2 id="_idParaDest-262"><a id="_idTextAnchor263"/>编码挑战 6–到最后一个节点的第 n 个</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑一个整数 T1 和一个给定的整数的单链表。编写一段代码，将第<em class="italic">n</em>个节点的值返回到最后一个节点。</p>
+			<p><strong class="bold">解决方案</strong>：我们有一群节点<a id="_idIndexMarker936"/>，我们必须找到满足给定约束的<em class="italic">n</em>th 节点。根据我们在<a href="08.html#_idTextAnchor161"><em class="italic">第 8 章</em></a><em class="italic">递归和动态规划</em>中的经验，我们可以直觉出这个问题有一个涉及递归的解决方案。但是我们也可以通过迭代的方法来解决。由于迭代解决方案更有趣，我将在这里介绍它，而递归解决方案在捆绑代码中可用。</p>
+			<p>让我们使用下图来展示算法（按照从上到下的图表）：</p>
+			<p><img src="img/Figure_11.6_B15403.jpg" alt="11.6: The nth to last node "/></p>
+			
+			<p class="figure-caption">图 11.6–第 n 个到最后一个节点</p>
+			<p>我们得到了一个链表，2→ 1.→ 5.→ 9→ 8.→ 3.→ 7.→ null，我们希望找到第五个到最后一个节点的值，即 5（您可以在前面的图表顶部看到）。迭代<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker937"/>解使用两个指针；让我们将它们表示为<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner1</em>和<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner2</em>。最初，它们都指向链接列表的头部。在步骤 1（上图中间），我们将<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner1</em>从头部移动到<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker938"/>第五个到头部（或<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">n</em>第五个到头部）节点。对于从 0 到 5 的循环（或<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">n</em>，这很容易在<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">中实现。在步骤 2 中（上图底部），我们同时移动<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner1</em>和<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner2</em>，直到<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner1</em>为<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">空</strong>。当<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner1</em>为<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">空</strong>时，<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">runner2</em>将指向从头部到最后一个节点的第五个节点（或从头部到最后一个节点的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">n</em>th）。在代码行中，我们按如下方式执行：</strong></p>
+			<pre>public int nthToLastIterative(int n) {
+  // both runners are set to the start
+  Node firstRunner = head;
+  Node secondRunner = head;
+  // runner1 goes in the nth position
+  for (int i = 0; i &lt; n; i++) {
+    if (firstRunner == null) {
+      throw new IllegalArgumentException(
+             "The given n index is out of bounds");
+    }
+    firstRunner = firstRunner.next;
+  }
+  // runner2 run as long as runner1 is not null
+  // basically, when runner1 cannot run further (is null), 
+  // runner2 will be placed on the nth to last node
+  while (firstRunner != null) {
+    firstRunner = firstRunner.next;
+    secondRunner = secondRunner.next;
+  }
+  return secondRunner.data;
+}</pre>
+			<p><a id="_idIndexMarker939"/>完整的应用程序是<a id="_idIndexMarker940"/>名为<em class="italic">LinkedListToLastNode</em>。</p>
+			<h2 id="_idParaDest-263"><a id="_idTextAnchor264"/>编码挑战 7–环路启动检测</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑一个包含循环的整数 T3 的单链表。换句话说，链表的尾部指向定义循环或循环的先前节点之一。编写一段代码，检测循环的第一个节点（即循环开始的节点）。</p>
+			<p><strong class="bold">解决方案</strong>：如果我们管理链表的尾部节点，那么很明显搜索到的节点（循环开始）位于<strong class="source-inline">尾部。下一个</strong>。如果我们不管理尾部，那么我们可以搜索有两个节点指向它的节点。这也很容易实现。如果我们知道链接的<a id="_idIndexMarker944"/>列表的<a id="_idIndexMarker943"/>大小，那么我们可以从 0 迭代到大小，最后一个<strong class="source-inline">节点。下一个</strong>指向标记循环开始的节点。</p>
+			<h3 id="sigil_toc_id_520">快跑者/慢跑者进近</h3>
+			<p>然而，让我们尝试另一种需要更多想象力的<a id="_idIndexMarker945"/>算法。这种方法称为快跑/慢跑<a id="_idIndexMarker946"/>方法。它很重要，因为它可以用于涉及链表的某些问题。</p>
+			<p>快速运行/慢速运行方法主要涉及使用两个指针，它们从链表的开头开始，同时遍历链表，直到满足某个条件为止。一个指针被命名为<strong class="bold">慢速运行器</strong>（<strong class="bold">SR</strong>，因为它逐节点遍历列表。另一个指针名为<strong class="bold">Fast Runner</strong>（<strong class="bold">FR</strong>，因为它通过每次移动跳过下一个节点来迭代列表。下图是四个动作的示例：</p>
+			<p><img src="img/Figure_11.7_B15403.jpg" alt="11.7: Fast Runner/Slow Runner example"/></p>
+			
+			<p class="figure-caption">图 11.7–快跑者/慢跑者示例</p>
+			<p>所以，在第一步，<em class="italic">FR</em>和<em class="italic">SR</em>指向<em class="italic">头部</em>。第二步，<em class="italic">SR</em>指向值为 1 的<em class="italic">head.next</em>节点，<em class="italic">FR</em>指向值为 4 的<em class="italic">head.next.next</em>节点。这些举措继续遵循这一模式。当<em class="italic">FR</em>到达链表尾部时，<em class="italic">SR</em>指向中间节点。</p>
+			<p>正如您将在下一个编码挑战中看到的，快速运行/慢速运行方法可用于检测链接列表是否为回文。然而，现在，让我们继续我们的问题。那么，我们可以使用这种方法来检测链表是否有循环，并找到这个循环的开始节点吗？这个问题产生了另一个问题。如果我们将快速运行/慢速运行方法应用于具有循环的链表，<em class="italic">FR</em>和<em class="italic">SR</em>指针是否冲突或相遇？答案是肯定的，它们会相互碰撞。</p>
+			<p>为了解释这一点，我们假设在开始循环之前，我们有<em class="italic">q</em>前面的节点（这些节点是<a id="_idIndexMarker947"/>在循环之外）。对于<em class="italic">SR</em>遍历的每<em class="italic">q</em>个节点，<em class="italic">FR</em>已经遍历了 2*<em class="italic">q</em>个节点（这一点很明显，因为<em class="italic">FR</em>每次移动都会跳过一个节点）。因此，当<em class="italic">SR</em>进入循环（到达循环开始节点）时，<em class="italic">FR</em>已经穿越了 2 个*<em class="italic">q</em>节点。换言之，<em class="italic">FR</em>位于环路部分的 2*<em class="italic">q-q</em>节点；因此，它位于环路部分的<em class="italic">q</em>节点。让我们通过以下测试用例将其可视化：</p>
+			<p><img src="img/Figure_11.8_B15403.jpg" alt="11.8: Linked list with a loop "/></p>
+			
+			<p class="figure-caption">图 11.8–带循环的链表</p>
+			<p>因此，当<em class="italic">SR</em>进入循环（到达第四个节点）时，<em class="italic">FR</em>进入循环的第四个节点。当然，我们需要考虑的是，前面的非循环节点的数量可能大于环路长度；因此，我们应该将 2*<em class="italic">q-q</em>表示为<em class="italic">q=modulo（q，LOOP_SIZE）</em>。</p>
+			<p>例如，考虑 Endot0q q＝模 OrdT1（3, 8）＝3，其中，我们有三个非循环节点（Po.T2，q，Qo.T3，Type＝3），并且环的大小是八（Po.T4；在这种情况下，我们也可以应用 2<em class="italic">*q-q</em>，因为 2*3-3=3。因此，我们可以得出结论，<em class="italic">SR</em>位于距离列表开始的三个节点处，<em class="italic">FR</em>位于距离循环开始的三个节点处。但是，如果链表在 7 个节点的循环之前有 25 个节点，那么<em class="italic">Q=modulo</em>（25，7）=4 个节点，而 2*25-25=25，这是错误的。</p>
+			<p>除此之外，<em class="italic">FR</em>和<em class="italic">SR</em>正在<a id="_idIndexMarker948"/>环路内移动。由于它们在一个圆圈中移动，这意味着当<em class="italic">FR</em>离开<em class="italic">SR</em>时<a id="_idIndexMarker949"/>也会靠近<em class="italic">SR</em>，反之亦然。下图隔离了循环，并显示了循环如何继续移动<em class="italic">FR</em>和<em class="italic">SR</em>直到它们碰撞：</p>
+			<p class="figure-caption"><img src="img/Figure_11.9_B15403.png" alt="11.9: FR and SR collision"/></p>
+			<p class="figure-caption">图 11.9–FR 和 SR 碰撞</p>
+			<p>慢慢追踪<em class="italic">SR</em>和<em class="italic">FR</em>直到它们到达交汇点。我们知道<em class="italic">FR</em>在<em class="italic">FR</em>后面的<em class="italic">环路大小–Q</em>节点，<em class="italic">SR</em>在<em class="italic">FR</em>后面的<em class="italic">Q</em>节点。在我们的测试用例中，<em class="italic">FR</em>是<em class="italic">SR</em>后面的 8-3=5 个节点，<em class="italic">SR</em>是<em class="italic">FR</em>后面的 3 个节点。通过继续移动<em class="italic">SR</em>和<em class="italic">FR</em>，我们可以看到<em class="italic">FR</em>以每移动一步的速度追赶。</p>
+			<p>那么，他们在哪里见面？那么，如果<em class="italic">FR</em>以每次移动 1 步的速度追赶，并且<em class="italic">FR</em>是<em class="italic">循环的大小–在<em class="italic">SR</em>后面的 Q</em>节点，那么它们将在循环头之前满足<em class="italic">Q</em>步。在我们的测试用例中，它们将在值为 8 的节点处的循环头之前满足 3 个步骤。</p>
+			<p>如果汇合点位于循环头<a id="_idIndexMarker950"/>的<em class="italic">Q</em>节点处，我们可以通过回顾汇合点也位于循环头的<em class="italic">Q</em>节点处继续，因为<em class="italic">Q=模（Q，循环大小）</em>。这意味着<a id="_idIndexMarker951"/>我们可以开发以下四步算法：</p>
+			<ol>
+				<li value="1">从链表开头的<em class="italic">FR</em>和<em class="italic">SR</em>开始。</li>
+				<li>以 1 个节点的速率移动<em class="italic">SR</em>，以 2 个节点的速率移动<em class="italic">FR</em>。</li>
+				<li>当它们碰撞（在交汇点）时，将<em class="italic">SR</em>移动到链表的头部，并将<em class="italic">FR</em>保持在原来的位置。</li>
+				<li>以 1 个节点的速率移动<em class="italic">SR</em>和<em class="italic">FR</em>直到它们碰撞（这是代表<a id="_idIndexMarker952"/>循环头部的节点）。</li>
+			</ol>
+			<p>让我们将其转化为代码：</p>
+			<pre>public void findLoopStartNode() {
+  Node slowRunner = head;
+  Node fastRunner = head;
+  // fastRunner meets slowRunner
+  while (fastRunner != null &amp;&amp; fastRunner.next != null) {
+    slowRunner = slowRunner.next;
+    fastRunner = fastRunner.next.next;
+    if (slowRunner == fastRunner) { // they met
+      System.out.println("\nThe meet point is at 
+        the node with value: " + slowRunner);
+      break;
+    }
+  }
+  // if no meeting point was found then there is no loop
+  if (fastRunner == null || fastRunner.next == null) {
+    return;
+  }
+  // the slowRunner moves to the head of the linked list
+  // the fastRunner remains at the meeting point
+  // they move simultaneously node-by-node and 
+  // they should meet at the loop start
+  slowRunner = head;
+  while (slowRunner != fastRunner) {
+    slowRunner = slowRunner.next;
+    fastRunner = fastRunner.next;
+  }
+  // both pointers points to the start of the loop
+  System.out.println("\nLoop start detected at 
+      the node with value: " + fastRunner);
+}</pre>
+			<p>请注意，不要<a id="_idIndexMarker953"/>期望<em class="italic">FR</em>可以跳过<em class="italic">SR</em>，因此他们不会相遇。这种情况是不可能的。假设<em class="italic">FR</em>已经跳过<em class="italic">SR</em>并且它在节点<em class="italic">a</em>处，那么<em class="italic">SR</em>一定在节点<em class="italic">a</em>1 处。这意味着，在上一步骤中，<em class="italic">FR</em>位于节点<em class="italic">a</em>-2，<em class="italic">SR</em>位于节点<em class="italic">a</em>-1）-1=<em class="italic">a</em>-2；因此，它们发生了碰撞。</p>
+			<p>完整的<a id="_idIndexMarker954"/>应用程序名为<em class="italic">LinkedListLoopDetection</em>。在这段代码中，您将找到一个名为<strong class="source-inline">generateLoop（）</strong>的方法。调用此方法可生成带有循环的随机链表。</p>
+			<h2 id="_idParaDest-264"><a id="_idTextAnchor265"/>编码挑战 8–回文</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑一个整数的单链表。写一段<a id="_idIndexMarker956"/>代码，如果链表是回文，则返回<strong class="source-inline">true</strong>。解决方案应该包括快速运行/慢速运行方法（该方法在前面的编码挑战中有详细说明）。</p>
+			<p><strong class="bold">解决方案</strong>：回文（无论是字符串、数字还是链表）在反转时看起来都没有变化，这只是一个快速提醒。这意味着可以从两个方向处理（读取）回文，并将获得相同的结果（例如，数字 12321 是回文，而数字 12322 不是）。</p>
+			<p>我们可以考虑一个解决方案，它涉及快速流道/慢速流道方法，认为当 T0 T0 FR SUTT1 到达链表的末尾时，ORT T2 SR AUTYT3T 位于链表的中间。</p>
+			<p>如果链接列表的前半部分与后半部分相反，则链接列表是回文。因此，如果在堆栈中存储<em class="italic">SR</em>遍历的所有节点，直到<em class="italic">FR</em>到达链表的末尾，则生成的<a id="_idIndexMarker957"/>堆栈将按相反顺序包含链表的前半部分。让我们通过下图将其可视化：</p>
+			<p><img src="img/Figure_11.10_B15403.jpg" alt="11.10: Linked list palindrome using the Fast Runner/Slow Runner approach "/></p>
+			
+			<p class="figure-caption">图 11.10–使用快速运行/慢速运行方法的链表回文</p>
+			<p>因此，当<em class="italic">FR</em>到达链表的<a id="_idIndexMarker958"/>端并且<em class="italic">SR</em>到达第四个节点（链表的中间）时，堆栈包含值 2、1 和 4。接下来，我们可以继续以 1 个节点的速率移动<em class="italic">SR</em>，直到链表结束。在每次移动时，我们从堆栈中弹出一个值，并将其与当前节点值进行比较。如果我们发现<a id="_idIndexMarker959"/>不匹配，那么链表就不是<a id="_idIndexMarker960"/>回文。在代码中，我们有以下内容：</p>
+			<pre>public boolean isPalindrome() {
+  Node fastRunner = head;
+  Node slowRunner = head;
+  Stack&lt;Integer&gt; firstHalf = new Stack&lt;&gt;();
+  // the first half of the linked list is added into the stack
+  while (fastRunner != null &amp;&amp; fastRunner.next != null) {
+    firstHalf.push(slowRunner.data);
+    slowRunner = slowRunner.next;
+    fastRunner = fastRunner.next.next;
+  }
+  // for odd number of elements we to skip the middle node
+  if (fastRunner != null) {
+    slowRunner = slowRunner.next;
+  }
+  // pop from the stack and compare with the node by node of 
+  // the second half of the linked list
+  while (slowRunner != null) {
+    int top = firstHalf.pop();
+    // a mismatch means that the list is not a palindrome
+    if (top != slowRunner.data) {
+      return false;
+    }
+    slowRunner = slowRunner.next;
+  }
+  return true;
+}</pre>
+			<p><a id="_idIndexMarker961"/>完整的应用程序名为<a id="_idIndexMarker962"/>名为<em class="italic">LinkedList 回文</em>。</p>
+			<h2 id="_idParaDest-265"><a id="_idTextAnchor266"/>编码挑战 9–两个链表相加</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑两个积极的 T2 整数和两个单链表。第一个整数逐位存储在第一个链表中（第一个数字是第一个链表的头）。第二个整数逐位存储在<a id="_idIndexMarker964"/>第二个链表中（第一个数字是第二个链表的头）。编写一段代码，将两个数字相加，并以链表的形式返回总和，每个节点有一个数字。</p>
+			<p><strong class="bold">解决方案</strong>：让我们从测试用例的可视化开始：</p>
+			<p><img src="img/Figure_11.11_B15403.jpg" alt="11.11: Summing two numbers as linked lists "/></p>
+			
+			<p class="figure-caption">图 11.11–将两个数字相加为链表</p>
+			<p>如果我们根据前面的图表一步一步地计算总和，我们得到以下结果：</p>
+			<p>我们加上 7+7=14，所以我们写下 4 并携带 1：</p>
+			<p>得到的链表是 4→ ?</p>
+			<p>我们加上 3+9+1=13，所以我们写下 3 并携带 1：</p>
+			<p>得到的链表是 4→ 3.→ ?</p>
+			<p>我们加上 8+8+1=17，所以我们写下 7 并携带 1：</p>
+			<p>得到的链表是 4→ 3.→ 7.→ ?</p>
+			<p>我们加 9+4+1=14，所以我们写下 4 并携带 1</p>
+			<p>得到的链表是 4→ 3.→ 7.→ 4.→ ?</p>
+			<p>我们加上 4+1=5，所以我们写下 5，什么也不带：</p>
+			<p>得到的链表是 4→ 3.→ 7.→ 4.→ 5.→ ?</p>
+			<p>我们加 1+0=1，所以我们写下 1，不携带任何内容：</p>
+			<p>得到的链表是 4→ 3.→ 7.→ 4.→ 5.→ 1.→ ?</p>
+			<p>我们加上 2+0=2，所以我们写下 2，什么也不带：</p>
+			<p>得到的链表是 4→ 3.→ 7.→ 4.→ 5.→ 1.→ 2.</p>
+			<p>如果我们将<a id="_idIndexMarker965"/>结果链表写为一个数字，则得到 4374512；因此，我们需要将其逆转为 2154734。虽然在捆绑代码中可以找到反转结果链表的<a id="_idIndexMarker966"/>方法（其本身可以被视为编码挑战），但以下方法在递归方法中应用了前面的步骤（如果您不熟悉递归问题，请不要忘记介绍<a href="08.html#_idTextAnchor161"><em class="italic">第 8 章</em></a>，<em class="italic">递归和动态规划</em>。本质上，以下递归通过逐节点添加数据来工作，将多余的数据传递到下一个节点：</p>
+			<pre>private Node sum(Node node1, Node node2, int carry) {
+  if (node1 == null &amp;&amp; node2 == null &amp;&amp; carry == 0) {
+    return null;
+  }
+  Node resultNode = new Node();
+  int value = carry;
+  if (node1 != null) {
+    value += node1.data;
+  }
+  if (node2 != null) {
+    value += node2.data;
+  }
+  resultNode.data = value % 10;
+  if (node1 != null || node2 != null) {
+    Node more = sum(node1 == null
+        ? null : node1.next, node2 == null
+        ? null : node2.next, value &gt;= 10 ? 1 : 0);
+    resultNode.next = more;
+  }
+  return resultNode;
+}</pre>
+			<p>完整的应用程序名为<em class="italic">LinkedListSum</em>。</p>
+			<h2 id="_idParaDest-266"><a id="_idTextAnchor267"/>编码挑战 10–链表交叉</h2>
+			<p><strong class="bold">Adobe</strong>、<strong class="bold">Flipkart</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">微软</strong></p>
+			<p>问题 T1：考虑两个 T2 单链表。编写一段代码，检查两个列表是否相交。交叉点基于参考，而不是值，但是<a id="_idIndexMarker968"/>您应该返回交叉点节点的值。因此，通过引用检查交点并返回值。</p>
+			<p><strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="bold">解决方案</strong>：如果您不确定两个链表的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">交集是什么意思，那么我们建议您绘制一个测试用例，并与面试官讨论细节。下图显示了这种情况：</em></p>
+			<p><img src="img/Figure_11.12_B15403.jpg" alt="11.12: The intersection of two lists "/></p>
+			
+			<p class="figure-caption">图 11.12–两个列表的交叉点</p>
+			<p>在这个图中，我们有两个列表，它们在值为 8 的节点处相交。因为我们讨论的是引用交集，这意味着值为 9 和值为 4 的节点指向值为 8 的节点的内存地址。</p>
+			<p>主要问题是这些列表的大小不一样。如果它们的大小相等，我们可以从头到尾逐点遍历它们，直到它们发生碰撞（直到<em class="italic">节点列表 1。下一步=节点列表 2。下一步</em>。如果我们可以跳过值为 2 和 1 的节点，我们的列表大小将相同（请参阅下图；由于第一个列表比第二个列表长，我们应该从标记为<em class="italic">虚拟头</em>的节点开始迭代）：</p>
+			<p><img src="img/Figure_11.13_B15403.jpg" alt="11.13: Removing the first two nodes of the top list "/></p>
+			
+			<p class="figure-caption">图 11.13–删除顶部列表的前两个节点</p>
+			<p>记住这句话，我们可以推断出以下算法：</p>
+			<ol>
+				<li value="1">确定列表的大小。</li>
+				<li>如果第一个列表（表示为<em class="italic">l1</em>）比第二个列表（表示为<em class="italic">l2</em>）长，则将第一个列表的指针移动到（<em class="italic">l1-l2</em>）。</li>
+				<li>如果第一个列表比第二个列表短，则将第二个列表的指针移动到（<em class="italic">l2-l1</em>。</li>
+				<li>逐点移动两个<a id="_idIndexMarker969"/>指针，直到到达终点或它们发生碰撞。</li>
+			</ol>
+			<p>将这些步骤<a id="_idIndexMarker970"/>转化为代码非常简单：</p>
+			<pre>public int intersection() {
+  // this is the head of first list
+  Node currentNode1 = {head_of_first_list};
+  // this is the head of the second list
+  Node currentNode2 = {head_of_second_list};
+  // compute the size of both linked lists
+  // linkedListSize() is just a helper method
+  int s1 = linkedListSize(currentNode1);
+  int s2 = linkedListSize(currentNode2);
+  // the first linked list is longer than the second one
+  if (s1 &gt; s2) {
+    for (int i = 0; i &lt; (s1 - s2); i++) {
+      currentNode1 = currentNode1.next;
+    }
+  } else {
+    // the second linked list is longer than the first one
+    for (int i = 0; i &lt; (s2 - s1); i++) {
+      currentNode2 = currentNode2.next;
+    }
+  }
+  // iterate both lists until the end or the intersection node
+  while (currentNode1 != null &amp;&amp; currentNode2 != null) {
+    // we compare references not values!
+    if (currentNode1 == currentNode2) {
+      return currentNode1.data;
+    }
+    currentNode1 = currentNode1.next;
+    currentNode2 = currentNode2.next;
+  }
+  return -1;
+}</pre>
+			<p>完整的应用程序名为<em class="italic">LinkedListInstituteSection</em>。在代码中，您将看到一个名为<strong class="source-inline">GenerateToLinkedListWithInterection（）</strong>的助手方法<a id="_idIndexMarker971"/>。用于生成具有交点的<a id="_idIndexMarker972"/>随机列表。</p>
+			<h2 id="_idParaDest-267"><a id="_idTextAnchor268"/>编码挑战 11–交换相邻节点</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong></p>
+			<p>问题 T1：考虑一个单独的 T2 链表。编写一段代码，交换相邻节点，以便创建一个列表，如 1→ 2.→ 3.→ 4.→ null 变为 2→ 1.→ 4.→ 3.→ 无效的考虑交换相邻节点，而不是它们的值！</p>
+			<p><strong class="bold">解决方案</strong>：我们可以减少寻找交换两个连续节点<em class="italic">n1</em>和<em class="italic">n2</em>的解决方案的问题。交换两个值（例如，两个整数，<em class="italic">v1</em>和<em class="italic">v2</em>）的一种众所周知的技术依赖于一个辅助变量，可以按如下方式写入：</p>
+			<p><em class="italic">aux=v1；v1=v2；v2=辅助；</em></p>
+			<p>但是，我们不能将这种简单的方法应用于节点，因为我们必须处理它们的链接。仅写以下内容是不够的：</p>
+			<p><em class="italic">aux=n1；n1=n2；n2=辅助；</em></p>
+			<p>如果我们依靠这个简单的方法来交换<em class="italic">n1</em>和<em class="italic">n2</em>，那么我们将得到类似于下图的东西（注意，在交换<em class="italic">n1</em>和<em class="italic">n2</em>之后，我们有<em class="italic">n1。下一个</em>=<em class="italic">n3</em>和<em class="italic">n2。下一个</em>=<em class="italic">n1</em>，这是完全错误的）：</p>
+			<p><img src="img/Figure_11.14_B15403.jpg" alt="11.14: Plain swapping with broken links (1)"/></p>
+			
+			<p class="figure-caption">图 11.14–断开链接的普通交换（1）</p>
+			<p>但是我们可以修复链接，对吗？那么我们可以显式设置<em class="italic">n1.next</em>指向<em class="italic">n2</em>，设置<em class="italic">n2.next</em>指向<em class="italic">n3</em>：</p>
+			<p><em class="italic">n1.next=n2</em></p>
+			<p><em class="italic">n2.next=n3</em></p>
+			<p>现在应该好了！我们可以交换两个连续的节点。然而，当我们交换一对节点时，我们也<a id="_idIndexMarker975"/>中断了两个连续的节点对之间的链接。下图说明了此问题（我们交换并修复了<em class="italic">n1-n2</em>对和<em class="italic">n3-n4</em>对的链接）：</p>
+			<p><img src="img/Figure_11.15_B15403.jpg" alt="11.15: Plain swapping with broken links (2)"/></p>
+			
+			<p class="figure-caption">图 11.15–断开链接的普通交换（2）</p>
+			<p>注意在<a id="_idIndexMarker976"/>交换这两对之后，<em class="italic">n2.next</em>指向<em class="italic">n4</em>，这是错误的。因此，我们也必须修复这个链接。为此，我们可以存储<em class="italic">n2</em>，在交换<em class="italic">n3-n4</em>后，我们可以通过设置<em class="italic">n2 来修复链接。下一步=n3</em>。现在，一切看起来都很好，我们可以将其转化为代码：</p>
+			<pre>public void swap() {
+  if (head == null || head.next == null) {
+    return;
+  }
+  Node currentNode = head;
+  Node prevPair = null;
+  // consider two nodes at a time and swap their links
+  while (currentNode != null &amp;&amp; currentNode.next != null) {
+    Node node1 = currentNode;           // first node
+    Node node2 = currentNode.next;      // second node                    
+    Node node3 = currentNode.next.next; // third node            
+    // swap node1 node2
+    Node auxNode = node1;
+    node1 = node2;
+    node2 = auxNode;
+    // repair the links broken by swapping
+    node1.next = node2;
+    node2.next = node3;
+    // if we are at the first swap we set the head
+    if (prevPair == null) {
+      head = node1;
+    } else {
+      // we link the previous pair to this pair
+      prevPair.next = node1;
+    }
+    // there are no more nodes, therefore set the tail
+    if (currentNode.next == null) {
+      tail = currentNode;
+    }
+    // prepare the prevNode of the current pair
+    prevPair = node2;
+    // advance to the next pair
+    currentNode = node3;
+  }
+}</pre>
+			<p>完整的<a id="_idIndexMarker977"/>应用程序名为<em class="italic">LinkedListPairwiseSwap</em>。考虑挑战你自己的 To.t3。</p>
+			<h2 id="_idParaDest-268"><a id="_idTextAnchor269"/>编码挑战 12–合并两个已排序的链表</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑两个排序的 To2 T2 单链表。写一段<a id="_idIndexMarker980"/>代码，合并这两个列表，不需要额外的空间。</p>
+			<p><strong class="bold">解决方案</strong>：我们有两个排序列表，<em class="italic">列表 1</em>：4→ 7.→ 8.→ 10→ 空和<em class="italic">列表 2</em>：5→ 9→ 11→ null，我们想要得到结果，4→ 5.→ 7.→ 8.→ 9→ 10→ 11→ 无效的此外，我们希望在不分配新节点的情况下获得此结果。</p>
+			<p>由于无法分配新节点，因此必须选择其中一个列表作为最终结果或合并的链表。也就是说，我们可以从<em class="italic">列表 1</em>开始作为合并链表，在<em class="italic">列表 1</em>的适当位置添加<em class="italic">列表 2</em>中的节点。在处理每个比较之后，我们将指针（<em class="italic">列表 1</em>移动到合并列表中的最后一个节点。</p>
+			<p>例如，我们首先比较这两个列表的标题。如果<em class="italic">列表 1</em>的头小于<em class="italic">列表 2</em>的头，我们选择<em class="italic">列表 1</em>的头作为合并列表的头。否则，如果<em class="italic">列表 1</em>的头大于<em class="italic">列表 2</em>的头，我们交换头。下图说明了此步骤：</p>
+			<p><img src="img/Figure_11.16_B15403.jpg" alt="Figure 11.16 – Merging two sorted linked lists (step 1) "/></p>
+			
+			<p class="figure-caption">图 11.16–合并两个排序的链表（步骤 1）</p>
+			<p>由于<em class="italic">列表 1</em>的头小于<em class="italic">列表 2</em>（4&lt;5）的头，因此成为合并列表的头。我们说过<em class="italic">列表 1</em>将指向合并列表的最后一个节点；因此，<a id="_idIndexMarker981"/>比较的下一个节点应该是<em class="italic">列表 1.next</em>（值为 7 的节点）和<em class="italic">列表 2</em>（值为 5 的节点）。下图显示了此比较的结果：</p>
+			<p><img src="img/Figure_11.17_B15403.jpg" alt="Figure 11.17 – Merging two sorted linked lists (step 2) "/></p>
+			
+			<p class="figure-caption">图 11.17–合并两个排序的链表（步骤 2）</p>
+			<p>由于<em class="italic">列表 1</em>跟随合并列表（最终结果），我们必须将<em class="italic">列表 1.next</em>移动到值为 5 的节点，但我们<a id="_idIndexMarker982"/>不能直接移动。如果我们说<em class="italic">列表 1.next=list2</em>，那么我们就失去了<em class="italic">列表 1</em>的其余部分。因此，我们必须进行交换，如下所示：</p>
+			<pre>Node auxNode = list1.next; // auxNode = node with value 7
+list1.next = list2;        // list1.next = node with value 5
+list2 = auxNode;           // list2 = node with value 7</pre>
+			<p>接下来，我们将<em class="italic">列表 1</em>移动到<em class="italic">列表 1.Next</em>，这是值为 9 的节点。我们比较<em class="italic">列表。接下来</em>与<em class="italic">列表 2</em>进行比较；因此，我们将 9 与 7 进行比较。下图显示了此比较的结果：</p>
+			<p><img src="img/Figure_11.18_B15403.jpg" alt="Figure 11.18 – Merging two sorted linked lists (step 3) "/></p>
+			
+			<p class="figure-caption">图 11.18–合并两个排序的链表（步骤 3）</p>
+			<p>因为<em class="italic">列表 1</em>跟随合并列表（最终结果），所以我们必须将<em class="italic">列表 1.next</em>移动到值为 7 的节点（从 7&lt;9 开始），我们使用前面讨论的交换来完成。接下来，我们将<em class="italic">列表 1</em>移动到<em class="italic">列表 1.Next</em>，这是值为 8 的节点。我们比较<em class="italic">列表。接下来</em>与<em class="italic">列表 2</em>进行比较；因此，我们将 8 与 9 进行比较。下图显示了此比较的结果：</p>
+			<p><img src="img/Figure_11.19_B15403.jpg" alt="Figure 11.19 – Merging two sorted linked lists (step 4) "/></p>
+			
+			<p class="figure-caption">图 11.19–合并两个排序的链表（步骤 4）</p>
+			<p>因为需要 8&lt; 9, no <a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker983"/>交换。我们将<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">列表 1.next</em>移动到下一个节点（值为 10 的节点），并将 10 与 9 进行比较。下图显示了此比较的结果：</p>
+			<p><img src="img/Figure_11.20_B15403.jpg" alt="Figure 11.20 – Merging two sorted linked lists (step 5) "/></p>
+			
+			<p class="figure-caption">图 11.20–合并两个排序的链表（步骤 5）</p>
+			<p>由于<em class="italic">列表 1</em>跟随<a id="_idIndexMarker984"/>合并列表（最终结果），我们必须将<em class="italic">列表 1.next</em>移动到值为 9 的节点（从 9&lt;10 开始），我们使用前面讨论的交换来完成。接下来，我们将<em class="italic">list1</em>移动到<em class="italic">list1.Next</em>，这是值为 11 的节点。我们比较<em class="italic">列表。下一步</em>与<em class="italic">列表 2</em>；因此，我们将 11 与 10 进行比较。下图显示了此比较的结果：</p>
+			<p><img src="img/Figure_11.21_B15403.jpg" alt="11.21: Merging two sorted linked lists (step 6) "/></p>
+			
+			<p class="figure-caption">图 11.21–合并两个排序的链表（步骤 6）</p>
+			<p>因为<em class="italic">列表 1</em>遵循<a id="_idIndexMarker985"/>合并列表（最终结果），所以我们必须将<em class="italic">列表 1.next</em>移动到值为 10 的节点（从 10&lt;11 开始），我们使用前面讨论的交换来完成。接下来我们将<em class="italic">列表 1</em>移动到<em class="italic">列表 1.Next</em>，即<strong class="source-inline">空</strong>；因此，我们从<em class="italic">列表 2</em>复制剩余部分。下一张图显示了此比较的<a id="_idIndexMarker986"/>结果：</p>
+			<p><img src="img/Figure_11.22_B15403.jpg" alt="11.22: Merging two sorted linked lists (last step) "/></p>
+			
+			<p class="figure-caption">图 11.22–合并两个排序的链表（最后一步）</p>
+			<p>此时，合并的链接列表已完成。是时候公开代码了（此方法被添加到著名的<strong class="source-inline">SinglyLinkedList</strong>中）：</p>
+			<pre>public void merge(SinglyLinkedList sll) {
+  // these are the two lists
+  Node list1 = head;      // the merged linked list 
+  Node list2 = sll.head;  // from this list we add nodes at 
+                          // appropriate place in list1
+  // compare heads and swap them if it is necessary
+  if (list1.data &lt; list2.data) {
+    head = list1;
+  } else {
+    head = list2;
+    list2 = list1;
+    list1 = head;
+  }
+  // compare the nodes from list1 with the nodes from list2
+  while (list1.next != null) {
+    if (list1.next.data &gt; list2.data) {
+      Node auxNode = list1.next;
+      list1.next = list2;
+      list2 = auxNode;
+    }
+    // advance to the last node in the merged linked list              
+    list1 = list1.next;
+  }
+  // add the remaining list2
+  if (list1.next == null) {
+    list1.next = list2;
+  }
+}</pre>
+			<p>完整的<a id="_idIndexMarker987"/>应用程序名为<em class="italic">LinkedListMergeTwoSorted</em>。类似的问题<a id="_idIndexMarker988"/>可能需要您通过递归合并两个已排序的链表。虽然您可以<a id="_idIndexMarker989"/>找到名为<em class="italic">LinkedListMergeTwoSortedRecursion 的应用程序，</em>我建议您挑战自己，尝试实现。此外，基于这种递归实现，挑战您自己合并<em class="italic">n</em>链表。完整的应用程序<a id="_idIndexMarker990"/>被命名为<em class="italic">LinkedListMergeNSortedRecursion。</em></p>
+			<h2 id="_idParaDest-269"><a id="_idTextAnchor270"/>编码挑战 13–删除冗余路径</h2>
+			<p>问题 T1：考虑在矩阵中存储路径的一个单独的 T2 链表。节点的数据类型为（<em class="italic">行、列</em>）或简言之（<em class="italic">r、c</em>）。路径只能是水平的（通过<em class="italic">列</em>）或垂直的（通过<em class="italic">行</em>）。完整的<a id="_idIndexMarker992"/>路径由所有水平和垂直路径的端点给出；因此，中间点（或中间点）是多余的。编写一段代码，删除冗余路径。</p>
+			<p>解决方案 To1 T1：让我们考虑一个包含以下路径的链表：（0, 0）→ (0, 1) → (0, 2) → (1, 2) → (2, 2) → (3, 2) → (3, 3) → (3, 4) → 无效的冗余路径包括以下节点：（0,1）、（1,2）、（2,2）和（3,3）。因此，在删除冗余路径后，我们应该保留一个包含四个节点的列表：（0，0）→ (0, 2) → (3, 2) → (3, 4) → 无效的下图表示冗余路径：</p>
+			<p><img src="img/Figure_11.23_B15403.jpg" alt="11.23: The redundant path "/></p>
+			
+			<p class="figure-caption">图 11.23–冗余路径</p>
+			<p>删除冗余路径后，我们得到下图：</p>
+			<p><img src="img/Figure_11.24_B15403.jpg" alt="11.24: The remaining path after removing the redundancy "/></p>
+			
+			<p class="figure-caption">图 11.24–删除冗余后的剩余路径</p>
+			<p>前面的图表应建议此问题的解决方案。请注意，定义垂直路径的节点具有相同的列，因为我们仅在行上向下/向上移动，而定义水平路径的节点具有相同的行，因为我们仅在列上向左/向右移动。这意味着，如果我们考虑三个连续的节点具有相同的值的列或行，那么我们可以删除中间节点。对相邻三元组重复此<a id="_idIndexMarker993"/>过程将删除所有冗余节点。代码<a id="_idIndexMarker994"/>应该很容易理解：</p>
+			<pre>public void removeRedundantPath() {
+  Node currentNode = head;
+  while (currentNode.next != null 
+          &amp;&amp; currentNode.next.next != null) {
+    Node middleNode = currentNode.next.next;
+    // check for a vertical triplet (triplet with same column)
+    if (currentNode.c == currentNode.next.c
+            &amp;&amp; currentNode.c == middleNode.c) {
+      // delete the middle node
+      currentNode.next = middleNode;
+    } // check for a horizontal triplet 
+    else if (currentNode.r == currentNode.next.r
+            &amp;&amp; currentNode.r == middleNode.r) {
+      // delete the middle node
+      currentNode.next = middleNode;
+    } else {
+      currentNode = currentNode.next;
+    }
+  }
+}</pre>
+			<p><a id="_idIndexMarker995"/>完整的申请为<a id="_idIndexMarker996"/>名为<em class="italic">LinkedListRemoveEdandPath</em>。</p>
+			<h2 id="_idParaDest-270"><a id="_idTextAnchor271"/>编码挑战 14–将最后一个节点移到前面</h2>
+			<p>问题 T1：考虑一个单独的链表。编写一段代码，通过两种方法将最后一个节点移到前面。因此，链表的最后一个节点成为它的头。</p>
+			<p><strong class="bold">解决方案</strong>：这类问题听起来很简单，而且很简单。第一种方法将遵循以下步骤：</p>
+			<ol>
+				<li value="1">将指针移动到倒数第二个节点（将其表示为<em class="italic">currentNode</em>。</li>
+				<li>存储<em class="italic">currentNode.next</em>（将其表示为<em class="italic">nextNode</em>——这是最后一个节点）。</li>
+				<li>将<strong class="source-inline">cu</strong><em class="italic">rrentNode.next</em>设置为<strong class="source-inline">null</strong>（最后一个节点变为尾部）。</li>
+				<li>将新的头设置为存储节点（这样，头变成<em class="italic">下一个节点</em>。</li>
+			</ol>
+			<p>在代码行中，我们有以下内容：</p>
+			<pre>public void moveLastToFront() {      
+  Node currentNode = head;
+  // step 1
+  while (currentNode.next.next != null) {
+    currentNode = currentNode.next;
+  }
+  // step 2
+  Node nextNode = currentNode.next;
+  // step 3
+  currentNode.next = null;
+  // step 4
+  nextNode.next = head;
+  head = nextNode;
+}</pre>
+			<p>第二次<a id="_idIndexMarker999"/>进近可通过以下步骤进行：</p>
+			<ol>
+				<li value="1">将指针移动到倒数第二个节点（将其表示为<em class="italic">currentNode</em>。</li>
+				<li>将链表<a id="_idIndexMarker1000"/>转换为循环列表（将<em class="italic">currentNode.next.next</em>链接到头部）。</li>
+				<li>将新头设置为<em class="italic">currentNode.next</em>。</li>
+				<li>通过将<em class="italic">currentNode.next</em>设置为<strong class="source-inline">空</strong>来打破循环。</li>
+			</ol>
+			<p>在代码行中，我们有以下内容：</p>
+			<pre>public void moveLastToFront() {
+  Node currentNode = head;
+  // step 1
+  while (currentNode.next.next != null) {
+    currentNode = currentNode.next;
+  }
+  // step 2
+  currentNode.next.next = head;
+  // step 3
+  head = currentNode.next;
+  // step 4
+ currentNode.next = null;
+}</pre>
+			<p><a id="_idIndexMarker1001"/>完整的申请为<a id="_idIndexMarker1002"/>名为<em class="italic">LinkedListMoveLastToFront</em>。</p>
+			<h2 id="_idParaDest-271"><a id="_idTextAnchor272"/>编码挑战 15–以 k 为一组反转单个链表</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong></p>
+			<p>【问题】T1：考虑一个单链表和一个整数，即 To3 T3。编写一段代码，反转<em class="italic">k</em>组中链表的节点。</p>
+			<p>让我们考虑一下，给定的链表是 7。→ 4.→ 3.→ 1.→ 8.→ 2.→ 9→ 0→ 空且<em class="italic">k</em>=3。结果应该是 3→ 4.→ 7.→ 2.→ 8.→ 1.→ 0→ 9→ 无效的</p>
+			<p>让我们考虑给定的 To0t0，k，Ont1，t 等于链表的大小。在本例中，我们将问题简化为反转给定的链表。例如，如果给定的列表为 7→ 4.→ 3.→ null 且<em class="italic">k</em>=3，则结果应为 3→ 4.→ 7.→ 无效的那么，我们怎样才能得到这个结果呢？</p>
+			<p>为了反转节点，我们需要当前节点（<em class="italic">current</em>），当前节点旁边的节点（<em class="italic">next</em>），以及当前节点之前的节点（<em class="italic">previous</em>），并应用以下表示节点重排的算法：</p>
+			<ol>
+				<li value="1">从 0 开始使用计数器。</li>
+				<li>As the <em class="italic">current</em> node (initially the head) is not <strong class="source-inline">null</strong> and we haven't reached the given <em class="italic">k</em>, the following occurs:<p>A.<em class="italic">下一个</em>节点（最初为<strong class="source-inline">空</strong>节点）成为<em class="italic">当前</em>节点（最初为头部）下一个节点。</p><p>B<em class="italic">当前</em>节点旁边的节点（最初为头部）变为<em class="italic">之前的</em>节点（最初为<strong class="source-inline">空</strong>。</p><p>C 之前的<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">节点成为<em xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="italic">当前</em>节点（最初为头部）。</em></p><p>D<em class="italic">当前</em>节点成为<em class="italic">下一个</em>节点（来自<em class="italic">步骤 2a</em>的节点）。</p><p>E 递增计数器。</p></li>
+			</ol>
+			<p>因此，如果我们应用这个算法，我们<a id="_idIndexMarker1005"/>可以反转整个列表。但我们需要在群体中扭转这种局面；因此，我们必须解决我们所做工作的<em class="italic">k</em>子问题。如果这听起来像是你的递归，那么你是对的。在上述算法的末尾，在<em class="italic">步骤 2a</em>（<em class="italic">下一步</em>中设置的节点也指向计数器所指向的节点。我们可以说我们已经反转了第一个<em class="italic">k</em>节点。接下来，我们从<em class="italic">下一个</em>节点开始，通过递归继续下一组<em class="italic">k</em>节点。下图说明了这一想法：</p>
+			<p><img src="img/Figure_11.25_B15403.jpg" alt="11.25: Reversing the list in k groups (k=3) "/></p>
+			
+			<p class="figure-caption">图 11.25–在 k 组中反转列表（k=3）</p>
+			<p>下面的代码实现了这个想法：</p>
+			<pre>public void reverseInKGroups(int k) {
+  if (head != null) {
+    head = reverseInKGroups(head, k);
+  }
+}
+private Node reverseInKGroups(Node head, int k) {
+  Node current = head;
+  Node next = null;
+  Node prev = null;
+  int counter = 0;
+  // reverse first 'k' nodes of linked list
+  while (current != null &amp;&amp; counter &lt; k) {
+    next = current.next;                        
+    current.next = prev;            
+    prev = current;
+    current = next;
+    counter++;
+  }
+  // 'next' points to (k+1)th node            
+  if (next != null) {
+    head.next = reverseInKGroups(next, k);
+  }
+  // 'prev' is now the head of the input list 
+  return prev;
+}</pre>
+			<p>此代码<a id="_idIndexMarker1007"/>以 O（n）运行，其中<em class="italic">n</em>是给定列表<a id="_idIndexMarker1008"/>中的节点数。完整的应用程序名为<em class="italic">ReverseLinkedListingGroup</em>。</p>
+			<h2 id="_idParaDest-272"><a id="_idTextAnchor273"/>编码挑战 16–反转双链接列表</h2>
+			<p><strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p>问题 T1：考虑一个二元链表。编写一段代码，反转其节点。</p>
+			<p><strong class="bold">解决方案</strong>：反转双<a id="_idIndexMarker1010"/>链表可以利用双链表维护到前一节点的链接这一事实。这意味着我们可以简单地交换每个节点的上一个指针和下一个指针，如以下代码所示：</p>
+			<pre>public void reverse() {
+  Node currentNode = head;
+  Node prevNode = null;
+  while (currentNode != null) {
+    // swap next and prev pointers of the current node
+    Node prev = currentNode.prev;
+    currentNode.prev = currentNode.next;
+    currentNode.next = prev;
+    // update the previous node before moving to the next node
+    prevNode = currentNode;
+    // move to the next node in the doubly linked list            
+    currentNode = currentNode.prev;
+  }
+  // update the head to point to the last node
+  if (prevNode != null) {
+    head = prevNode;
+  }
+}</pre>
+			<p><a id="_idIndexMarker1011"/>完整的应用程序名为<em class="italic">双链接 ListReverse</em>。要对单链和双链表进行排序，请参见<a href="14.html#_idTextAnchor340"><em class="italic">第 14 章</em></a>、<em class="italic">排序和搜索</em>。</p>
+			<h2 id="_idParaDest-273"><a id="_idTextAnchor274"/>编码挑战 17–LRU 缓存</h2>
+			<p><strong class="bold">亚马逊</strong>、<strong class="bold">谷歌</strong>、<strong class="bold">Adobe</strong>、<strong class="bold">微软</strong>、<strong class="bold">Flipkart</strong></p>
+			<p><strong class="bold">问题</strong>：编写一段<a id="_idIndexMarker1013"/>代码来实现固定大小的 LRU 缓存。LRU 缓存表示最近使用最少的缓存。这<a id="_idIndexMarker1014"/>意味着，当缓存已满时，添加新条目将指示缓存自动退出最近使用最少的<a id="_idIndexMarker1015"/>条目。</p>
+			<p><strong class="bold">解决方案</strong>：任何缓存实现都必须提供快速有效的数据检索方式。这意味着我们的实施必须遵守以下限制：</p>
+			<ul>
+				<li><strong class="bold">固定大小</strong>：缓存必须使用有限的内存。因此，它需要有一些边界（例如，固定大小）。</li>
+				<li><strong class="bold">快速访问数据</strong>：插入和搜索操作应快速；优选地，O（1）复杂度时间。</li>
+				<li><strong class="bold">快速逐出数据</strong>：当缓存已满（已达到其分配的边界）时，缓存应提供有效的算法逐出条目。</li>
+			</ul>
+			<p>在<a id="_idIndexMarker1016"/>最后一点的上下文中，从 LRU 缓存中逐出<a id="_idIndexMarker1017"/>意味着逐出最近使用最少的数据。要做到这一点，我们必须跟踪最近使用的条目和长时间未使用的条目。此外，我们必须确保插入和搜索操作的时间复杂性为 O（1）。Java 中没有内置的数据结构可以提供这种开箱即用的缓存。</p>
+			<p>但是我们可以从一个<strong class="source-inline">HashMap</strong>数据结构开始。在 Java 中，<strong class="source-inline">哈希映射</strong>允许我们在 O（1）时间内按键插入和搜索（查找）数据。因此，使用<strong class="source-inline">哈希映射</strong>解决了一半的问题。另一半，即跟踪最近使用的条目和长时间未使用的条目，无法通过<strong class="source-inline">HashMap</strong>完成。</p>
+			<p>然而，如果我们设想一个提供快速插入、更新和删除的数据结构，那么我们必须考虑一个双链表。本质上，如果我们知道双链表中某个节点的地址，那么可以在 O（1）中执行插入、更新和删除。</p>
+			<p>这意味着我们可以提供一个依赖于<strong class="source-inline">HashMap</strong>和双链表之间的共生关系的实现。本质上，对于 LRU 缓存中的每个条目（键值对），我们可以将条目的键和关联链表节点的地址存储在<strong class="source-inline">HashMap</strong>中，而该节点将存储条目的值。下图是该语句的直观表示：</p>
+			<p><img src="img/Figure_11.26_B15403.jpg" alt="11.26: An LRU cache using a HashMap and doubly linked list"/></p>
+			
+			<p class="figure-caption">图 11.26–使用 HashMap 和双链接列表的 LRU 缓存</p>
+			<p>但是，双链接列表如何帮助我们跟踪最近使用的条目呢？秘密在于<a id="_idIndexMarker1018"/>以下几点：</p>
+			<ul>
+				<li>在缓存中插入新的<a id="_idIndexMarker1019"/>条目将导致将相应的节点添加到链表的头部（因此，链表的头部保存最近使用的值）。</li>
+				<li>当一个条目被访问时，我们将其对应的节点移动到链表的头部。</li>
+				<li>当我们需要逐出一个条目时，我们逐出链表的尾部（因此，链表的尾部包含最近使用最少的值）。</li>
+			</ul>
+			<p>基于这些陈述，我们可以提供以下简单的实现：</p>
+			<pre>public final class LRUCache {
+  private final class Node {
+    private int key;
+    private int value;
+    private Node next;
+    private Node prev;
+  }
+  private final Map&lt;Integer, Node&gt; hashmap;
+  private Node head;
+  private Node tail;
+  // 5 is the maximum size of the cache
+  private static final int LRU_SIZE = 5;
+  public LRUCache() {
+    hashmap = new HashMap&lt;&gt;();
+  }
+  public int getEntry(int key) {
+    Node node = hashmap.get(key);
+    // if the key already exist then update its usage in cache
+    if (node != null) {
+      removeNode(node);
+      addNode(node);
+      return node.value;
+    }
+    // by convention, data not found is marked as -1
+    return -1;
+  }
+  public void putEntry(int key, int value) {
+    Node node = hashmap.get(key);
+    // if the key already exist then update 
+    // the value and move it to top of the cache                 
+    if (node != null) { 
+      node.value = value;
+      removeNode(node);
+      addNode(node);
+    } else {
+      // this is new key
+      Node newNode = new Node();
+      newNode.prev = null;
+      newNode.next = null;
+      newNode.value = value;
+      newNode.key = key;
+      // if we reached the maximum size of the cache then 
+      // we have to remove the  Least Recently Used
+      if (hashmap.size() &gt;= LRU_SIZE) { 
+        hashmap.remove(tail.key);
+        removeNode(tail);
+        addNode(newNode);
+      } else {
+        addNode(newNode);
+      }
+      hashmap.put(key, newNode);
+    }
+  }
+  // helper method to add a node to the top of the cache
+  private void addNode(Node node) {
+    node.next = head;
+    node.prev = null;
+    if (head != null) {
+      head.prev = node;
+    }
+    head = node;
+    if (tail == null) {
+      tail = head;
+    }
+  }
+  // helper method to remove a node from the cache
+  private void removeNode(Node node) {
+    if (node.prev != null) {
+      node.prev.next = node.next;
+    } else {
+      head = node.next;
+    }
+    if (node.next != null) {
+      node.next.prev = node.prev;
+    } else {
+      tail = node.prev;
+    }
+  }   
+}</pre>
+			<p><a id="_idIndexMarker1020"/>完整的申请被命名为<em class="italic">LRUCache</em>。</p>
+			<p>这是本章最后一次编码挑战。是时候总结这一章了！</p>
+			<h1 id="_idParaDest-274"><a id="_idTextAnchor275"/>总结</h1>
+			<p>本章让您注意到最常见的问题，包括链表和地图。在这些问题中，涉及单链表的问题是首选问题；因此，本章主要关注这类编码挑战。</p>
+			<p>在下一章中，我们将解决与堆栈和队列相关的编码难题。</p>
+		
+	
+</body>
+</html>

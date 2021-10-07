@@ -1,0 +1,297 @@
+<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" lang="en" xml:lang="en" xsi:schemalocation="http://www.w3.org/2002/06/xhtml2/ http://www.w3.org/MarkUp/SCHEMA/xhtml2.xsd">
+<head>
+<link href="Styles/Style00.css" rel="stylesheet" type="text/css"/>
+
+<style type="text/css">body{margin:1em;background-color:transparent!important;}#sbo-rt-content *{text-indent:0pt!important;}#sbo-rt-content .bq{margin-right:1em!important;}#sbo-rt-content *{word-wrap:break-word!important;word-break:break-word!important;}#sbo-rt-content table,#sbo-rt-content pre{overflow-x:unset!important;overflow:unset!important;overflow-y:unset!important;white-space:pre-wrap!important;}</style>
+
+</head>
+<body>
+<p id="_idParaDest-435" class="chapter-number"><em class="italic"><a id="_idTextAnchor441"/>第 18 章</em>：</p>
+			<h1 id="_idParaDest-436"><a id="_idTextAnchor442"/>单元测试</h1>
+			<p>作为开发人员（或软件工程师），您还必须具备测试领域的技能。例如，开发人员负责编写代码的单元测试（例如，使用 JUnit 或 TestNG）。最有可能的是，不包含单元测试的请求将不会被接受。</p>
+			<p>在本章中，我们将介绍在申请开发人员或软件工程师等职位时可能遇到的单元测试面试问题。当然，如果您正在寻找测试员（手动/自动）职位，那么本章可能只是测试的另一个角度，因此不要期望在这里看到特定于手动/自动测试员职位的问题。在本章中，我们将介绍以下主题：</p>
+			<ul>
+				<li>简而言之，单元测试</li>
+				<li>问题和编码问题</li>
+			</ul>
+			<p>开始吧！</p>
+			<h1 id="_idParaDest-437"><a id="_idTextAnchor443"/>技术要求</h1>
+			<p>本章中使用的代码可以在 GitHub 上找到：<a href="https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter18">https://github.com/PacktPublishing/The-Complete-Coding-Interview-Guide-in-Java/tree/master/Chapter18 </a></p>
+			<h1 id="_idParaDest-438"><a id="_idTextAnchor444"/>简而言之，单元测试</h1>
+			<p>测试应用程序的<a id="_idIndexMarker1696"/>过程包含多个测试层。其中一层是<em class="italic">单元测试</em>层。</p>
+			<p>应用程序主要是由称为单元的<a id="_idIndexMarker1697"/>小功能部件构建的（例如，一个常规 Java<a id="_idIndexMarker1698"/>方法可以被视为一个单元）。在特定输入/条件/约束下测试这些单元的功能和正确性称为单元测试。</p>
+			<p>这些单元测试由开发人员使用源代码和测试计划编写。理想情况下，每个开发人员都应该能够编写单元测试来测试/验证他们的代码。单元测试应该是有意义的，并提供可接受的代码覆盖率。</p>
+			<p>如果单元测试失败，那么开发人员负责修复问题并再次执行单元测试。下图描述了该声明：</p>
+			<p><img src="img/Figure_18.1_B15403.jpg" alt="Figure 18.1 – Unit testing flow "/></p>
+			
+			<p class="figure-caption">图 18.1–单元测试流程</p>
+			<p>单元测试使用<strong class="bold">单元测试用例</strong>。<em class="italic">单元测试用例</em>是一对<a id="_idIndexMarker1699"/>输入数据和预期输出，旨在为特定功能形成测试。</p>
+			<p>如果你在面试中希望了解单元测试，那么当你被问及功能测试和/或集成测试的问题时，不要感到惊讶。因此，最好也准备好这些问题的答案。</p>
+			<p><strong class="bold">功能测试</strong>是基于<a id="_idIndexMarker1702"/>给定的输入和需要与预期输出（行为）进行比较的生成的输出（行为），对功能需求进行<a id="_idIndexMarker1701"/>测试。每个功能测试都使用功能规范来验证表示该功能需求实现的组件（或一组组件）的正确性。下图对此进行了说明：</p>
+			<p><img src="img/Figure_18.2_B15403.jpg" alt="Figure 18.2 – Functional testing "/></p>
+			
+			<p class="figure-caption">图 18.2–功能测试</p>
+			<p><strong class="bold">集成测试</strong>的目标是在<a id="_idIndexMarker1704"/>以迭代增量方式集成时，找出<a id="_idIndexMarker1703"/>软件组件中的缺陷。换句话说，已经过单元测试的模块被集成（分组或聚合）并按照集成计划进行测试。下图对此进行了描述：</p>
+			<p><img src="img/Figure_18.3_B15403.jpg" alt="Figure 18.3 – Integration testing "/></p>
+			
+			<p class="figure-caption">图 18.3–集成测试</p>
+			<p>一个关于单元测试和集成测试的问题<a id="_idIndexMarker1705"/>经常被用来面试<a id="_idIndexMarker1706"/>应聘者，这个问题是关于强调这两者之间的主要区别。下表将帮助您准备此<a id="_idIndexMarker1708"/>问题的<a id="_idIndexMarker1707"/>答案：</p>
+			<p><img src="img/Figure_18.4_B15403.jpg" alt="Figure 18.4 – Comparison between unit tests and integration tests "/></p>
+			
+			<p class="figure-caption">图 18.4–单元测试和集成测试之间的比较</p>
+			<p>一个好的测试人员<a id="_idIndexMarker1709"/>能够强调和滥用测试主题，而无需对输入做出任何假设或限制。这也适用于单元测试。既然我们已经谈到了单元测试，那么让我们来看看单元测试中的一些编码挑战和问题。</p>
+			<h1 id="_idParaDest-439"><a id="_idTextAnchor445"/>问题和编码挑战</h1>
+			<p>在本节中，我们将讨论 15 个问题<a id="_idIndexMarker1710"/>以及与<a id="_idIndexMarker1711"/>单元测试相关的编码挑战，这些问题在访谈中非常流行。开始吧！</p>
+			<h2 id="_idParaDest-440"><a id="_idTextAnchor446"/>编码挑战 1–AAA</h2>
+			<p><strong class="bold">问题</strong>：什么是单元测试中的 AAA？</p>
+			<p><strong class="bold">解决方案</strong>：<strong class="bold">AAA</strong>首字母缩写代表<strong class="bold">A</strong>排列、<strong class="bold">A</strong>ct、<strong class="bold">A</strong>ssert，它代表了一种构建测试以<a id="_idIndexMarker1712"/>保持干净代码和可读性的方法。如今，AAA 是一种测试模式，几乎是整个行业的标准。以下代码片段不言自明：</p>
+			<pre>@Test
+public void givenStreamWhenSumThenEquals6() {
+  // Arrange
+  Stream&lt;Integer&gt; theStream = Stream.of(1, 2, 3);
+  // Act
+  int sum = theStream.mapToInt(i -&gt; i).sum();
+  // Assert
+  assertEquals(6, sum);
+}</pre>
+			<p><strong class="bold">安排</strong>部分：在该部分中，我们准备或设置测试。例如，在前面的代码中，我们<a id="_idIndexMarker1714"/>准备了一个整数流，其中元素为 1、2 和 3。</p>
+			<p><strong class="bold">动作</strong>部分：在本部分中，我们<a id="_idIndexMarker1715"/>执行必要的动作以获得测试结果。例如，在前面的代码中，我们对流的元素求和，并将结果存储在整数变量中。</p>
+			<p><strong class="bold">断言</strong>部分：在该部分中，我们检查单元测试的结果是否与预期结果相符。这是通过断言实现的。例如，在前面的代码中，我们检查了元素之和是否等于 6。</p>
+			<p>您可以在名为<em class="italic">junit5/ArrangeActAssert</em>的应用程序中找到此代码。</p>
+			<h2 id="_idParaDest-441"><a id="_idTextAnchor447"/>编码挑战 2–第一</h2>
+			<p><strong class="bold">问题</strong>：单元测试中的<strong class="bold">第一个</strong>是什么？</p>
+			<p><strong class="bold">解决方案</strong>：优秀的测试人员首先使用<a id="_idIndexMarker1716"/>，以避免单元测试中遇到的许多陷阱。<strong class="bold">第一个</strong>首字母缩写代表<strong class="bold">F</strong>ast、<strong class="bold">I</strong>solated、<strong class="bold">R</strong>epeatable、<strong class="bold">S</strong>elf validating、<strong class="bold">T</strong>imely。让我们看看它们各自的含义：</p>
+			<p><strong class="bold">快速</strong>：建议编写快速运行的单元测试<a id="_idIndexMarker1717"/>。Fast 是一个任意的概念，它取决于您有多少个单元测试，您运行它们的频率，以及您愿意等待它们运行多长时间。例如，如果每个单元测试的平均完成时间为 200 毫秒，而您运行了 5000 个单元测试，那么您将等待约 17 分钟。通常，单元测试速度较慢，因为它们访问外部资源（例如，数据库和文件）。</p>
+			<p><strong class="bold">隔离</strong>：理想情况下，您应该能够在任何时间以任何顺序运行任何测试。如果您的单元测试是孤立的，并且它们关注于小的代码片段，那么这是可能的。好的单元测试并不依赖于其他单元测试，但这并不总是可以实现的。尽管如此，还是要努力避免依赖链，因为当出现问题时，依赖链是邪恶的，您必须进行调试。</p>
+			<p><strong class="bold">可重复</strong>：单元测试应该是可重复的。这意味着每次运行单元测试时，单元测试的断言都应该产生相同的结果。换句话说，单元测试不应该依赖于任何可能给断言引入可变结果的东西。</p>
+			<p><strong class="bold">自验证</strong>：单元测试应该是自验证的。这意味着您不应该手动验证测试结果。这非常耗时，并且表明断言没有发挥作用。努力<a id="_idIndexMarker1718"/>撰写断言，使其按预期工作。</p>
+			<p><strong class="bold">及时</strong>：重要的是不要<a id="_idIndexMarker1719"/>推迟编写单元测试。你越是拖延，你将面临越多的缺陷。您将发现您没有时间回来编写单元测试。想想如果我们一直推迟倒垃圾会发生什么。我们拖延得越多，就越难接受，我们的健康也会受到威胁。我有没有说那气味？因此，及时编写单元测试。这是一个好习惯！</p>
+			<h2 id="_idParaDest-442"><a id="_idTextAnchor448"/>编码挑战 3–测试夹具</h2>
+			<p><strong class="bold">问题</strong>：什么是测试夹具？</p>
+			<p><strong class="bold">解决方案</strong>：所谓测试夹具，我们<a id="_idIndexMarker1720"/>是指存在于该测试之外的任何测试数据，用于设置应用程序，使其处于固定状态。应用程序有一个<a id="_idIndexMarker1721"/>固定状态，允许在恒定的已知环境下运行测试。</p>
+			<h2 id="_idParaDest-443"><a id="_idTextAnchor449"/>编码挑战 4–异常测试</h2>
+			<p><strong class="bold">问题</strong>：JUnit 中测试异常的常用<a id="_idIndexMarker1722"/>方法是什么？</p>
+			<p><strong class="bold">解决方案</strong>：在 JUnit4 中，我们通常通过<strong class="source-inline">try</strong>/<strong class="source-inline">catch</strong>成语、<strong class="source-inline">@test</strong>的<strong class="source-inline">期望</strong>元素以及<strong class="source-inline">期望异常</strong>规则来测试<a id="_idIndexMarker1723"/>异常。</p>
+			<p>JUnit 3.x 中流行的<strong class="source-inline">try</strong>/<strong class="source-inline">catch</strong>成语，可使用如下：</p>
+			<pre>@Test
+public void givenStreamWhenGetThenException() {
+  Stream&lt;Integer&gt; theStream = Stream.of();
+  try {
+    theStream.findAny().get();
+    fail("Expected a NoSuchElementException to be thrown");
+  } catch (NoSuchElementException ex) {
+    assertThat(ex.getMessage(), is("No value present"));
+  }
+}</pre>
+			<p>由于<strong class="source-inline">fail（）</strong>抛出一个<strong class="source-inline">断言错误</strong>，因此不能用于测试此错误类型。</p>
+			<p>从<a id="_idIndexMarker1724"/>JUnit4 开始，我们可以使用<strong class="source-inline">@Test</strong>注释的<strong class="source-inline">预期的</strong>元素。此元素的值是预期异常的类型（可丢弃的子类<strong class="source-inline"/>）。查看下面的<a id="_idIndexMarker1725"/>示例，该示例是使用<strong class="source-inline">预期的</strong>编写的：</p>
+			<pre>@Test(expected = NoSuchElementException.class)
+public void givenStreamWhenGetThenException() {
+  Stream&lt;Integer&gt; theStream = Stream.of();
+  theStream.findAny().get();
+}</pre>
+			<p>只要您不想测试异常消息的值，这种方法就可以了。此外，请注意，如果任何代码行抛出了一个<strong class="source-inline">NoTouchElementException</strong>，则测试通过。您可能认为此异常是由特定代码行引起的，而实际上，它可能是由其他代码引起的。</p>
+			<p>另一种方法依赖于<strong class="source-inline">ExpectedException</strong>规则。这种方法从 JUnit4.13 开始就被弃用了。让我们看一下代码：</p>
+			<pre>@Rule
+public ExpectedException thrown = ExpectedException.none();
+@Test
+public void givenStreamWhenGetThenException() 
+    throws NoSuchElementException {
+  Stream&lt;Integer&gt; theStream = Stream.of();
+  thrown.expect(NoSuchElementException.class);
+  thrown.expectMessage("No value present");
+  theStream.findAny().get();
+}</pre>
+			<p>通过这种方法，您<a id="_idIndexMarker1726"/>可以测试异常消息的值。这些示例已分组到名为<em class="italic">junit4/TestingExceptions</em>的应用程序中。</p>
+			<p>从 JUnit5 开始，我们可以使用两种方法来测试异常。它们都依赖于<strong class="source-inline">assertThrows（）</strong>方法。此方法允许我们断言给定的函数调用（作为 lambda 表达式或甚至作为方法引用传入）会导致引发预期类型的异常。下面的例子说明了这一点：</p>
+			<pre>@Test
+public void givenStreamWhenGetThenException() {
+  assertThrows(NoSuchElementException.class, () -&gt; {
+    Stream&lt;Integer&gt; theStream = Stream.of();
+    theStream.findAny().get();
+  });
+}</pre>
+			<p>此示例仅验证异常的类型。但是，由于抛出了异常，我们可以断言抛出异常的更多细节。例如，我们可以如下断言异常消息的<a id="_idIndexMarker1729"/>值：</p>
+			<pre>@Test
+public void givenStreamWhenGetThenException() {
+  Throwable ex = assertThrows(
+    NoSuchElementException.class, () -&gt; {
+      Stream&lt;Integer&gt; theStream = Stream.of();
+      theStream.findAny().get();
+    });
+  assertEquals(ex.getMessage(), "No value present");
+}</pre>
+			<p>简单地使用 AutoT0TyEXT1 T1 对象来声明您认为有用的任何东西，从 TytT2。当您不需要断言有关异常的详细信息时，请依赖<strong class="source-inline">assertThrows（）</strong>，而不捕获返回。这两个示例已分组到名为<em class="italic">junit5/TestingExceptions</em>的应用程序中。</p>
+			<h2 id="_idParaDest-444"><a id="_idTextAnchor450"/>编码挑战 5–开发人员或测试人员</h2>
+			<p><strong class="bold">问题</strong>：谁应该使用 JUnit——开发人员还是测试人员？</p>
+			<p><strong class="bold">解决方案</strong>：开发人员通常使用 JUnit<a id="_idIndexMarker1730"/>用 Java 编写单元测试。编写单元测试是一个测试应用程序代码的编码过程。JUnit 不是一个测试过程。然而，许多测试人员愿意学习并使用 JUnit 进行单元测试。</p>
+			<h2 id="_idParaDest-445"><a id="_idTextAnchor451"/>编码挑战 6–JUnit 扩展</h2>
+			<p><strong class="bold">问题</strong>：您知道/使用哪些有用的 JUnit<a id="_idIndexMarker1731"/>扩展？</p>
+			<p><strong class="bold">解决方案</strong>：最广泛使用的 JUnit 扩展是 JWebUnit（一个基于 Java 的 web 应用程序测试框架）、XMLUnit（一个用于测试 XML 的 JUnit 扩展类）、Cactus（一个用于测试服务器端 Java 代码的简单测试框架）和 MockObject（一个模拟框架）。你需要就每一个问题说几句话。</p>
+			<h2 id="_idParaDest-446"><a id="_idTextAnchor452"/>编码挑战 7–@Before*和@After*注释</h2>
+			<p><strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="bold">问题</strong>：在/<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">@之前的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">@在</strong>注释之后的</strong>/<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">是什么您知道/使用了什么？</strong></p>
+			<p><strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="bold">解决方案</strong>：在 JUnit4 中，我们<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker1732"/>有之前的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">、<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">课前的</strong>、</strong>之后的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">、以及<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">课后的</strong>。</strong></p>
+			<p>当在每个测试之前<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker1733"/>执行一个方法时，我们在注释之前用<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">注释它。这对于在运行测试之前执行公共代码片段非常有用（例如，我们可能需要在每个测试之前执行一些重新初始化）。为了在每次测试后清理阶段，我们在</strong>注释后用<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">注释一个方法。</strong></p>
+			<p>当在所有测试之前只执行一次方法时，我们使用<strong class="source-inline">@BeforeClass</strong>注释对其进行注释。方法必须为<strong class="source-inline">静态</strong>。这对于全局和昂贵的设置非常有用，例如打开到数据库的连接。为了在所有测试完成后清理阶段，我们使用<strong class="source-inline">@AfterClass</strong>注释注释<strong class="source-inline">静态</strong>方法；例如，关闭数据库连接。</p>
+			<p>您可以在名称为<em class="italic">junit4/BeforeAfterAnnotations</em>下找到一个简单的<a id="_idIndexMarker1734"/>示例。</p>
+			<p>从 JUnit5 开始，我们将<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">beforeach</strong>作为之前<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">的等价物，将<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">beforeach</strong>作为<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">beforeach</strong>的等价物。实际上，</strong>之前的<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">和<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">之前的</strong>被<a xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" id="_idIndexMarker1735"/>重命名为更具暗示性的名称，以避免混淆。</strong></p>
+			<p>您可以在名称为<em class="italic">junit5/BeforeAfterAnnotations</em>下找到一个简单的例子。</p>
+			<h2 id="_idParaDest-447"><a id="_idTextAnchor453"/>编码挑战 8–模拟和存根</h2>
+			<p><strong class="bold">问题</strong>：什么是嘲弄和存根？</p>
+			<p><strong class="bold">解决方案</strong>：模拟是一种<a id="_idIndexMarker1736"/>技术，用于创建模拟/模仿真实对象的对象。这些对象可以按照预期进行预编程（或预设或<a id="_idIndexMarker1737"/>预配置），我们可以检查它们是否已被调用。在可用的最广泛使用的模拟框架中，我们有 Mockito 和 EasyMock。</p>
+			<p>存根就像嘲弄，只是我们不能检查它们是否被调用。存根预先配置为用特定输出响应特定输入。</p>
+			<h2 id="_idParaDest-448"><a id="_idTextAnchor454"/>编码挑战 9–测试套件</h2>
+			<p><strong class="bold">问题</strong>：什么是测试套件？</p>
+			<p><strong class="bold">解决方案</strong>：测试套件是<a id="_idIndexMarker1738"/>的概念，即<a id="_idIndexMarker1739"/>将多个测试聚合在一起，并在多个测试类和包中进行划分，以便它们一起运行。</p>
+			<p>在 JUnit4 中，我们可以通过<strong class="source-inline">org.junit.runners.suite</strong>runner 和<strong class="source-inline">@SuiteClasses（…）</strong>注释定义测试套件。例如，下面的代码片段是一个测试套件，它聚合了三个测试（<strong class="source-inline">TestConnect.class</strong>、<strong class="source-inline">TestHeartbeat.class</strong>和<strong class="source-inline">TestDisconnect.class</strong>）：</p>
+			<pre>@RunWith(Suite.class)
+@Suite.SuiteClasses({
+  TestConnect.class,
+  TestHeartbeat.class,
+  TestDisconnect.class
+})
+public class TestSuite {
+    // this class was intentionally left empty
+}</pre>
+			<p>完整的<a id="_idIndexMarker1740"/>代码称为<em class="italic">junit4/TestSuite</em>。</p>
+			<p>在 JUnit5 中，我们可以通过<strong class="source-inline">@SelectPackages</strong>和<strong class="source-inline">@SelectClasses</strong>注释定义一个测试<a id="_idIndexMarker1741"/>套件。</p>
+			<p><strong class="source-inline">@SelectPackages</strong>注释对于聚合来自不同包的测试非常有用。我们所要做的就是指定包的名称，如以下示例所示：</p>
+			<pre>@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("TEST LOGIN AND CONNECTION")
+@SelectPackages({
+  "coding.challenge.connection.test",
+  "coding.challenge.login.test"
+})
+public class TestLoginSuite {
+  // this class was intentionally left empty
+}</pre>
+			<p><strong class="source-inline">@SelectClasses</strong>注释可用于通过类名称聚合测试：</p>
+			<pre>@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("TEST CONNECTION")
+@SelectClasses({
+  TestConnect.class, 
+  TestHeartbeat.class, 
+  TestDisconnect.class
+})
+public class TestConnectionSuite {
+  // this class was intentionally left empty
+}</pre>
+			<p>完整的<a id="_idIndexMarker1742"/>代码称为<em class="italic">junit5/TestSuite</em>。</p>
+			<p>此外，可以通过以下注释过滤<a id="_idIndexMarker1743"/>测试包、测试类和测试方法：</p>
+			<ul>
+				<li>过滤包装：<strong class="source-inline">@包括包装</strong>和<strong class="source-inline">@排除包装</strong></li>
+				<li>过滤测试类：<strong class="source-inline">@IncludeClassNamePatterns</strong>和<strong class="source-inline">@ExcludeClassNamePatterns</strong></li>
+				<li>过滤测试方法：<strong class="source-inline">@包括标签</strong>和<strong class="source-inline">@排除标签</strong></li>
+			</ul>
+			<h2 id="_idParaDest-449"><a id="_idTextAnchor455"/>编码挑战 10–忽略测试方法</h2>
+			<p><strong class="bold">问题</strong>：我们<a id="_idIndexMarker1744"/>怎么能忽视考试？</p>
+			<p><strong class="bold">解决方案</strong>：在 JUnit4 中，我们可以通过<strong class="source-inline">@忽略</strong>注释来忽略测试方法。在 JUnit5 中，我们可以通过<strong class="source-inline">@Disable</strong>注释执行相同的操作。</p>
+			<p>如果我们已经提前编写了一些测试，并且希望在不运行这些特定测试的情况下运行当前测试，那么忽略测试方法可能会很有用。</p>
+			<h2 id="_idParaDest-450"><a id="_idTextAnchor456"/>编码挑战 11–假设</h2>
+			<p><strong class="bold">问题</strong>：什么是假设？</p>
+			<p><strong class="bold">解决方案</strong>：如果满足规定条件，则使用假设<a id="_idIndexMarker1745"/>执行测试。它们通常用于处理测试正常执行所需的外部条件，但<a id="_idIndexMarker1746"/>不在我们的控制范围内和/或与测试内容没有直接关系。</p>
+			<p>在 JUnit4 中，假设是<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">静态</strong>方法，可以在<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">org.junit.aspect</strong>包中找到。在这些假设中，我们有<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">假设（）。以下代码片段举例说明了<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">assumeThit（）</strong>的用法：</strong></p>
+			<pre>@Test
+public void givenFolderWhenGetAbsolutePathThenSuccess() {
+  assumeThat(File.separatorChar, is('/'));
+  assertThat(new File(".").getAbsolutePath(),
+    is("C:/SBPBP/GitHub/Chapter18/junit4"));
+}</pre>
+			<p>如果<strong class="source-inline">假设（）</strong>不满足给定条件，则跳过测试。完整的应用程序称为<em class="italic">junit4/假设</em>。</p>
+			<p>在 JUnit5 中，假设是<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">静态</strong>方法，可以在<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">org.junit.jupiter.api.aspections</strong>包中找到。在这些假设中，我们有<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">假设（）。这三种都有不同的口味。以下代码片段举例说明了<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">assumeThit（）</strong>的用法：</strong></p>
+			<pre>@Test
+public void givenFolderWhenGetAbsolutePathThenSuccess() {
+  assumingThat(File.separatorChar == '/',
+   () -&gt; {
+     assertThat(new File(".").getAbsolutePath(), 
+       is("C:/SBPBP/GitHub/Chapter18/junit5"));
+   });
+   // run these assertions always, just like normal test
+   assertTrue(true);
+}</pre>
+			<p>请注意，<a id="_idIndexMarker1747"/>测试方法（<strong class="source-inline">assertThat（）</strong>仅在满足假设的情况下执行。无论假设的有效性如何，lambda 之后的一切都将被<a id="_idIndexMarker1748"/>执行。完整的应用程序称为<em class="italic">junit5/假设</em>。</p>
+			<h2 id="_idParaDest-451"><a id="_idTextAnchor457"/>编码挑战 12–@规则</h2>
+			<p><strong class="bold">问题</strong>：<strong class="source-inline">规则</strong>是什么？</p>
+			<p><strong class="bold">解决方案</strong>：JUnit 通过所谓的<em class="italic">规则</em>提供了高度的<a id="_idIndexMarker1749"/>灵活性。规则允许我们创建和隔离对象（代码），并在多个测试类中重用这些代码。主要是，我们<a id="_idIndexMarker1750"/>使用可重用的规则增强测试。JUnit 带有内置规则和可用于编写自定义规则的 API。</p>
+			<h2 id="_idParaDest-452"><a id="_idTextAnchor458"/>编码挑战 13–方法测试返回类型</h2>
+			<p><strong class="bold">问题</strong>：我们能否从 JUnit 测试方法中返回<a id="_idIndexMarker1751"/>除<strong class="source-inline">无效</strong>之外的其他内容？</p>
+			<p><strong class="bold">解决方案</strong>：是的，我们可以将测试方法的返回从<strong class="source-inline">void</strong>更改为其他内容，但 JUnit 不会将其识别为测试方法，因此在测试执行过程中会忽略它。</p>
+			<h2 id="_idParaDest-453"><a id="_idTextAnchor459"/>编码挑战 14–动态测试</h2>
+			<p><strong class="bold">问题</strong>：我们可以在 JUnit 中编写动态测试（运行时生成的测试）吗？</p>
+			<p><strong class="bold">解决方案</strong>：直到 JUnit5，所有测试<a id="_idIndexMarker1752"/>都是静态的。换句话说，所有用<strong class="source-inline">@Test</strong>注释的测试都是在编译时完全定义的静态测试。JUnit5 引入了动态测试–在运行时生成动态测试。</p>
+			<p>动态测试是通过工厂方法生成的，这是一种用<strong class="source-inline">@TestFactory</strong>注释注释的方法。这种方法可以返回<strong class="source-inline">DynamicTest</strong>实例的<strong class="source-inline">迭代器</strong>、<strong class="source-inline">Iterable</strong>、<strong class="source-inline">集合</strong>或<strong class="source-inline">流</strong>。工厂方法没有标注<strong class="source-inline">@Test</strong>，也不是<strong class="source-inline">私有</strong>或<strong class="source-inline">静态</strong>。此外，动态测试不能利用生命周期回调（例如，<strong class="source-inline">@beforeach</strong>和<strong class="source-inline">@AfterEach</strong>被忽略）。</p>
+			<p>让我们看一个简单的例子：</p>
+			<pre>1: @TestFactory
+2: Stream&lt;DynamicTest&gt; dynamicTestsExample() {
+3:
+4:   List&lt;Integer&gt; items = Arrays.asList(1, 2, 3, 4, 5);
+5:
+6:   List&lt;DynamicTest&gt; dynamicTests = new ArrayList&lt;&gt;();
+7:
+8:   for (int item : items) {
+9:     DynamicTest dynamicTest = dynamicTest(
+10:        "pow(" + item + ", 2):", () -&gt; {
+11:        assertEquals(item * item, Math.pow(item, 2));
+12:    });
+13:    dynamicTests.add(dynamicTest);
+14:  }
+15:
+16:  return dynamicTests.stream();
+17: }</pre>
+			<p>现在，让我们指出主要的代码行：</p>
+			<p><strong class="bold">1</strong>：在第 1 行，我们使用<strong class="source-inline">@TestFactory</strong>注释指示 JUnit5 这是一种用于动态测试的工厂方法。</p>
+			<p><strong class="bold">2</strong>：工厂方法返回<strong class="source-inline">流&lt;动态测试&gt;</strong>。</p>
+			<p><strong class="bold">4</strong>：我们<a id="_idIndexMarker1753"/>测试的输入是一个整数列表。对于每个整数，我们生成一个动态测试。</p>
+			<p><strong class="bold">6</strong>：我们定义了<strong class="source-inline">列表&lt;动态测试&gt;</strong>。在这个列表中，我们添加每个生成的测试。</p>
+			<p><strong class="bold">8-12</strong>：我们为每个整数生成一个测试。每个测试都有一个名称和一个包含必要断言的 lambda 表达式。</p>
+			<p><strong class="bold">13</strong>：我们将生成的测试存储在适当的列表中。</p>
+			<p><strong class="bold">16</strong>：返回测试的<strong class="source-inline">流</strong>。</p>
+			<p>运行这个测试工厂将产生五个测试。完整的示例称为<em class="italic">junit5/TestFactory</em>。</p>
+			<h2 id="_idParaDest-454"><a id="_idTextAnchor460"/>编码挑战 15–嵌套测试</h2>
+			<p><strong class="bold">问题</strong>：我们可以在 JUnit5 中编写嵌套测试吗？</p>
+			<p><strong class="bold">解决方案</strong>：是的，我们可以！JUnit5<a id="_idIndexMarker1754"/>通过<strong class="source-inline">@nested</strong>注释支持嵌套测试。实际上，我们创建了一个嵌套的测试类层次结构。此层次结构可能包含设置、拆卸和测试方法。然而，我们必须遵守一些规则，如下<a id="_idIndexMarker1755"/>：</p>
+			<ul>
+				<li>嵌套测试类用<strong class="source-inline">@Nested</strong>注释。</li>
+				<li>嵌套测试类是非<strong class="source-inline">静态</strong>内部类。</li>
+				<li>一个嵌套的测试类可以包含每个方法之前的一个<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">、每个</strong>方法之后的一个<strong xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:epub="http://www.idpf.org/2007/ops" class="source-inline">和测试方法。</strong></li>
+				<li>内部类中不允许使用<strong class="source-inline">静态</strong>成员，这意味着<strong class="source-inline">@beforeal</strong>和<strong class="source-inline">@AfterAll</strong>方法不能用于嵌套测试。</li>
+				<li>类<a id="_idIndexMarker1756"/>层次结构的深度是无限的。</li>
+			</ul>
+			<p>嵌套测试<a id="_idIndexMarker1757"/>的一些示例代码可以在这里看到：</p>
+			<pre>@RunWith(JUnitPlatform.class)
+public class NestedTest {
+  private static final Logger log 
+    = Logger.getLogger(NestedTest.class.getName());
+  @DisplayName("Test 1 - not nested")
+  @Test
+  void test1() {
+    log.info("Execute test1() ...");
+  }
+  @Nested
+  @DisplayName("Running tests nested in class A")
+  class A {
+    @BeforeEach
+    void beforeEach() {
+      System.out.println("Before each test 
+        method of the A class");
+    }
+    @AfterEach
+    void afterEach() {
+      System.out.println("After each test 
+        method of the A class");
+    }
+    @Test
+    @DisplayName("Test2 - nested in class A")
+    void test2() {
+      log.info("Execute test2() ...");
+    }
+  }
+}</pre>
+			<p>完整的<a id="_idIndexMarker1758"/>示例<a id="_idIndexMarker1759"/>称为<em class="italic">junit5/NestedTests</em>。</p>
+			<h1 id="_idParaDest-455"><a id="_idTextAnchor461"/>总结</h1>
+			<p>在本章中，我们讨论了关于通过 JUnit4 和 JUnit5 进行单元测试的几个热点问题和编码挑战。重要的是不要忽视这个话题。最有可能的是，在 Java 开发人员或软件工程师职位面试的最后一部分，您将得到几个与测试相关的问题。此外，这些问题将与单元测试和 JUnit 相关。</p>
+			<p>在下一章中，我们将讨论缩放和缩放相关的面试问题。</p>
+		
+	
+</body>
+</html>
