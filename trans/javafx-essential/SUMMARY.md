@@ -1,3 +1,4 @@
++   [JavaFX 基础知识](README.md)
 +   [零、序言](0.md)
 +   [一、JavaFX 8 入门](1.md)
 +   [二、JavaFX 8 基础和创建自定义 UI](2.md)
@@ -8,4 +9,3 @@
 +   [七、使用 JavaFX 监控 Arduino](7.md)
 +   [八、使用 JavaFX 的交互式 Leap Motion 应用](8.md)
 +   [九、成为 JavaFX 大师](9.md)
-+   [JavaFX 基础知识](README.md)
