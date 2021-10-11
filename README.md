@@ -28,10 +28,10 @@
 +   [Java 基础知识](docs/java-fund/SYMMARY.md)
 +   [JavaFX 基础知识](docs/javafx-essential/SYMMARY.md)
 +   [Java 编程入门](docs/intro-prog-java/SYMMARY.md)
-+   [Java7 并发秘籍](docs/java7-concur-cb/docs/intro-prog-java/SYMMARY.md)
-+   [Java9 和 JShell](docs/java9-jshell/docs/intro-prog-java/SYMMARY.md)
-+   [面向初学者的 Java 编程](docs/java-prog-beginner/docs/intro-prog-java/SYMMARY.md)
-+   [精通 Java8 并发编程](docs/master-concur-prog-java8/docs/intro-prog-java/SYMMARY.md)
++   [Java7 并发秘籍](docs/java7-concur-cb/SYMMARY.md)
++   [Java9 和 JShell](docs/java9-jshell/SYMMARY.md)
++   [面向初学者的 Java 编程](docs/java-prog-beginner/SYMMARY.md)
++   [精通 Java8 并发编程](docs/master-concur-prog-java8/SYMMARY.md)
 
 <!--
 无需翻译：
