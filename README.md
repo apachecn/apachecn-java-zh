@@ -32,6 +32,12 @@
 +   [Java9 和 JShell](docs/java9-jshell/SUMMARY.md)
 +   [面向初学者的 Java 编程](docs/java-prog-beginner/SUMMARY.md)
 +   [精通 Java8 并发编程](docs/master-concur-prog-java8/SUMMARY.md)
++   [Java7 新特性秘籍](docs/java7-new-feat-cb/SUMMARY.md)
++   [Java9 编程蓝图](docs/java9-prog-blueprint/SUMMARY.md)
++   [Java SE7 编程学习指南](docs/java-se7-prog-study-guide/SUMMARY.md)
++   [Java Lambda 学习指南](docs/learn-java-lambda/SUMMARY.md)
++   [Java 网络编程学习指南](docs/learn-network-prog-java/SUMMARY.md)
++   [Java8 反应式编程学习指南](docs/learn-react-prog-java8/SUMMARY.md)
 
 <!--
 无需翻译：
